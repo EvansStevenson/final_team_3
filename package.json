@@ -1,0 +1,27 @@
+{
+  "name": "cse341final",
+  "version": "1.0.0",
+  "description": "final project for cse341",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masterlink0/final_team_3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masterlink0/final_team_3/issues"
+  },
+  "homepage": "https://github.com/masterlink0/final_team_3#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1"
+  }
+}
