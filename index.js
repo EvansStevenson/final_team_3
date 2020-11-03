@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
 
 const routes = require('./routes');
 const errorController = require('./controllers/error_pages');
+const User = require('./models/user');
 
 const app = express();
 
@@ -42,6 +43,26 @@ app.use(
         store: store,
     })
 );
+/* Check if the user is logged in and the session is stored in the databse */
+app.use(async (req, res, next) => {
+    try {
+        if (!req.session.user) {
+            return next();
+        }
+        const user = await User.findById(req.session.user._id);
+        if (user) {
+            req.user = user;
+            next();
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+/* Add local variable that all pages use */
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    next()
+});
 /* add protection */
 // app.use(csrfProtection);
 //routes
