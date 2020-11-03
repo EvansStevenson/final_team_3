@@ -10,11 +10,11 @@ const recipeSchema = new Schema({
     {
       name: { type: String, required: true },
       unit: { type: String, required: true },
-      amount: { type: Number, required: true }
-    }
+      amount: { type: Number, required: true },
+    },
   ],
-  instructions: { type: String, required: true },
-  imagePath: { type: String, required: true }
+  instructions: [{ type: String, required: true }],
+  imagePath: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Recipe', recipeSchema); 
+module.exports = mongoose.model('Recipe', recipeSchema);

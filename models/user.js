@@ -10,7 +10,7 @@ const userSchema = new Schema({
   addedRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
   favoriteRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  level: { type: Number }
-})
+  level: { type: Number },
+});
 
-modele.exports = mongoose.model('User', userSchema); 
+module.exports = mongoose.model('User', userSchema);
