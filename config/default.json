@@ -1,0 +1,5 @@
+{
+  "mongoURI": "paste it in here",
+  "sendGridAPIKey": "paste it here",
+  "sessionSecret": "yXiOT2D9kn8aLarwvx5s"
+}
