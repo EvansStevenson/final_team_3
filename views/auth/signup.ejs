@@ -1,0 +1,38 @@
+<!-- INCLUDE HEAD GOES HERE <%- include('../includes/head.ejs') %> -->
+</head>
+
+<body>
+<!-- INCLUDE NAVIGATION GOES HERE <%- include('../includes/navigation.ejs') %> -->
+</header>
+
+    <main>
+        <h1 class="">Gourmeat</h1>
+            <% if (errorMessage) { %>
+                <div class=""><%= error %></div>
+                 <% } %> 
+                <form class="" action="/signup" method="POST">
+                    <div class="form">
+                        <label for="username">Username</label>
+                        <input type="username" name="username" id="username">
+                    </div>
+                    <div class="form">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password">
+                    </div>
+                    <div class="form">
+                     <label for="confirmPassword">Confirm Password</label>
+                     <input type="confirmPassword" name="confirmPassword" id="confirmPassword">
+                    </div>
+                    <% if (submitAdmin) { %>
+                  <div class="form">
+                     <label for="birthday">Birthday</label>
+                     <input type="birthday" name="birthday" id="birthday">
+                    </div>
+                    <% } %>
+                        <input type="hidden" name="_csrf" id="<%= csrf %>>">
+                <button class="button" type="submit">Create Admin</button>
+                <button class="button" type="submit">Create User</button>
+                </form>
+    </main>
+
+<!-- INCLUDE END GOES HERE <%- include('../includes/end.ejs') %>-->
