@@ -26,15 +26,20 @@
                             <header class="">
                                 <h1 class=""><%= food.title %></p>
                             </header>
-                            <!-- LEFT ARROW -->
+                            <!-- LEFT ARROW THUMBS UP -->
                             <div class="">
                                 <img src=" <%= food.imageUrl %>",alt="<%= food.title %>">
                             </div>
-                            <!-- RIGHT ARROW -->
+                            <!-- RIGHT ARROW THUMBS DOWN-->
                             <div class="">
                                 <h2 class=""><%= food.description %></h2>
-                            </div>
-                        </article>
+                            </div>  
+                        </article> 
+                     <div class="buttons">
+                        <button type="submit" class="button">Add to List</button>
+                        <button type="submit" class="button">Add to Favorites</button>
+                        <button><a href="/go-to-list">Go to List</a></button>
+                     </div>
                 </div>  
             <% } %>      
         </div>
