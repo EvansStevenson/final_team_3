@@ -1,16 +1,14 @@
-<!-- INCLUDE HEAD GOES HERE <%- include('../includes/head.ejs') %> -->
+    <%- include('../includes/head.ejs') %>
 </head>
 
 <body>
-<!-- INCLUDE NAVIGATION GOES HERE <%- include('../includes/navigation.ejs') %> -->
-</header>
-
+    <%- include('../includes/nav.ejs') %>
     <main>
-        <h1 class="">Gourmeat</h1>
+        <h1 class="company_name">Gourmet</h1>
             <% if (errorMessage) { %>
-                <div class=""><%= error %></div>
+                <div class="error_message"><%= error %></div>
                  <% } %> 
-                <form class="" action="/signup" method="POST">
+                <form class="signup_form" action="/signup" method="POST">
                     <div class="form">
                         <label for="username">Username</label>
                         <input type="username" name="username" id="username">
@@ -35,4 +33,4 @@
                 </form>
     </main>
 
-<!-- INCLUDE END GOES HERE <%- include('../includes/end.ejs') %>-->
+<%- include('../includes/end.ejs') %>
