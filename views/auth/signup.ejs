@@ -1,12 +1,8 @@
-<head>
-    <!-- INCLUDE HEAD GOES HERE <%- include('../includes/head.ejs') %> -->
-    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <%- include('../includes/head.ejs') %>
 </head>
 
 <body>
-<!-- INCLUDE NAVIGATION GOES HERE <%- include('../includes/navigation.ejs') %> -->
-</header>
-
+    <%- include('../includes/nav.ejs') %>
     <main>
         <h1 class="company_name">Gourmet</h1>
             <% if (errorMessage) { %>
@@ -37,4 +33,4 @@
                 </form>
     </main>
 
-<!-- INCLUDE END GOES HERE <%- include('../includes/end.ejs') %>-->
+<%- include('../includes/end.ejs') %>

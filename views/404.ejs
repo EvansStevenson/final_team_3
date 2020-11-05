@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %> </title>
+<%- include('../includes/head.ejs') %>
 </head>
 
 <body>
+    <%- include('../includes/nav.ejs') %>
     <h1><%= title %></h1>
     <p>The page you were looking for at <%= path %> does not exist.</p>
     </div>
-</body>
 
-</html>
+<%- include('../includes/end.ejs') %>
+

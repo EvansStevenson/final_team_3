@@ -1,42 +1,39 @@
-<head>
-   <!-- INCLUDE HEAD GOES HERE <%- include('../includes/head.ejs') %> -->
-   <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+   <%- include('../includes/head.ejs') %>
 </head>
 
 <body>
-<!-- INCLUDE NAVIGATION GOES HERE <%- include('../includes/navigation.ejs') %> -->
-</header>
+   <%- include('../includes/nav.ejs') %>
+   <main>
+      <form class="recipe_upload" action="/admin/<% if(editing) { %>edit-food<% } else { %>add-food<% } %>" method="POST">
+         <div class="food_name">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" value="<% if(editing) { %><%=food.title%><% } %>">
+         </div>
 
-<main>
-   <form class="recipe_upload" action="/admin/<% if(editing) { %>edit-food<% } else { %>add-food<% } %>" method="POST">
-      <div class="food_name">
-         <label for="title">Title</label>
-         <input type="text" name="title" id="title" value="<% if(editing) { %><%=food.title%><% } %>">
-      </div>
-
-      <div class="food_image">
-         <label for="imageUrl">Image Url</label>
-         <input type="text" name="imageUrl" id="imageUrl" value="<% if(editing) { %><%=food.imageUrl%><% } %>">
-      </div>
-     
-      <div class="food_description">
-         <label for="description">Description</label>
-         <textarea name="description" id="description" rows="5" ><% if(editing) { %><%=food.description%><% } %></textarea>
-      </div> 
-
-      <div class="food_recipe">
-         <label for="recipe">Recipe</label>
-         <input type="number" name="recipe" id="recipe" step="0.01" value="<% if(editing) { %><%=food.recipe%><% } %>">
-      </div>
-
-         <% if (editing) { %>
-         <input type="hidden" value="<%= food.id %>" name="foodId">
-         <% } %>
-
-         <input type="hidden" name="_csrf" value="<%= csrf %>">
+         <div class="food_image">
+            <label for="imageUrl">Image Url</label>
+            <input type="text" name="imageUrl" id="imageUrl" value="<% if(editing) { %><%=food.imageUrl%><% } %>">
+         </div>
       
-      <button class="btn" type="submit"><% if (editing) { %>Update Food<% } else { %>Add Food<% } %></button>
-   </form>
-</main>
+         <div class="food_description">
+            <label for="description">Description</label>
+            <textarea name="description" id="description" rows="5" ><% if(editing) { %><%=food.description%><% } %></textarea>
+         </div> 
 
-<!-- INCLUDE END GOES HERE <%- include('../includes/end.ejs') %>-->
+         <div class="food_recipe">
+            <label for="recipe">Recipe</label>
+            <input type="number" name="recipe" id="recipe" step="0.01" value="<% if(editing) { %><%=food.recipe%><% } %>">
+         </div>
+
+            <% if (editing) { %>
+            <input type="hidden" value="<%= food.id %>" name="foodId">
+            <% } %>
+
+            <input type="hidden" name="_csrf" value="<%= csrf %>">
+         
+         <button class="btn" type="submit"><% if (editing) { %>Update Food<% } else { %>Add Food<% } %></button>
+      </form>
+   </main>
+
+<%- include('../includes/end.ejs') %>
+
