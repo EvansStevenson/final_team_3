@@ -79,22 +79,11 @@ app.use(errorController.get404);
 
 //Connect to the database and open the web server
 mongoose
-<<<<<<< HEAD
-    .connect(
-        MONGODB_URL, options
-    )
-    .then(result => {
-        app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-    })
-    .catch(err => {
-        console.log(err);
-    })
-=======
   .connect(MONGODB_URI, options)
   .then(result => {
     app.listen(PORT, () => console.log(`Listening on ${PORT}`));
   })
   .catch(err => {
     console.log(err);
+    res.redirect('/500');
   });
->>>>>>> development
