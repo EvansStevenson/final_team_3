@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> </title>
+</head>
+<body>
+    <h1>Add Recipe</h1>
+<form action="/recipe/addrecipe/submit" method="POST">
+    <input id="numOfIngredients" type="hidden" value="0">
+    <input id="numOfDirections" type="hidden" value="0">
+    <input type="number" placeholder="Servings"><br>
+    <input type="number" placeholder="Preperation Time"><br>
+    <input type="number" placeholder="Cooking Time"><br>
+    <input type="text" placeholder="Title"><br>
+    <input type="text" placeholder="Ingredient #1">
+    <input name="amount1" type="number" placeholder="amount" style="width: 60px;">
+    <select name="unit1" id="unit">
+        <option value="teaspoon">teaspoon</option> 
+        <option value="tablespoon">tablespoon</option>
+        <option value="cup">cup</option> 
+        <option value="pint">pint</option> 
+        <option value="quart">quart</option> 
+        <option value="gallon">gallon</option> 
+        <option value="pound">pound</option> 
+        <option value="other">other</option> 
+    </select>   <br>
+    <div id="ingredients">
+    </div>
+    <button type='button' id="ingredientBtn" onclick="addIngredient()">Add another Ingredient</button><br>
+    <input type="text" placeholder="Direction #1"><br>
+    <div id="directions">
+    </div>
+    <button type="button" id="directionBtn" onclick="addDirection()">Add another Direction</button><br>
+    <input type="file"><br>
+    <input type="submit">
+</form>
+<script>
+    let numberOfIngredients = 1;
+    let numberOfDirections = 1;
+    function addIngredient(){
+        numberOfIngredients++;
+        document.getElementById('numOfIngredients').value = numberOfIngredients;
+        document.getElementById('ingredients').innerHTML += `
+        <input name="ingredient${numberOfIngredients}" type="text" placeholder="Ingredient #${numberOfIngredients}">
+        <input name="amount${numberOfIngredients}" type="number" placeholder="amount" style="width: 60px;">
+        <select name="unit${numberOfIngredients}" id="unit">
+            <option value="teaspoon">teaspoon</option> 
+            <option value="tablespoon">tablespoon</option>
+            <option value="cup">cup</option> 
+            <option value="pint">pint</option> 
+            <option value="quart">quart</option> 
+            <option value="gallon">gallon</option> 
+            <option value="pound">pound</option> 
+            <option value="other">other</option> 
+        </select><br>   
+        `
+    }
+
+    function addDirection(){
+        numberOfDirections++;
+        document.getElementById('directions').innerHTML += "<input type='text' name='direction"+ numberOfDirections +"' placeholder='Direction #" + numberOfDirections +"'><br>";
+    }
+</script>
+</body>
+</html>
