@@ -1,0 +1,5 @@
+{
+  "mongoURI": "mongodb+srv://root:root@cluster0.wcnhp.mongodb.net/gourmeat?retryWrites=true&w=majority",
+  "sendGridAPIKey": "paste it here",
+  "sessionSecret": "yXiOT2D9kn8aLarwvx5s"
+}
