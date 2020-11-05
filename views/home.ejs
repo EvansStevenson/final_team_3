@@ -1,18 +1,8 @@
-<!-- INCLUDE HEAD GOES HERE
-    
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %> </title> 
--->
+    <%- include('../includes/head.ejs') %>
 </head>
 
 <body>
-<!-- INCLUDE NAV GOES HERE -->
-</header>
-
+    <%- include('../includes/nav.ejs') %>
 <!-- Names of div and other classes are open for definition-->
 
     <main>
@@ -41,12 +31,7 @@
             <% } else { %>
                 <h1>No Foods Found</h1>
             <% } %>
-
-
     </main>
     
 
-<!-- INCLUDE END GOES HERE
-</body>
-</html>
--->
+<%- include('../includes/end.ejs') %>
