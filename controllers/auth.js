@@ -11,8 +11,8 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = async (req, res, next) => {
   try {
     console.log('In login');
-    const email = 'test@test.com';
-    const password = 'test';
+    const email = 'test@test.com'; // here we are going to use req.body.username
+    const password = 'test'; // here we are going to use req.body.password
     const user = await User.findOne({ email: email });
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -21,14 +21,14 @@ exports.postLogin = async (req, res, next) => {
       });
     }
     if (!user) {
-      return res.satatus(422).render('pages/auth/login', {
-        title: 'Login'
-      })
+      return res.status(422).render('pages/auth/login', {
+        title: 'Login',
+      });
     }
     const correctPassword = await bcrypt.compare(password, user.password);
     if (!correctPassword) {
       return res.status(422).render('pages/auth/login', {
-        title: 'Login'
+        title: 'Login',
       });
     } else {
       req.session.isLoggedIn = true;
@@ -42,21 +42,21 @@ exports.postLogin = async (req, res, next) => {
   }
 };
 
-exports.postLogout = (async (req, res, next) => {
+exports.postLogout = async (req, res, next) => {
   try {
     await req.session.destroy();
     res.redirect('/');
   } catch (error) {
     console.error(error);
   }
-})
+};
 
 exports.postSignup = async (req, res, next) => {
   try {
     console.log(req.body);
-    const name = 'Test';
-    const email = 'test@test.com';
-    const password = 'test';
+    const name = 'Test'; // req.body.name
+    const email = 'test@test.com'; // req.body.username
+    const password = 'test'; // req.body.password
     const hash = await bcrypt.hash(password, 12);
     const user = new User({ name: name, email: email, password: hash, level: 1 });
     await user.save();
@@ -64,4 +64,4 @@ exports.postSignup = async (req, res, next) => {
   } catch (error) {
     console.error(error);
   }
-}
+};

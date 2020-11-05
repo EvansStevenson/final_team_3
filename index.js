@@ -17,17 +17,17 @@ const app = express();
 
 //Options for mongoose
 const options = {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-}
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+};
 
 const PORT = process.env.PORT || 5000;
 /* Check if the url is in the server env otherwise use it from the config */
 const MONGODB_URI = process.env.MONGODB_URI || config.get('mongoURI');
 /* Create session store and point to database, and save it in collection sessions */
 const store = new mongoDBStore({
-    uri: MONGODB_URI,
-    collection: 'sessions',
+  uri: MONGODB_URI,
+  collection: 'sessions',
 });
 const csrfProtection = csrf();
 
@@ -36,32 +36,34 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 /* add session to the app */
 app.use(
-    session({
-        secret: config.get('sessionSecret'),
-        resave: false,
-        saveUninitialized: false,
-        store: store,
-    })
+  session({
+    secret: config.get('sessionSecret'),
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
 );
-/* Check if the user is logged in and the session is stored in the databse */
+/* Check if the user is logged in and the session is stored in the database */
 app.use(async (req, res, next) => {
-    try {
-        if (!req.session.user) {
-            return next();
-        }
-        const user = await User.findById(req.session.user._id);
-        if (user) {
-            req.user = user;
-            next();
-        }
-    } catch (error) {
-        console.error(error);
+  try {
+    if (!req.session.user) {
+      return next();
     }
+    const user = await User.findById(req.session.user._id);
+    if (user) {
+      req.user = user;
+      next();
+    }
+  } catch (error) {
+    console.error(error);
+  }
 });
+
 /* Add local variable that all pages use */
 app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.session.isLoggedIn;
-    next()
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+
+  next();
 });
 /* add protection */
 // app.use(csrfProtection);
@@ -77,12 +79,10 @@ app.use(errorController.get404);
 
 //Connect to the database and open the web server
 mongoose
-    .connect(
-        MONGODB_URI, options
-    )
-    .then(result => {
-        app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-    })
-    .catch(err => {
-        console.log(err);
-    })
+  .connect(MONGODB_URI, options)
+  .then(result => {
+    app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+  })
+  .catch(err => {
+    console.log(err);
+  });
