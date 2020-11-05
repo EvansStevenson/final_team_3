@@ -1,6 +1,6 @@
 exports.getHomePage = (req, res) => {
-    res.render('../views/pages/home', {
+    res.render('home', {
         title: 'CSE341 final',
         path: '/',
     });
- }
+}
