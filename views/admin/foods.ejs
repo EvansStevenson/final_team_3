@@ -1,12 +1,12 @@
-<!-- INCLUDE HEAD GOES HERE
+<!-- INCLUDE HEAD GOES HERE-->
     
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %> </title> 
--->
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 </head>
 
 <body>
@@ -16,23 +16,23 @@
 <!-- Names of div and other classes are open for definition-->
 
     <main>
-        <h1 class="">Gourmeat</h1>
-        <div class="">
+        <h1 class="company_name">Gourmet</h1>
+        <div class="user_response">
         <!-- Possible slideshow view for food items -->
             <% if (foods.length > 0) { %>
-                <div class="">
+                <div class="container">
                     <% for (let food of foods) { %>
-                        <article class="">
-                            <header class="">
-                                <h1 class=""><%= food.title %></p>
+                        <article class="container">
+                            <header class="container">
+                                <h1 class="food_option_names"><%= food.title %></p>
                             </header>
                             <!-- LEFT ARROW THUMBS UP -->
-                            <div class="">
-                                <img src=" <%= food.imageUrl %>",alt="<%= food.title %>">
+                            <div class="like">
+                                <img src="<%= food.imageUrl %>",alt="<%= food.title %>">
                             </div>
                             <!-- RIGHT ARROW THUMBS DOWN-->
-                            <div class="">
-                                <h2 class=""><%= food.description %></h2>
+                            <div class="dislike">
+                                <h2 class="food_description"><%= food.description %></h2>
                             </div>  
                         </article> 
                      <div class="buttons">
@@ -42,10 +42,11 @@
                      </div>
                 </div>  
             <% } %>      
-        </div>
+  
             <% } else { %>
                 <h1>No Foods Found</h1>
             <% } %>
+        </div>
 
 
     </main>

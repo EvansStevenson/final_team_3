@@ -1,4 +1,6 @@
-<!-- INCLUDE HEAD GOES HERE <%- include('../includes/head.ejs') %> -->
+<head>
+    <!-- INCLUDE HEAD GOES HERE <%- include('../includes/head.ejs') %> -->
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 </head>
 
 <body>
@@ -6,11 +8,11 @@
 </header>
 
     <main>
-        <h1 class="">Gourmeat</h1>
+        <h1 class="company_name">Gourmet</h1>
             <% if (errorMessage) { %>
-                <div class=""><%= error %></div>
+                <div class="error_message"><%= error %></div>
                  <% } %> 
-                <form class="" action="/login" method="POST">
+                <form class="login_form" action="/login" method="POST">
                     <div class="form">
                         <label for="username">Username</label>
                         <input type="username" name="username" id="username">
