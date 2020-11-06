@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const recipeSchema = new Schema({
   servings: { type: Number },
@@ -10,11 +10,12 @@ const recipeSchema = new Schema({
     {
       name: { type: String, required: true },
       unit: { type: String, required: true },
-      amount: { type: Number, required: true }
-    }
+      amount: { type: Number, required: true },
+    },
   ],
-  instructions: { type: String, required: true },
-  imagePath: { type: String, required: true }
+  instructions: [{ type: String, required: true }],
+  imagePath: { type: String, required: true },
+  creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
-module.exports = mongoose.model('Recipe', recipeSchema); 
+module.exports = mongoose.model('Recipe', recipeSchema);
