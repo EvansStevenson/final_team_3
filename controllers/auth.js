@@ -3,10 +3,23 @@ const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 
 exports.getLogin = (req, res, next) => {
-  res.render('pages/home', {
-    title: 'Test',
+  res.render('./auth/login', {
+    title: 'login',
+    errorMessage: {}, //Added so that page would load without errors. This will eventually mean somehting
+    error: {}, //Added so that page would load without errors. This will eventually mean somehting
+    csrf: "code" //Added so that page would load without errors. This will eventually mean somehting
   });
 };
+
+exports.getSignup = (req, res, next) => {
+  res.render('./auth/signup', {
+    title: 'signup',
+    errorMessage: 'place holder error', //Added so that page would load without errors. This will eventually mean somehting
+    error: 'place holder error', //Added so that page would load without errors. This will eventually mean somehting
+    csrf: "code", //Added so that page would load without errors. This will eventually mean somehting
+    submitAdmin: false//Added so that page would load without errors. This will eventually mean somehting
+  });
+}; 
 
 exports.postLogin = async (req, res, next) => {
   try {
@@ -16,18 +29,18 @@ exports.postLogin = async (req, res, next) => {
     const user = await User.findOne({ email: email });
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).render('pages/auth/login', {
+      return res.status(422).render('auth/login', {
         title: 'Login',
       });
     }
     if (!user) {
-      return res.status(422).render('pages/auth/login', {
+      return res.status(422).render('auth/login', {
         title: 'Login',
       });
     }
     const correctPassword = await bcrypt.compare(password, user.password);
     if (!correctPassword) {
-      return res.status(422).render('pages/auth/login', {
+      return res.status(422).render('auth/login', {
         title: 'Login',
       });
     } else {
