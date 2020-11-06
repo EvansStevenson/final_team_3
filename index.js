@@ -85,4 +85,5 @@ mongoose
   })
   .catch(err => {
     console.log(err);
+    res.redirect('/500');
   });
