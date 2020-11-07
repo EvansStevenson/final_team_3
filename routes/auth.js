@@ -8,7 +8,6 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-// router.get('/signup');
 router.get('/login', authController.getLogin);
 router.get('/signup', authController.getSignup);
 router.post(
@@ -27,9 +26,9 @@ router.post(
           console.error(error);
         }
       })
-      .normalizeEmail(),
-    body('password', 'Password must be at least 8 characters and it must contain at least one number or special character')
-      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/, 'i')
+      //.normalizeEmail(),
+    //body('password', 'Password must be at least 8 characters and it must contain at least one number or special character')
+    //  .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/, 'i')
       .trim(),
     body('confirmPassword')
       .custom((value, { req }) => {
