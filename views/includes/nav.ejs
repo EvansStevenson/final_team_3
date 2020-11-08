@@ -1,8 +1,8 @@
 <nav>
-    <div class="nav-wrapper">
-        <a href="/" class="brand-logo">Logo</a><br>
+    <div class="navbar navbar-light" style="background-color: #ef5350; overflow: hidden;"> 
+        <a href="/" class="brand-logo" style ="float: left; font-size: 16px; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Gourmeat Logo</a><br>
         <% if (!isAuthenticated){ %>
-            <a class="auth" href="/auth/login">Sign In</a>
+            <a  href="/auth/login" class="auth" style ="float: left; font-size: 16px; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Sign In</a>
         <% } %>
         <% if (isAuthenticated){ %>
             <form action="/auth/logout" method="POST">
@@ -10,17 +10,21 @@
                 <input type="submit" value="logout" id="logout">
             </form>
         <% } %> 
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">JavaScript</a></li>
-        </ul>
+
+        <div class="dropdown">
+            <button class="dropbtn">Service</button>
+            <div id="nav-mobile" class="dropdown-content">
+                <a href="sass.html">Sass</a>
+                <a href="badges.html">Components</a>
+                <a href="collapsible.html">JavaScript</a>
+            </div>
+        </div>
 
         <form>
             <div class="input-field">
-                <input id="search" type="search" required>
-                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
+                <input class="form-control mr-sm-2" id="search" type="search" required>
+                <button class="btn btn-outline-warning" type="submit">Search</button>
+                <i class="material-icons">close</i> <!----Why do we need this line of code?----->
             </div>
         </form>
     </div>
