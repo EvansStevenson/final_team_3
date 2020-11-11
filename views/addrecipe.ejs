@@ -1,23 +1,39 @@
+<%- include('./includes/head.ejs') %>
+<style>
+    textarea {
+        width: 300px;
+    }
 
- <%- include('./includes/head.ejs') %>
+    label {
+        font-size: xx-large
+    }
+</style>
 </head>
 
 <body>
     <%- include('./includes/nav.ejs') %>
     <h1>Add Recipe</h1>
-    <form action="/recipe/addrecipe/submit" method="POST">
+    <form action="/recipe/addrecipe/submit" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="<%= csrf %>" />
         <input id="numOfIngredients" type="number" value="1" name="numIngredients" hidden>
         <input id="numOfDirections" type="number" value="1" name="numDirections" hidden>
 
-        <input type="number" placeholder="Servings" name="servings"><br>
-        <input type="number" placeholder="Preperation Time" name="preperationMinutes"><br>
-        <input type="number" placeholder="Cooking Time" name="cookingMinutes"><br>
-        <input type="text" placeholder="Title" name="title"><br>
+        <label for="servings">Servings</label><br>
+        <input type="number" step=".01" placeholder="Servings" name="servings" id="servings"><br><br>
 
-        <input type="text" placeholder="Ingredient #1" name="ingredient1">
-        <input name="amount1" type="number" placeholder="amount" style="width: 60px;">
-        <select name="unit1" id="unit">
+        <label for="preperationMinutes">Preperation Time (Minutes)</label><br>
+        <input type="number" step=".01" placeholder="Preperation Time" name="preperationMinutes" id="preperationMinutes"><br><br>
+
+        <label for="cookingMinutes">Cooking Time (Minutes)</label><br>
+        <input type="number" step=".01" placeholder="Cooking Time" name="cookingMinutes" id="cookingMinutes"><br><br>
+
+        <label for="title">Title</label><br>
+        <input type="text" placeholder="Title" name="title" id="title"><br><br>
+
+        <label for="ingredient1">Ingredients</label><br>
+        <input type="text" placeholder="Ingredient #1" name="ingredient1" id="ingredient1">
+        <input name="amount1" type="number" step=".01" placeholder="amount" style="width: 60px;">
+        <select name="unit1" id="unit1">
             <option value="teaspoon">teaspoon</option>
             <option value="tablespoon">tablespoon</option>
             <option value="cup">cup</option>
@@ -25,22 +41,29 @@
             <option value="quart">quart</option>
             <option value="gallon">gallon</option>
             <option value="pound">pound</option>
-            <option value="other">other</option>
-        </select><br>
+            <option id="otherId1" value="other">other</option>
+            <option value="" hidden>hidden</option>
+        </select>
+        <input type="text" hidden id="hiddenUnit1"><br>
         <div id="ingredients">
         </div>
-        <button type='button' id="ingredientBtn" onclick="addIngredient()">Add another Ingredient</button><br>
-        <input type="text" placeholder="Direction #1" name="direction1"><br>
+        <button type='button' id="ingredientBtn">Add another Ingredient</button><br><br>
+
+        <label for="direction1">Directions</label><br>
+        <textarea placeholder="Direction #1" name="direction1" id="direction1"></textarea><br>
         <div id="directions">
         </div>
-        <button type="button" id="directionBtn" onclick="addDirection()">Add another Direction</button><br>
-        <input type="file"><br>
+        <button type="button" id="directionBtn" onclick="addDirection()">Add another Direction</button><br><br>
+
+        <label for="image">Upload picture of final product</label><br>
+        <input type="file" name="image" id="image"><br><br>
+
         <input type="submit">
     </form>
     <script>
         let numberOfIngredients = 1;
         let numberOfDirections = 1;
-        
+
         function addIngredient() {
             numberOfIngredients++;
             document.getElementById('numOfIngredients').value = numberOfIngredients;
@@ -50,19 +73,20 @@
             ingredient.setAttribute('name', 'ingredient' + numberOfIngredients.toString());
             document.getElementById('ingredients').appendChild(ingredient);
 
-           
+
 
             let amount = document.createElement("input");
             amount.setAttribute('name', 'amount' + numberOfIngredients.toString());
             amount.setAttribute('type', 'number');
+            amount.setAttribute('step', '.01');
             amount.setAttribute('placeholder', 'amount');
             amount.setAttribute('style', 'width: 60px;');
             document.getElementById('ingredients').appendChild(amount);
 
             let selectbox = document.createElement("select");
             selectbox.setAttribute('name', 'unit' + numberOfIngredients.toString());
-            selectbox.setAttribute('id', 'unit');
-            
+            selectbox.setAttribute('id', 'unit' + numberOfIngredients.toString());
+
 
             let teaspoon = document.createElement("option");
             teaspoon.setAttribute("value", "teaspoon");
@@ -94,8 +118,9 @@
 
             let other = document.createElement("option");
             other.setAttribute("value", "other");
+            other.setAttribute("id", "otherId" + numberOfIngredients.toString());
             other.innerHTML = "other";
-            
+
             selectbox.add(teaspoon);
             selectbox.add(tablespoon);
             selectbox.add(cup);
@@ -105,6 +130,13 @@
             selectbox.add(pound);
             selectbox.add(other);
             document.getElementById('ingredients').appendChild(selectbox);
+
+            let hiddenText = document.createElement("input");
+            hiddenText.setAttribute("id", 'hiddenUnit' + numberOfIngredients.toString());
+            hiddenText.setAttribute("type", "text");
+            hiddenText.setAttribute("placeholder", "other Unit");
+            hiddenText.hidden = true;
+            document.getElementById('ingredients').appendChild(hiddenText);
             let br = document.createElement("br");
             document.getElementById('ingredients').appendChild(br);
         }
@@ -112,13 +144,40 @@
         function addDirection() {
             numberOfDirections++;
             document.getElementById('numOfDirections').value = numberOfDirections;
-            let newDirection = document.createElement("input");
-            newDirection.setAttribute('type', 'text');
+            let newDirection = document.createElement("textarea");
             newDirection.setAttribute('placeholder', 'Direction #' + numberOfDirections.toString());
             newDirection.setAttribute('name', 'direction' + numberOfDirections.toString());
             document.getElementById('directions').appendChild(newDirection);
             let br = document.createElement("br");
             document.getElementById('directions').appendChild(br);
         }
+
+
+        document.getElementById('unit1').addEventListener("change", () => {
+            if (document.getElementById('unit1').value === "other") {
+                document.getElementById("hiddenUnit1").hidden = false;
+                document.getElementById("hiddenUnit1").addEventListener("change", () => {
+                    document.getElementById("otherId1").value = document.getElementById("hiddenUnit1").value;
+                })
+            }
+        })
+        document.getElementById("ingredientBtn").addEventListener("click", () => {
+            addIngredient();
+            document.getElementById('unit' + numberOfIngredients.toString()).addEventListener("change", () => {
+                if (document.getElementById('unit' + numberOfIngredients.toString()).value === "other") {
+                    document.getElementById("hiddenUnit" + numberOfIngredients.toString()).hidden = false;
+                    document.getElementById("hiddenUnit" + numberOfIngredients.toString()).addEventListener("change", () => {
+                        document.getElementById("otherId" + numberOfIngredients.toString()).value = document.getElementById("hiddenUnit" + numberOfIngredients.toString()).value;
+                    })
+                }
+            })
+        })
+
+
+
+
+
+
+        // 
     </script>
-<%- include('./includes/end.ejs') %>
+    <%- include('./includes/end.ejs') %>
