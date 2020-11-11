@@ -1,5 +1,6 @@
 const session = require("express-session");
 const Recipe = require('../models/recipe');
+const User = require('../models/user');
 
 exports.getHomePage = (req, res) => {
     res.render('../views/home', {
@@ -55,6 +56,9 @@ exports.postAddRecipe = (req, res) => {
     })
     recipe.save()
         .then(result => {
+            const recipesArray = req.user.addedRecipes;
+            recipesArray.push(result._id)
+            User.updateOne({ _id: req.user._id }, { $set: { addedRecipes: recipesArray } });
             res.redirect('/'); // TO DO: not sure where to redirect to at the moment 
         })
         .catch(err => {
