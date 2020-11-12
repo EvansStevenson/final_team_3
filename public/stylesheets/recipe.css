@@ -1,0 +1,21 @@
+.recipe-form {
+    width: 20rem;
+    max-width: 90%;
+    margin: auto;
+    display: block;
+}
+
+.recipe-item {
+    width: 20rem;
+    max-width: 95%;
+    margin: 1rem;
+}
+
+.recipe__title {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.recipe__description {
+    text-align: center;
+}

@@ -1,13 +1,29 @@
 <%- include('./includes/head.ejs') %>
-<link rel="stylesheet" href="/stylesheets/home.css">
+
 </head>
 
 <body>
     <%- include('./includes/nav.ejs') %>
-    <!-- Names of div and other classes are open for definition-->
 
+    <main>
+        <h1 class="">Gourmeat</h1>
 
+        <div class="grid">
+            <% if (foods.length > 0) { %>
+                <div class="">
+                    <article class="card">
+                        <div class="card__image">
+                            <img src=" <%= foods[0].imagePath %>" alt="<%= foods[0].title %>">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title"><%= foods[0].title %></p>
+                        </header>
+                        <div class="centered">
+                            <%- include('./includes/view-recipe.ejs') %>
+                        </div>
+                    </article>
+            </div>
+            <% } %>
+        </div>
 
-
-    
     <%- include('./includes/end.ejs') %>
