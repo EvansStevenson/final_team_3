@@ -1,39 +1,27 @@
-    <%- include('./includes/head.ejs') %>
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/stylesheets/home.css">
 </head>
-
-
 
 <body>
     <%- include('./includes/nav.ejs') %>
-<!-- Names of div and other classes are open for definition-->
+    <!-- Names of div and other classes are open for definition-->
 
     <main>
-        <h1 class="">Gourmeat</h1>
-        <div class="">
-            <!-- Possible slideshow view for food items -->
-            <% if (foods.length > 0) { %>
-            <div class="">
-                <% for (let food of foods) { %>
-                <article class="">
-                    <header class="">
-                        <h1 class=""><%= food.title %></p>
-                    </header>
-                    <!-- LEFT ARROW -->
-                    <div class="">
-                        <img src=" <%= food.imagePath %>" ,alt="<%= food.title %>">
-                    </div>
-                    <!-- RIGHT ARROW -->
-                    <div class="">
-                         <!--<h2 class=""><%= food.description %></h2> -->
-                    </div>
-                </article>
+        <div class="center">
+            <div class="grid">
+                <div class="item">
+                    <a href="/" style=" text-decoration: none;"><button class="reload">New Recipes</button></a>
+                </div>
+                <% if (foods.length > 0) { %>
+                <% for (let i = 0; i < 5; i++) { %>
+                <div class="item">
+                    <img src=" <%= foods[i].imagePath %>" ,alt="<%= foods[i].title %>">
+                    <h3><%= foods[i].title %> </h3>
+                </div>
+                <% } %>
+                <% } %>
             </div>
-            <% } %>
         </div>
-
-        <% } else { %>
-        <h1>No Foods Found</h1>
-        <% } %>
     </main>
 
-<%- include('./includes/end.ejs') %>
+    <%- include('./includes/end.ejs') %>

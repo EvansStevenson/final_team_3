@@ -5,6 +5,14 @@ const Recipe = require('../models/recipe');
 exports.getHomePage = (req, res) => {
     Recipe.find()
         .then(recipe => {
+            
+            for(let i = recipe.length - 1; i > 0; i--){
+                const j = Math.floor(Math.random() * i)
+                const temp = recipe[i]
+                recipe[i] = recipe[j]
+                recipe[j] = temp
+            }
+
             res.render('../views/home', {
                 title: 'CSE341 final',
                 path: '/',
