@@ -1,27 +1,30 @@
 <%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/stylesheets/forms.css">
+<link rel="stylesheet" href="/stylesheets/auth.css">
 </head>
 
 <body>
     <%- include('../includes/nav.ejs') %>
 
     <main>
-        <h1 class="company_name">Gourmet</h1>
         <% if (errorMessage) { %>
-        <div class="error_message"><%= error %></div>
+            <div class="user-message user-message--error"><%= error %></div>
         <% } %>
-        <form class="login_form" action="/auth/login" method="POST">
-            <div class="form">
+        <form class="login-form" action="/auth/login" method="POST">
+            <div class="form-control">
                 <label for="email">Email</label>
                 <input type="email" name="email" id="email">
             </div>
-            <div class="form">
+            <div class="form-control">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password">
             </div>
             <input type="hidden" name="_csrf" value="<%= csrf %>" />
-            <a href="/auth/signup">Sign Up</a>
-            <button class="button" type="submit">Login</button>
+            <button class="btn" type="submit">Login</button>
         </form>
+        <div class="centered">
+            <a class="link" href="/auth/reset">Reset Password</a>
+        </div>
     </main>
 
     <%- include('../includes/end.ejs') %>
