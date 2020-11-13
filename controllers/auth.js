@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Recipe = require('../models/recipe');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 
@@ -130,3 +131,19 @@ exports.postSignup = async (req, res, next) => {
     console.error(error);
   }
 };
+
+
+exports.getDashboard = async (req, res, next) => {
+  try {
+    const addedRecipes = req.user.addedRecipes;
+    const recipes = [];
+    await Promise.all(addedRecipes.map(async item => {
+      const recipe = await Recipe.findOne({ _id: item });
+      recipes.push(recipe);
+    }));
+    console.log(recipes);
+    res.redirect('/auth/login');
+  } catch (error) {
+    console.error(error);
+  }
+}

@@ -63,5 +63,6 @@ router.post(
   authController.postLogin
 );
 router.post('/logout', authController.postLogout);
+router.get('/dashboard', authController.getDashboard);
 
 module.exports = router;
