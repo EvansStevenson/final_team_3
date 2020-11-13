@@ -1,4 +1,4 @@
-    <%- include('../includes/head.ejs') %>
+<%- include('../includes/head.ejs') %>
 </head>
 
 <body>
@@ -6,22 +6,22 @@
 
     <main>
         <h1 class="company_name">Gourmet</h1>
-            <% if (errorMessage) { %>
-                <div class="error_message"><%= error %></div>
-                 <% } %> 
-                <form class="login_form" action="/login" method="POST">
-                    <div class="form">
-                        <label for="username">Username</label>
-                        <input type="username" name="username" id="username">
-                    </div>
-                    <div class="form">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password">
-                    </div>
-                        <input type="hidden" name="_csrf" id="<%= csrf %>>">
-                    <button class="button" type="submit">Sign Up</button>
-                    <button class="button" type="submit">Login</button>
-                </form>
+        <% if (errorMessage) { %>
+        <div class="error_message"><%= error %></div>
+        <% } %>
+        <form class="login_form" action="/login" method="POST">
+            <div class="form">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div class="form">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrf %>" />
+            <a href="/signup">Sign Up</a>
+            <button class="button" type="submit">Login</button>
+        </form>
     </main>
-    
-<%- include('../includes/end.ejs') %>
+
+    <%- include('../includes/end.ejs') %>

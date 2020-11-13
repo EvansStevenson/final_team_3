@@ -32,6 +32,9 @@ const store = new mongoDBStore({
 const csrfProtection = csrf();
 
 //body parser
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 /* add session to the app */
@@ -43,6 +46,8 @@ app.use(
     store: store,
   })
 );
+/* add protection */
+app.use(csrfProtection);
 /* Check if the user is logged in and the session is stored in the database */
 app.use(async (req, res, next) => {
   try {
@@ -62,15 +67,10 @@ app.use(async (req, res, next) => {
 /* Add local variable that all pages use */
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
-
+  res.locals.csrf = req.csrfToken();
   next();
 });
-/* add protection */
-// app.use(csrfProtection);
 //routes
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 app.use('/', routes);
 
 //error pages
@@ -85,4 +85,5 @@ mongoose
   })
   .catch(err => {
     console.log(err);
+    res.redirect('/500');
   });

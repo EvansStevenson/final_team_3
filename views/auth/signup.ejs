@@ -1,36 +1,41 @@
-    <%- include('../includes/head.ejs') %>
+<%- include('../includes/head.ejs') %>
 </head>
 
 <body>
     <%- include('../includes/nav.ejs') %>
     <main>
         <h1 class="company_name">Gourmet</h1>
-            <% if (errorMessage) { %>
-                <div class="error_message"><%= error %></div>
-                 <% } %> 
-                <form class="signup_form" action="/signup" method="POST">
-                    <div class="form">
-                        <label for="username">Username</label>
-                        <input type="username" name="username" id="username">
-                    </div>
-                    <div class="form">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password">
-                    </div>
-                    <div class="form">
-                     <label for="confirmPassword">Confirm Password</label>
-                     <input type="confirmPassword" name="confirmPassword" id="confirmPassword">
-                    </div>
-                    <% if (submitAdmin) { %>
-                  <div class="form">
-                     <label for="birthday">Birthday</label>
-                     <input type="birthday" name="birthday" id="birthday">
-                    </div>
-                    <% } %>
-                        <input type="hidden" name="_csrf" id="<%= csrf %>>">
-                <button class="button" type="submit">Create Admin</button>
-                <button class="button" type="submit">Create User</button>
-                </form>
+        <% if (errorMessage) { %>
+        <div class="error_message"><%= error %></div>
+        <% } %>
+        <form class="signup_form" action="/signup" method="POST">
+            <div class="form">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" value="<%= oldInput.name %>">
+            </div>
+            <div class="form">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="<%= oldInput.email %>">
+            </div>
+            <div class="form">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" value="<%= oldInput.password %>">
+            </div>
+            <div class="form">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" name="confirmPassword" id="confirmPassword"
+                    value="<%= oldInput.confirmPassword %>">
+            </div>
+            <% if (submitAdmin) { %>
+            <div class="form">
+                <label for="birthday">Birthday</label>
+                <input type="date" name="birthday" id="birthday">
+            </div>
+            <% } %>
+            <input type="hidden" name="_csrf" value="<%= csrf %>" />
+            <button class="button" type="submit">Create Admin</button>
+            <button class="button" type="submit">Create User</button>
+        </form>
     </main>
 
-<%- include('../includes/end.ejs') %>
+    <%- include('../includes/end.ejs') %>
