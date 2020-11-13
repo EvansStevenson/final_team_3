@@ -8,7 +8,6 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-// router.get('/signup');
 router.get('/login', authController.getLogin);
 router.get('/signup', authController.getSignup);
 router.post(

@@ -1,18 +1,92 @@
-<nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Logo</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">JavaScript</a></li>
+<div class="backdrop"></div>
+<header class="main-header">
+    <div class="main-header__nav">
+
+        <!-- Logo/ Homepage link -->
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/"><img src="/images/Logo.jpg" class="logo" alt="Gourmeat Logo" height="50" width="50" /></a>
+            </li>
+
+            <!-- About page -->
+            <li class="main-header__item">
+                <a class="<%= path === '/about' ? 'active' : '' %>" href="/about">About Us</a>
+            </li>
+
+            <% if (isAuthenticated) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/account' ? 'active' : '' %>" href="/auth/account" >Account</a>
+            </li>
+
+            <li class="main-header__item">
+                <a class="<%= path === '/recipe/add-recipe' ? 'active' : '' %>" href="/recipe/add-recipe">Add Recipe</a>
+            </li>
+        <% } %>
         </ul>
 
-        <form>
-            <div class="input-field">
-                <input id="search" type="search" required>
-                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
-            </div>
-        </form>
-    </div>
-</nav>
+        <!-- Searchbar -->
+        <ul class="main-header__item-list">
+                <li class="main-header__item">
+                    <div class="search-container">
+                        <form action="/search">
+                            <input type="text" placeholder="Find a recipe" name="search">
+                            <button type="submit"><img src="/images/search.png" alt="Search Icon" height="30px" width="30px"></button>
+                        </form>
+                    </div>
+                </li>
+        </ul>
+
+        <ul class="main-header__item-list">
+        <% if (!isAuthenticated) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/auth/login' ? 'active' : '' %>" href="/auth/login" >Log In</a>
+            </li>
+
+            <li class="main-header__item">
+                <a class="<%= path === '/auth/signup' ? 'active' : '' %>" href="/auth/signup" >Sign Up</a>
+            </li>
+        <% } else { %>
+            <li class="main-header__item">
+                <form action="/auth/logout" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+        <% } %>
+        </ul>
+</header>
+
+<!-- The navbar has an issue where it appears for a split second whenever a page is loaded.  Commented out for now -->
+
+<!-- <nav class="mobile-nav">
+    <ul class="mobile-nav__item-list">
+
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+            </li>
+
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/about' ? 'active' : '' %>" href="/about">About</a>
+            </li>
+
+            <% if(isAuthenticated) { %>
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/auth/account' ? 'active' : '' %>" href="/auth/account">Account</a>
+                </li>
+
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/recipe/add-recipe' ? 'active' : '' %>" href="/recipe/add-recipe">Add Recipe</a>
+                </li>
+
+            <% } else if (!isAuthenticated) { %>
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/auth/login' ? 'active' : '' %>" href="/auth/login">Login</a>
+                </li>
+
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/auth/signup' ? 'active' : '' %>" href="/auth/signup">Sign Up
+                    </a>
+                </li>
+            <% } %>
+        </ul>
+</nav> -->

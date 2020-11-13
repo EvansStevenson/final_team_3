@@ -9,11 +9,30 @@ const config = require('config');
 const csrf = require('csurf');
 const mongoose = require('mongoose');
 
+const multer = require('multer');
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+const fileFilter = (req, file, cb) =>{
+  if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
+    cb(null, true);
+  }
+  else{
+    cb(null, false);
+  }
+}
+
 const routes = require('./routes');
 const errorController = require('./controllers/error_pages');
 const User = require('./models/user');
 
 const app = express();
+
 
 //Options for mongoose
 const options = {
@@ -33,9 +52,12 @@ const csrfProtection = csrf();
 
 //body parser
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
 
 /* add session to the app */
 app.use(

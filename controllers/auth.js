@@ -17,21 +17,11 @@ exports.getLogin = (req, res, next) => {
   });
 };
 
-exports.getSignup = (req, res, next) => {
-  res.render('./auth/signup', {
-    title: 'signup',
-    errorMessage: 'place holder error', //Added so that page would load without errors. This will eventually mean somehting
-    error: 'place holder error', //Added so that page would load without errors. This will eventually mean somehting
-    csrf: "code", //Added so that page would load without errors. This will eventually mean somehting
-    submitAdmin: false//Added so that page would load without errors. This will eventually mean somehting
-  });
-}; 
-
 exports.postLogin = async (req, res, next) => {
   try {
     const email = req.body.email;
     const user = await User.findOne({ email: email });
-    console.log(user);
+    //console.log(user);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).render('auth/login', {
@@ -63,6 +53,7 @@ exports.postLogin = async (req, res, next) => {
     req.session.user = user;
 
     await req.session.save();
+    //console.log(req.session.user);
     res.redirect('/');
   } catch (error) {
     console.error(error);
@@ -71,6 +62,7 @@ exports.postLogin = async (req, res, next) => {
 
 exports.postLogout = async (req, res, next) => {
   try {
+    console.log(req.user);
     await req.session.destroy();
     res.redirect('/');
   } catch (error) {
@@ -81,7 +73,7 @@ exports.postLogout = async (req, res, next) => {
 exports.getSignup = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).render('/signup', {
+    return res.status(422).render('/auth/signup', {
       title: 'Signup',
       path: '/signup',
       errorMessage: errors.array(),
@@ -133,7 +125,7 @@ exports.postSignup = async (req, res, next) => {
     const hash = await bcrypt.hash(password, 12);
     const user = new User({ ...req.body, password: hash, level: 2 });
     await user.save();
-    res.redirect('/login');
+    res.redirect('/auth/login');
   } catch (error) {
     console.error(error);
   }
