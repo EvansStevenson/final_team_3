@@ -1,39 +1,29 @@
-    <%- include('./includes/head.ejs') %>
+<%- include('./includes/head.ejs') %>
+
 </head>
-
-
 
 <body>
     <%- include('./includes/nav.ejs') %>
-<!-- Names of div and other classes are open for definition-->
 
     <main>
         <h1 class="">Gourmeat</h1>
-        <div class="">
-            <!-- Possible slideshow view for food items -->
+
+        <div class="grid">
             <% if (foods.length > 0) { %>
-            <div class="">
-                <% for (let food of foods) { %>
-                <article class="">
-                    <header class="">
-                        <h1 class=""><%= food.title %></p>
-                    </header>
-                    <!-- LEFT ARROW -->
-                    <div class="">
-                        <img src=" <%= food.imageUrl %>" ,alt="<%= food.title %>">
-                    </div>
-                    <!-- RIGHT ARROW -->
-                    <div class="">
-                        <h2 class=""><%= food.description %></h2>
-                    </div>
-                </article>
+                <div class="">
+                    <article class="card">
+                        <div class="card__image">
+                            <img src=" <%= foods[0].imagePath %>" alt="<%= foods[0].title %>">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title"><%= foods[0].title %></p>
+                        </header>
+                        <div class="centered">
+                            <%- include('./includes/view-recipe.ejs') %>
+                        </div>
+                    </article>
             </div>
             <% } %>
         </div>
 
-        <% } else { %>
-        <h1>No Foods Found</h1>
-        <% } %>
-    </main>
-
-<%- include('./includes/end.ejs') %>
+    <%- include('./includes/end.ejs') %>
