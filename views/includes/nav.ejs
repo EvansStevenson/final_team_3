@@ -19,7 +19,7 @@
             </li>
 
             <li class="main-header__item">
-                <a class="<%= path === '/recipe/add-recipe' ? 'active' : '' %>" href="/recipe/add-recipe">Add Recipe</a>
+                <a class="<%= path === '/recipe/addrecipe' ? 'active' : '' %>" href="/recipe/addrecipe">Add Recipe</a>
             </li>
         <% } %>
         </ul>
@@ -48,7 +48,7 @@
         <% } else { %>
             <li class="main-header__item">
                 <form action="/auth/logout" method="post">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="_csrf" value="<%= csrf %>">
                     <button type="submit">Logout</button>
                 </form>
             </li>

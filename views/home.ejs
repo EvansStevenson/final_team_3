@@ -7,7 +7,7 @@
 
     <main>
         <h1 class="">Gourmeat</h1>
-
+        
         <div class="grid">
             <% if (foods.length > 0) { %>
                 <div class="">
@@ -19,7 +19,9 @@
                             <h1 class="recipe__title"><%= foods[0].title %></p>
                         </header>
                         <div class="centered">
-                            <%- include('./includes/view-recipe.ejs') %>
+                            <form action='/recipes/<%= foods[0]._id %>' method="GET">
+                                <button class="btn" type="submit">View Recipe</button>
+                            </form>
                         </div>
                     </article>
             </div>
