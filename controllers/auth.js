@@ -136,12 +136,14 @@ exports.getDashboard = async (req, res, next) => {
   try {
     const addedRecipes = req.user.addedRecipes;
     const recipes = [];
+    console.log(addedRecipes);
     await Promise.all(
       addedRecipes.map(async item => {
         const recipe = await Recipe.findOne({ _id: item });
         recipes.push(recipe);
       })
     );
+    console.log(recipes);
     res.render('dashboard', {
       title: 'Dashboard',
       path: '/auth/dashboard',
