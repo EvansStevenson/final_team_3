@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Recipe = require('../models/recipe');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 
@@ -12,8 +13,8 @@ exports.getLogin = (req, res, next) => {
     oldInput: {
       email: '',
       password: '',
-      csrf: "code" //Added so that page would load without errors. This will eventually mean somehting
-    }
+      csrf: 'code', //Added so that page would load without errors. This will eventually mean somehting
+    },
   });
 };
 
@@ -33,7 +34,7 @@ exports.postLogin = async (req, res, next) => {
         oldInput: {
           email: req.body.email,
           password: req.body.password,
-        }
+        },
       });
     }
     if (!user) {
@@ -46,7 +47,7 @@ exports.postLogin = async (req, res, next) => {
         oldInput: {
           email: req.body.email,
           password: req.body.password,
-        }
+        },
       });
     }
     req.session.isLoggedIn = true;
@@ -83,9 +84,9 @@ exports.getSignup = (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        confirmPassword: req.body.confirmPassword
-      }
-    })
+        confirmPassword: req.body.confirmPassword,
+      },
+    });
   }
   res.render('auth/signup', {
     title: 'Signup',
@@ -97,10 +98,10 @@ exports.getSignup = (req, res, next) => {
       name: '',
       email: '',
       password: '',
-      confirmPassword: ''
-    }
-  })
-}
+      confirmPassword: '',
+    },
+  });
+};
 
 exports.postSignup = async (req, res, next) => {
   try {
@@ -118,14 +119,35 @@ exports.postSignup = async (req, res, next) => {
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
-          confirmPassword: req.body.confirmPassword
-        }
-      })
+          confirmPassword: req.body.confirmPassword,
+        },
+      });
     }
     const hash = await bcrypt.hash(password, 12);
     const user = new User({ ...req.body, password: hash, level: 2 });
     await user.save();
     res.redirect('/auth/login');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.getDashboard = async (req, res, next) => {
+  try {
+    const addedRecipes = req.user.addedRecipes;
+    const recipes = [];
+    await Promise.all(
+      addedRecipes.map(async item => {
+        const recipe = await Recipe.findOne({ _id: item });
+        recipes.push(recipe);
+      })
+    );
+    res.render('dashboard', {
+      title: 'Dashboard',
+      path: '/auth/dashboard',
+      recipes: recipes,
+      user: req.user,
+    });
   } catch (error) {
     console.error(error);
   }
