@@ -1,55 +1,33 @@
-<!-- INCLUDE HEAD GOES HERE
-    
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %> </title> 
--->
+<%- include('./includes/head.ejs') %>
 </head>
 
 <body>
-<!-- INCLUDE NAV GOES HERE -->
+    <%- include('./includes/nav.ejs') %>
 </header>
-
-<!-- Names of div and other classes are open for definition-->
-
-    <main>
-        <h1 class="">Gourmeat</h1>
+        <h1 class="">Welcome <%= user.name %></h1>
         <div class="">
-        <!-- Possible slideshow view for food items -->
             <% if (foods.length > 0) { %>
                 <div class="">
-                    <% for (let food of foods) { %>
-                        <article class="">
-                            <header class="">
-                                <h1 class=""><%= food.title %></p>
-                            </header>
+                    <h2></h2>
+                    <% for (let recipe of recipes) { %>
+                       
+                        <h2 class="">Recipes</h2>
+                            <h4 class=""><a href="/recipes/<%=recipe._id%>"><%= recipe.title %></a><a class="btn btn-primary" href="/recipes/<%=recipe._id%>/edit">Edit</a><a class="btn btn-danger" href="/recipes/<%=recipe._id%>/delete">Delete</a></h4>
+                    <% } %> 
+                            
                             <!-- LEFT ARROW THUMBS UP -->
-                            <div class="">
-                                <img src=" <%= food.imageUrl %>",alt="<%= food.title %>">
+                            <div>
+        
                             </div>
                             <!-- RIGHT ARROW THUMBS DOWN-->
-                            <div class="">
-                                <h2 class=""><%= food.description %></h2>
-                            </div>  
-                        </article> 
+                        <h2 class=""><a href="/auth/<%= user._id%>/edit">Edit Account</a></h2>
                      <div class="buttons">
-                        <button type="submit" class="button">Add to List</button>
-                        <button type="submit" class="button">Add to Favorites</button>
-                        <button><a href="/go-to-list">Go to List</a></button>
+                         <button type="submit" class="button">Add to Favorites</button>
+                        <!-- <button type="submit" class="button">Add to List</button> -->
                      </div>
                 </div>  
-            <% } %>      
         </div>
             <% } else { %>
                 <h1>No Foods Found</h1>
             <% } %>
-    </main>
-    
-
-<!-- INCLUDE END GOES HERE
-</body>
-</html>
--->
+<%- include('./includes/end.ejs') %>
