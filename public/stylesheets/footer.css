@@ -6,6 +6,7 @@
     background-color: #A8C256;
     color: white;
     text-align: center;
+    z-index: -1;
 }
 
 .item-list {
