@@ -3,29 +3,43 @@
     <div class="main-header__nav">
 
         <!-- Logo/ Homepage link -->
-        <ul class="main-header__item-list">
-            <li class="main-header__item">
-                <a class="<%= path === '/' ? 'active' : '' %>" href="/"><img src="/images/Logo.jpg" class="logo" alt="Gourmeat Logo" height="50" width="50" /></a>
-            </li>
+        <div class="main-header__item">
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/"><img src="/images/logo-transparent.png" class="logo"
+                    alt="Gourmeat Logo" height="50" width="50" /></a>
+        </div>
 
-            <!-- About page -->
+        <ul class="main-header__item-list">
             <li class="main-header__item">
                 <a class="<%= path === '/about' ? 'active' : '' %>" href="/about">About Us</a>
             </li>
 
+            <li class="main-header__item">
+                <a class="<%= path === '/recipe/categories' ? 'active' : '' %>" href="/recipe/categories">Food
+                    Categories</a>
+            </li>
+        </ul>
+
+        <ul class="main-header__item-list" style="float: left;">
+            <!-- About page -->
+
+
             <% if (isAuthenticated) { %>
             <li class="main-header__item">
-                <a class="<%= path === '/account' ? 'active' : '' %>" href="/auth/account" >Account</a>
+                <a class="<%= path === '/auth/account' ? 'active' : '' %>" href="/auth/account">Account</a>
+            </li>
+
+            <li class="main-header__item">
+                <a class="<%= path === '/recipe/favorites' ? 'active' : '' %>" href="/recipe/favorites">Favorites</a>
             </li>
 
             <li class="main-header__item">
                 <a class="<%= path === '/recipe/add-recipe' ? 'active' : '' %>" href="/recipe/add-recipe">Add Recipe</a>
             </li>
-        <% } %>
+            <% } %>
         </ul>
 
         <!-- Searchbar -->
-        <ul class="main-header__item-list">
+        <!-- <ul class="main-header__item-list">
                 <li class="main-header__item">
                     <div class="search-container">
                         <form action="/search">
@@ -34,25 +48,25 @@
                         </form>
                     </div>
                 </li>
-        </ul>
+        </ul> -->
 
         <ul class="main-header__item-list">
-        <% if (!isAuthenticated) { %>
+            <% if (!isAuthenticated) { %>
             <li class="main-header__item">
-                <a class="<%= path === '/auth/login' ? 'active' : '' %>" href="/auth/login" >Log In</a>
+                <a class="<%= path === '/auth/login' ? 'active' : '' %>" href="/auth/login">Log In</a>
             </li>
 
             <li class="main-header__item">
-                <a class="<%= path === '/auth/signup' ? 'active' : '' %>" href="/auth/signup" >Sign Up</a>
+                <a class="<%= path === '/auth/signup' ? 'active' : '' %>" href="/auth/signup">Sign Up</a>
             </li>
-        <% } else { %>
+            <% } else { %>
             <li class="main-header__item">
                 <form action="/auth/logout" method="post">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="_csrf" value="<%= csrf %>">
                     <button type="submit">Logout</button>
                 </form>
             </li>
-        <% } %>
+            <% } %>
         </ul>
 </header>
 
@@ -88,5 +102,5 @@
                     </a>
                 </li>
             <% } %>
-        </ul>
-</nav> -->
+        </ul> -->
+</nav>

@@ -1,56 +1,67 @@
 <%- include('./includes/head.ejs') %>
-<link rel="stylesheet" href="/stylesheets/addrecipe.css"> 
+<link rel="stylesheet" href="/stylesheets/forms.css">
+<link rel="stylesheet" href="/stylesheets/auth.css">
+<link rel="stylesheet" href="/stylesheets/addrecipe.css">
 </head>
 
 <body>
     <%- include('./includes/nav.ejs') %>
-    <h1>Add Recipe</h1>
-    <form action="/recipe/addrecipe/submit" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="_csrf" value="<%= csrf %>" />
-        <input id="numOfIngredients" type="number" value="1" name="numIngredients" hidden>
-        <input id="numOfDirections" type="number" value="1" name="numDirections" hidden>
 
-        <label for="servings">Servings</label><br>
-        <input type="number" step=".01" placeholder="Servings" name="servings" id="servings"><br><br>
+    <main class="content">
+        <div class="content-wrap">
 
-        <label for="preperationMinutes">Preperation Time (Minutes)</label><br>
-        <input type="number" step=".01" placeholder="Preperation Time" name="preperationMinutes" id="preperationMinutes"><br><br>
+        <h1>Add Recipe</h1>
+        <form class="login-form" action="/recipe/addrecipe/submit" method="POST" enctype="multipart/form-data">
+            <input class="form-control" type="hidden" name="_csrf" value="<%= csrf %>" />
+            <input class="form-control" id="numOfIngredients" type="number" value="1" name="numIngredients" hidden>
+            <input class="form-control" id="numOfDirections" type="number" value="1" name="numDirections" hidden>
 
-        <label for="cookingMinutes">Cooking Time (Minutes)</label><br>
-        <input type="number" step=".01" placeholder="Cooking Time" name="cookingMinutes" id="cookingMinutes"><br><br>
+            <label class="form-control" for="servings">Servings</label><br>
+            <input class="form-control" type="number" step=".01" placeholder="Servings" name="servings"
+                id="servings"><br><br>
 
-        <label for="title">Title</label><br>
-        <input type="text" placeholder="Title" name="title" id="title"><br><br>
+            <label class="form-control" for="preperationMinutes">Preperation Time (Minutes)</label><br>
+            <input class="form-control" type="number" step=".01" placeholder="Preperation Time"
+                name="preperationMinutes" id="preperationMinutes"><br><br>
 
-        <label for="ingredient1">Ingredients</label><br>
-        <input type="text" placeholder="Ingredient #1" name="ingredient1" id="ingredient1">
-        <input name="amount1" type="number" step=".01" placeholder="amount" style="width: 60px;">
-        <select name="unit1" id="unit1">
-            <option value="teaspoon">teaspoon</option>
-            <option value="tablespoon">tablespoon</option>
-            <option value="cup">cup</option>
-            <option value="pint">pint</option>
-            <option value="quart">quart</option>
-            <option value="gallon">gallon</option>
-            <option value="pound">pound</option>
-            <option id="otherId1" value="other">other</option>
-            <option value="" hidden>hidden</option>
-        </select>
-        <input type="text" hidden id="hiddenUnit1"><br>
-        <div id="ingredients">
-        </div>
-        <button type='button' id="ingredientBtn">Add another Ingredient</button><br><br>
+            <label class="form-control" for="cookingMinutes">Cooking Time (Minutes)</label><br>
+            <input class="form-control" type="number" step=".01" placeholder="Cooking Time" name="cookingMinutes"
+                id="cookingMinutes"><br><br>
 
-        <label for="direction1">Directions</label><br>
-        <textarea placeholder="Direction #1" name="direction1" id="direction1"></textarea><br>
-        <div id="directions">
-        </div>
-        <button type="button" id="directionBtn" onclick="addDirection()">Add another Direction</button><br><br>
+            <label class="form-control" for="title">Title</label><br>
+            <input class="form-control" type="text" placeholder="Title" name="title" id="title"><br><br>
 
-        <label for="image">Upload picture of final product</label><br>
-        <input type="file" name="image" id="image"><br><br>
+            <label class="form-control" for="ingredient1">Ingredients</label><br>
+            <input class="form-control" type="text" placeholder="Ingredient #1" name="ingredient1" id="ingredient1">
+            <input class="form-control" name="amount1" type="number" step=".01" placeholder="amount"
+                style="width: 60px;">
+            <select name="unit1" id="unit1">
+                <option value="teaspoon">teaspoon</option>
+                <option value="tablespoon">tablespoon</option>
+                <option value="cup">cup</option>
+                <option value="pint">pint</option>
+                <option value="quart">quart</option>
+                <option value="gallon">gallon</option>
+                <option value="pound">pound</option>
+                <option id="otherId1" value="other">other</option>
+                <option value="" hidden>hidden</option>
+            </select>
+            <input class='form-control' type="text" hidden id="hiddenUnit1"><br>
+            <div id="ingredients">
+            </div>
+            <button type='button' id="ingredientBtn">Add another Ingredient</button><br><br>
 
-        <input type="submit">
-    </form>
+            <label class="form-control" for="direction1">Directions</label><br>
+            <textarea class="form-control" placeholder="Direction #1" name="direction1" id="direction1"></textarea><br>
+            <div id="directions">
+            </div>
+            <button type="button" id="directionBtn" onclick="addDirection()">Add another Direction</button><br><br>
+
+            <label class="form-control" for="image">Upload picture of final product</label><br>
+            <input class="form-control" type="file" name="image" id="image"><br><br>
+
+            <input class="form-control" type="submit">
+        </form>
+
     <script src="/js/addrecipe.js"></script>
     <%- include('./includes/end.ejs') %>

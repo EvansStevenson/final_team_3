@@ -5,13 +5,15 @@
 <body>
     <%- include('./includes/nav.ejs') %>
 
-    <main>
-        <h1 class="">Gourmeat</h1>
+    <main class="content">
+        <div class="content-wrap">
 
-        <div class="grid">
-            <% if (foods.length > 0) { %>
-                <div class="">
-                    <article class="card">
+            <h1 class="centered" style="margin: 20px;">Gourmeat</h1>
+
+            <div>
+                <% if (foods.length > 0) { %>
+                <div>
+                    <article class="card centered" style="margin-bottom: 20px;">
                         <div class="card__image">
                             <img src=" <%= foods[0].imagePath %>" alt="<%= foods[0].title %>">
                         </div>
@@ -22,8 +24,8 @@
                             <%- include('./includes/view-recipe.ejs') %>
                         </div>
                     </article>
+                </div>
+                <% } %>
             </div>
-            <% } %>
-        </div>
 
-    <%- include('./includes/end.ejs') %>
+            <%- include('./includes/end.ejs') %>
