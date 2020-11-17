@@ -20,12 +20,16 @@
                         <h4 class="recipe__title">Details</h4>
                     </header> -->
                     <div>
-                        <h5>Servings:</h5><p><%= recipe.servings %></p>
-                        <h5>Prep Time:</h5><p><%= recipe.preperationMinutes %></p>
-                        <h5>Cook Time:</h5><p><%= recipe.cookingMinutes %></p>
+                        <div class='flex'>
+                        <h5>Servings: <p><%= recipe.servings %></p></h5>
+                        <h5>Prep Time:<p><%= recipe.preperationMinutes %></p></h5>
+                        <h5>Cook Time:<p><%= recipe.cookingMinutes %></p></h5>
 
-                        <h4>Ingredients</h4>
+                    </div> 
+                    <div class="list">
+                        <h4>Ingredients: </h4>
                         <% for (ingredient of recipe.ingredients) { %>
+                   
                         <ul>
                         <li> 
                             <%= ingredient.amount %>
@@ -38,10 +42,19 @@
                         <% } %>
                         </ul>
                     <% } %>
-                    <h4>Instructions</h4>
-                        <%= recipe.instructions %><br>
                     
-                    <h4>Contributor: </h4><p><%= recipe.creator %></p>
+                    <h4>Instructions: </h4>
+                    <ol>
+                        <% for (instruction of recipe.instructions) { %>
+                            <li>
+                                <span>
+                        <%= instruction %>
+                                </span>
+                            </li>
+                    <% } %>
+                </ol>
+                    <h4>Contributor: </h4><p><%= user.name %></p>
+                    </div>
                     </div>
                 </article>
             </div>

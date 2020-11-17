@@ -19,3 +19,23 @@
 .recipe__description {
     text-align: center;
 }
+
+.list {
+    text-align: left;
+    margin-left: 11.5%;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-around;
+}
+
+ol {
+    font-weight: bold;
+    margin-left: -2px;
+}
+
+li span {
+    font-weight: normal;
+    padding: 5px;
+}

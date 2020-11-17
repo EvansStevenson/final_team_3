@@ -113,18 +113,40 @@ exports.getAbout = (req, res) => {
   });
 };
 
-exports.getInfo = (req, res) => {
-  let id = req.params.id;
-  Recipe.findById(id)
-  .then(recipe => {
-    //console.log(recipe.imagePath);
-    res.render('../views/recipeinfo', {
+exports.getInfo = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const recipe = await Recipe.findById(id);
+    if (!recipe) {
+      res.redirect('/');
+    }
+    const user = await User.findById(recipe.creator);
+
+    res.render('recipeinfo', {
       title: 'Recipe Detail',
       path: '/recipe',
-      recipe: recipe
-  });
-  }).catch(err => {
-    console.log(err);
-    res.redirect('/500');
-  });
-}
+      recipe: recipe,
+      user: user,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+// exports.getInfo = (req, res) => {
+//   const user.findById()
+//   let id = req.params.id;
+//   Recipe.findById(id)
+//   .then(recipe => {
+//     //console.log(recipe.imagePath);
+//     res.render('../views/recipeinfo', {
+//       title: 'Recipe Detail',
+//       path: '/recipe',
+//       recipe: recipe
+//   });
+//   }).catch(err => {
+//     console.log(err);
+//     res.redirect('/500');
+//   });
+// }
