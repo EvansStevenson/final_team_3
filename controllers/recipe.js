@@ -13,10 +13,11 @@ exports.getHomePage = (req, res) => {
         recipe[j] = temp;
       }
 
+      //console.log(recipe[0].imagePath);
       res.render('../views/home', {
         title: 'CSE341 final',
         path: '/',
-        foods: recipe, //Added so that home would load without errors. This will eventually mean somehting
+        foods: recipe,
       });
     })
     .catch(err => {
@@ -111,3 +112,19 @@ exports.getAbout = (req, res) => {
     path: '/recipe/about',
   });
 };
+
+exports.getInfo = (req, res) => {
+  let id = req.params.id;
+  Recipe.findById(id)
+  .then(recipe => {
+    //console.log(recipe.imagePath);
+    res.render('../views/recipeinfo', {
+      title: 'Recipe Detail',
+      path: '/recipe',
+      recipe: recipe
+  });
+  }).catch(err => {
+    console.log(err);
+    res.redirect('/500');
+  });
+}

@@ -1,0 +1,29 @@
+<%- include('./includes/head.ejs') %>
+
+</head>
+
+<body>
+    <%- include('./includes/nav.ejs') %>
+
+    <main class="content">
+        <div class="content-wrap">
+
+            <h1 class="centered" style="margin: 20px;">Gourmeat</h1>
+
+
+            <div>
+                <article class="card centered" style="margin-bottom: 20px;">
+                    <div class="card__image">
+                        <img src="../<%= recipe.imagePath %>" alt="no image found">
+                    </div>
+                    <header class="card__header">
+                        <h1 class="recipe__title"><%= recipe.title %></p>
+                    </header>
+                    <div class="centered">
+                        <!--The rest of the recipe info-->
+                    </div>
+                </article>
+            </div>
+
+
+            <%- include('./includes/end.ejs') %>
