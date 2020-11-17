@@ -14,6 +14,13 @@
                             <h4 class=""><a href="/recipes/<%=recipe._id%>"><%= recipe.title %></a>
                                 <a class="btn btn-primary" href="/recipes/<%=recipe._id%>/edit">Edit</a>
                                 <a class="btn btn-danger" href="/recipes/<%=recipe._id%>/delete">Delete</a>
+
+                                <!-- if (isAdmin) { -->
+                                <a class="btn btn-danger" href="/recipes/<%=recipe._id%>/publish">Publish</a>
+                                 <!-- } else {  -->
+                                <a class="btn btn-danger" href="/recipes/<%=recipe._id%>/request">Request Publish</a>
+                                 <!-- }  -->
+
                             </h4>
                     <% } %> 
                 </div>  

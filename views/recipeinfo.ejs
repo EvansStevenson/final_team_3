@@ -8,7 +8,7 @@
     <main class="content">
         <div class="content-wrap">
 
-            <h1 class="centered" style="margin: 20px;">Gourmeat</h1>
+            <h1 class="centered" style="margin: 20px;"><%= recipe.title %></h1>
 
 
             <div>
@@ -16,11 +16,32 @@
                     <div class="card__image">
                         <img src="../<%= recipe.imagePath %>" alt="no image found">
                     </div>
-                    <header class="card__header">
-                        <h1 class="recipe__title"><%= recipe.title %></p>
-                    </header>
-                    <div class="centered">
-                        <!--The rest of the recipe info-->
+                    <!-- <header class="card__header">
+                        <h4 class="recipe__title">Details</h4>
+                    </header> -->
+                    <div>
+                        <h5>Servings:</h5><p><%= recipe.servings %></p>
+                        <h5>Prep Time:</h5><p><%= recipe.preperationMinutes %></p>
+                        <h5>Cook Time:</h5><p><%= recipe.cookingMinutes %></p>
+
+                        <h4>Ingredients</h4>
+                        <% for (ingredient of recipe.ingredients) { %>
+                        <ul>
+                        <li> 
+                            <%= ingredient.amount %>
+                            <% if (ingredient.amount > 1) { %>
+                            <%= ingredient.unit %>s of
+                            <%= ingredient.name %>
+                            <% } else { %>
+                            <%= ingredient.unit %> of
+                            <%= ingredient.name %></li>
+                        <% } %>
+                        </ul>
+                    <% } %>
+                    <h4>Instructions</h4>
+                        <%= recipe.instructions %><br>
+                    
+                    <h4>Contributor: </h4><p><%= recipe.creator %></p>
                     </div>
                 </article>
             </div>
