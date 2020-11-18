@@ -1,16 +1,81 @@
-    <%- include('./includes/head.ejs') %>
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/stylesheets/recipe.css">
 </head>
 
 <body>
     <%- include('./includes/nav.ejs') %>
-    <main>
-        <h1 class="">Gourmeat</h1>
-        <div class="">
-            <p class="">
-               Created in October 2020 by the coolest CS341 class team ever, Our goal has always be to help college students have meal ideas on hand.  Whether you have dragonfruit, potatoes, or even ramen to cook with, we want help you get swank ideas for things to cook.  Whether you are just bored or starving, we want to help you.  With Gourmeat, we want you to feel free as a bee.  If you have more questions please contact us via email at gourmeat@gmail.com.
-            </p>  
-        </div>
-    </main>
-    
-<%- include('./includes/end.ejs') %>
 
+    <main class="content">
+        <div class="content-wrap">
+            <h1 class="">About Us</h1>
+            <div class="about">
+                <p class="about">
+                    Created in October 2020 by the coolest CS341 class team ever, Our goal has always be to help college
+                    students have meal ideas on hand. Whether you have dragonfruit, potatoes, or even ramen to cook
+                    with, we
+                    want help you get swank ideas for things to cook. Whether you are just bored or starving, we want to
+                    help you. With Gourmeat, we want you to feel free as a bee. If you have more questions please
+                    contact us
+                    via email at cse341.team3@gmail.com.
+                </p>
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+            <h2>Members of Team 3:</h2>
+            <div class="grid centered">
+                <div>
+                    <article class="card" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src="/images//images/" alt="Picture of Vova">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title">Vova</p>
+                        </header>
+                    </article>
+                </div>
+                <div>
+                    <article class="card" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src="/images/" alt="Picture of Liya">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title">Liya</p>
+                        </header>
+                    </article>
+                </div>
+                <div>
+                    <article class="card" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src="/images/" alt="Picture of Evans">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title">Evans</p>
+                        </header>
+                    </article>
+                </div>
+                <div>
+                    <article class="card" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src="/images/" alt="Picture of Jared">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title">Jared</p>
+                        </header>
+                    </article>
+                </div>
+                <div>
+                    <article class="card" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src="/images/" alt="Picture of Adam">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title">Adam</p>
+                        </header>
+                    </article>
+                </div>
+            </div>
+
+            <%- include('./includes/end.ejs') %>
