@@ -64,5 +64,23 @@ router.post(
 );
 router.post('/logout', authController.postLogout);
 router.get('/dashboard', authController.getDashboard);
+router.get('/:id/edit', authController.getEditAccount);
+router.post('/:id/edit', [
+  body('email')
+    .isEmail()
+    .withMessage('Please enter a valid email.')
+    .normalizeEmail(),
+  body('password', 'Password must be at least 8 characters and it must contain at least one number, special character, and upper case')
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/, 'i')
+    .trim(),
+  body('confirmPassword')
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Passwords do not match.');
+      }
+      return true;
+    })
+    .trim(),
+], authController.postEditAccount);
 
 module.exports = router;

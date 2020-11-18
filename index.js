@@ -18,11 +18,11 @@ const fileStorage = multer.diskStorage({
     cb(null, Date.now() + '-' + file.originalname);
   }
 });
-const fileFilter = (req, file, cb) =>{
-  if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
     cb(null, true);
   }
-  else{
+  else {
     cb(null, false);
   }
 }
@@ -38,6 +38,7 @@ const app = express();
 const options = {
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useFindAndModify: false
 };
 
 const PORT = process.env.PORT || 5000;
@@ -57,7 +58,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'));
 
 /* add session to the app */
 app.use(
