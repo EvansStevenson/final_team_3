@@ -1,36 +1,21 @@
 <%- include('./includes/head.ejs') %>
-<link rel="stylesheet" href="/stylesheets/addrecipe.css">
+<link rel="stylesheet" href="/stylesheets/categories.css">
 </head>
 
 <body>
     <%- include('./includes/nav.ejs') %>
-    <!-- Names of div and other classes are open for definition-->
 
-    <main class="content">
-        <div class="content-wrap">
+    <main class="center">
 
-            <h1 class="centered" style="margin: 20px;">Food Categories</h1>
 
-                <div class="grid">
-                    <div class="item">
-                        <a href="/" style=" text-decoration: none;"><button class="reload">New Recipes</button></a>
-                    </div>
-                    <% if (foods.length > 0) { %>
-                    <% for (let i = 0; i < 5; i++) { %>
-                    <article class="card centered" style="margin-bottom: 20px;">
-                        <div class="card__image">
-                            <img src=" <%= foods[i].imagePath %>" alt="<%= foods[i].title %>">
-                        </div>
-                        <header class="card__header">
-                            <h1 class="recipe__title"><%= foods[i].title %></p>
-                        </header>
-                        <div class="centered">
-                            <%- include('./includes/view-recipe.ejs') %>
-                        </div>
-                    </article>
-                    <% } %>
-                    <% } %>
-                </div>
+        <h1 class="centered" style="margin: 20px;">Food Categories</h1>
+
+        <div class="grid">
+            <% for (let i = 0; i < 6; i++) { %>
+            <div class="item">
+                <a href="/" style=" text-decoration: none;"><button class="reload">New Recipes</button></a>
             </div>
+            <% } %>
+        </div>
 
-            <%- include('./includes/end.ejs') %>
+        <%- include('./includes/end.ejs') %>

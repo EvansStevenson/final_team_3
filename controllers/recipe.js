@@ -39,8 +39,18 @@ exports.postAddRecipe = (req, res) => {
   let cookingMinutes = req.body.cookingMinutes;
   let title = req.body.title;
   let ingredients = [];
+  let tags = [];
   let numIngredients = req.body.numIngredients;
 
+  //populate tags
+  for (let i = 0; i <= 6; i++){
+    let id = i;
+    id.toString();
+    if (req.body['tag' + id] !== undefined)
+    tags.push(req.body['tag' + id]);
+  }
+
+  //populate ingredients
   for (let i = 0; i < numIngredients; i++) {
     let id = i + 1;
     id.toString();
@@ -50,6 +60,7 @@ exports.postAddRecipe = (req, res) => {
     ingredients.push({ name: currentIngredient, unit: currentUnit, amount: currentAmount });
   }
 
+  //populate instructions
   let instructions = [];
   let numDirections = req.body.numDirections;
   for (let i = 0; i < numDirections; i++) {
@@ -59,7 +70,7 @@ exports.postAddRecipe = (req, res) => {
     instructions.push(currentDirection);
   }
   let image = req.file;
-  console.log(image);
+  //console.log(image);
   if (!image) {
     return res.status(422).render('../views/addrecipe', {
       title: 'Add Recipe',
@@ -90,6 +101,7 @@ exports.postAddRecipe = (req, res) => {
     ingredients: ingredients,
     instructions: instructions,
     imagePath: imageUrl,
+    tags: tags,
     creator: req.user,
   });
   recipe
@@ -110,6 +122,13 @@ exports.getAbout = (req, res) => {
   res.render('../views/about', {
     title: 'about',
     path: '/recipe/about',
+  });
+};
+
+exports.getCategories = (req, res) => {
+  res.render('../views/categories', {
+    title: 'categories',
+    path: '/recipe/categories',
   });
 };
 
@@ -134,19 +153,3 @@ exports.getInfo = async (req, res) => {
 };
 
 
-// exports.getInfo = (req, res) => {
-//   const user.findById()
-//   let id = req.params.id;
-//   Recipe.findById(id)
-//   .then(recipe => {
-//     //console.log(recipe.imagePath);
-//     res.render('../views/recipeinfo', {
-//       title: 'Recipe Detail',
-//       path: '/recipe',
-//       recipe: recipe
-//   });
-//   }).catch(err => {
-//     console.log(err);
-//     res.redirect('/500');
-//   });
-// }

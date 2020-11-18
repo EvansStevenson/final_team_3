@@ -8,6 +8,7 @@ function addIngredient() {
     ingredient.setAttribute('type', 'text');
     ingredient.setAttribute('placeholder', 'Ingredient #' + numberOfIngredients.toString());
     ingredient.setAttribute('name', 'ingredient' + numberOfIngredients.toString());
+    ingredient.setAttribute("class", "form-control");
     document.getElementById('ingredients').appendChild(ingredient);
 
 
@@ -17,7 +18,7 @@ function addIngredient() {
     amount.setAttribute('type', 'number');
     amount.setAttribute('step', '.01');
     amount.setAttribute('placeholder', 'amount');
-    amount.setAttribute('style', 'width: 60px;');
+    amount.setAttribute('style', 'width: 80px;');
     document.getElementById('ingredients').appendChild(amount);
 
     let selectbox = document.createElement("select");
@@ -83,6 +84,7 @@ function addDirection() {
     document.getElementById('numOfDirections').value = numberOfDirections;
     let newDirection = document.createElement("textarea");
     newDirection.setAttribute('placeholder', 'Direction #' + numberOfDirections.toString());
+    newDirection.setAttribute("class", "form-control");
     newDirection.setAttribute('name', 'direction' + numberOfDirections.toString());
     document.getElementById('directions').appendChild(newDirection);
     let br = document.createElement("br");
