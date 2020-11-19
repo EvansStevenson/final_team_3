@@ -46,8 +46,7 @@ exports.postAddRecipe = (req, res) => {
   for (let i = 0; i <= 6; i++) {
     let id = i;
     id.toString();
-    if (req.body['tag' + id] !== undefined)
-      tags.push(req.body['tag' + id]);
+    if (req.body['tag' + id] !== undefined) tags.push(req.body['tag' + id]);
   }
 
   //populate ingredients
@@ -137,26 +136,20 @@ exports.getCategories = (req, res) => {
     .then(recipe => {
       for (let i of recipe) {
         for (let tag of i.tags) {
-          if (tag === "chicken") {
+          if (tag === 'chicken') {
             chicken.push(i);
-          }
-          else if (tag === "beef") {
-            beef.push(i)
-          }
-          else if (tag === "pork") {
-            pork.push(i)
-          }
-          else if (tag === "fish") {
-            fish.push(i)
-          }
-          else if (tag === "vegetable") {
-            vegetable.push(i)
-          }
-          else if (tag === "vegan") {
-            vegan.push(i)
-          }
-          else if (tag === "dessert") {
-            dessert.push(i)
+          } else if (tag === 'beef') {
+            beef.push(i);
+          } else if (tag === 'pork') {
+            pork.push(i);
+          } else if (tag === 'fish') {
+            fish.push(i);
+          } else if (tag === 'vegetable') {
+            vegetable.push(i);
+          } else if (tag === 'vegan') {
+            vegan.push(i);
+          } else if (tag === 'dessert') {
+            dessert.push(i);
           }
         }
       }
@@ -178,7 +171,7 @@ exports.getCategories = (req, res) => {
         fish: fish,
         vegetable: vegetable,
         vegan: vegan,
-        dessert: dessert
+        dessert: dessert,
       });
     })
     .catch(err => {
@@ -242,13 +235,13 @@ exports.deleteRecipe = async (req, res) => {
     users.forEach(async user => {
       const favorites = user.favoriteRecipes.filter(x => x != id);
       await User.updateOne({ _id: user._id }, { $set: { favoriteRecipes: favorites } });
-    })
-    fs.unlinkSync(recipe.imagePath); // delete image from the server 
+    });
+    fs.unlinkSync(recipe.imagePath); // delete image from the server
     res.redirect('/auth/dashboard');
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 exports.addFavorite = async (req, res) => {
   try {
@@ -260,7 +253,7 @@ exports.addFavorite = async (req, res) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 exports.getFavorites = async (req, res) => {
   try {
@@ -269,23 +262,21 @@ exports.getFavorites = async (req, res) => {
     let recipes = [];
     if (recipesId.length > 1) {
       await Promise.all(
-        (recipes = recipesId.map(async item => {
+        recipesId.map(async item => {
           const recipe = await Recipe.findById(item);
-          return recipe;
-        }))
+          recipes.push(recipe);
+        })
       );
-    }
-    else {
+    } else {
       const recipe = await Recipe.findById(recipesId[0]);
       recipes.push(recipe);
     }
-    console.log(recipes);
     res.render('favorites', {
       title: 'Favorite Recipes',
       path: '/favorites',
-      recipes: recipes
-    })
+      recipes: recipes,
+    });
   } catch (error) {
     console.log(error);
   }
-}
+};

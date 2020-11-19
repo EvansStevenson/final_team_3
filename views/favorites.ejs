@@ -11,10 +11,10 @@
     <% if (recipes.length > 0) { %>
     <% for (recipe of recipes) { %>
     <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src="<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+      <img class="card-img-top" style="width: 100%;" src="/<%= recipe.imagePath %>" alt="<%= recipe.title %>">
       <div class="card-body">
         <p class="card-text"><%= recipe.title %></p>
-        <a href="/recipe/<%= recipe._id %>">View Recipe</a>
+        <a href="/recipe/<%= recipe._id %>/info">View Recipe</a>
       </div>
     </div>
     <% } %>
