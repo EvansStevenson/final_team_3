@@ -43,11 +43,11 @@ exports.postAddRecipe = (req, res) => {
   let numIngredients = req.body.numIngredients;
 
   //populate tags
-  for (let i = 0; i <= 6; i++){
+  for (let i = 0; i <= 6; i++) {
     let id = i;
     id.toString();
     if (req.body['tag' + id] !== undefined)
-    tags.push(req.body['tag' + id]);
+      tags.push(req.body['tag' + id]);
   }
 
   //populate ingredients
@@ -92,7 +92,7 @@ exports.postAddRecipe = (req, res) => {
   }
 
   const imageUrl = image.path;
-  console.log(image.path);
+  //console.log(image.path);
   const recipe = new Recipe({
     servings: servings,
     preperationMinutes: preperationMinutes,
@@ -126,10 +126,65 @@ exports.getAbout = (req, res) => {
 };
 
 exports.getCategories = (req, res) => {
-  res.render('../views/categories', {
-    title: 'categories',
-    path: '/recipe/categories',
-  });
+  let chicken = [];
+  let beef = [];
+  let pork = [];
+  let fish = [];
+  let vegetable = [];
+  let vegan = [];
+  let dessert = [];
+  Recipe.find()
+    .then(recipe => {
+      for (let i of recipe) {
+        for (let tag of i.tags) {
+          if (tag === "chicken") {
+            chicken.push(i);
+          }
+          else if (tag === "beef") {
+            beef.push(i)
+          }
+          else if (tag === "pork") {
+            pork.push(i)
+          }
+          else if (tag === "fish") {
+            fish.push(i)
+          }
+          else if (tag === "vegetable") {
+            vegetable.push(i)
+          }
+          else if (tag === "vegan") {
+            vegan.push(i)
+          }
+          else if (tag === "dessert") {
+            dessert.push(i)
+          }
+        }
+      }
+      //make unique
+      // let uchicken = [...new Set(chicken)];
+      // console.log(uchicken);
+      // let ubeef = [...new Set(beef)];
+      // let upork = [...new Set(pork)];
+      // let ufish = [...new Set(fish)];
+      // let uvegetable = [...new Set(vegetable)];
+      // let uvegan = [...new Set(vegan)];
+      // let udessert = [...new Set(dessert)];
+      res.render('../views/categories', {
+        title: 'categories',
+        path: '/recipe/categories',
+        chicken: chicken,
+        beef: beef,
+        pork: pork,
+        fish: fish,
+        vegetable: vegetable,
+        vegan: vegan,
+        dessert: dessert
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.redirect('/500');
+    });
 };
 
 exports.getInfo = async (req, res) => {
