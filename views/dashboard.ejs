@@ -3,30 +3,24 @@
 
 <body>
     <%- include('./includes/nav.ejs') %>
-</header>
-        <h1 class="">Welcome <%= user.name %></h1>
+    </header>
+    <h1 class="">Welcome <%= user.name %></h1>
+    <div class="">
+        <% if (recipes.length > 0) { %>
         <div class="">
-            <% if (recipes.length) { %>
-                <div class="">
-                    <h2></h2>
-                    <% for (let recipe of recipes) { %>
-                        <h2 class="">Recipes</h2>
-                            <h4 class=""><a href="/recipes/<%=recipe._id%>"><%= recipe.title %></a>
-                                <a class="btn btn-primary" href="/recipes/<%=recipe._id%>/edit">Edit</a>
-                                <a class="btn btn-danger" href="/recipes/<%=recipe._id%>/delete">Delete</a>
-
-                                <!-- if (isAdmin) { -->
-                                <a class="btn btn-danger" href="/recipes/<%=recipe._id%>/publish">Publish</a>
-                                 <!-- } else {  -->
-                                <a class="btn btn-danger" href="/recipes/<%=recipe._id%>/request">Request Publish</a>
-                                 <!-- }  -->
-
-                            </h4>
-                    <% } %> 
-                </div>  
-            </div>
-            <% } else { %>
-                <h1>No Recipes Found</h1>
+            <h2 class="">Recipes</h2>
+            <% for (let recipe of recipes) { %>
+            <% if (recipe) { %>
+            <h4 class=""><a href="/recipe/<%=recipe._id%>"><%= recipe.title %></a>
+                <a class="btn btn-primary" href="/recipe/<%=recipe._id%>/edit">Edit</a>
+                <a class="btn btn-danger" href="/recipe/<%=recipe._id%>/delete">Delete</a>
+            </h4>
             <% } %>
-            <h2 class=""><a href="/auth/<%= user._id%>/edit">Edit Account</a></h2>
-<%- include('./includes/end.ejs') %>
+            <% } %>
+        </div>
+    </div>
+    <% } else { %>
+    <a class="btn btn-success" href="/recipe/addrecipe">Add Recipe</a>
+    <% } %>
+    <h2 class=""><a href="/auth/<%= user._id%>/edit">Edit Account</a></h2>
+    <%- include('./includes/end.ejs') %>

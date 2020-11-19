@@ -2,23 +2,23 @@
 </head>
 
 <body>
-    <%- include('./includes/nav.ejs') %>
+  <%- include('./includes/nav.ejs') %>
 
 
-        <h1 class="">My Favorite Recipes</h1>
+  <h1 class="">My Favorite Recipes</h1>
 
-        <div class="grid">
-            <% if (recipes.length > 0) { %>
-               <% for (recipe of recipes) { %>
-                  <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="<%= recipe.imagePath %>" alt="<%= recipe.title %>">
-                <div class="card-body">
-                  <p class="card-text"><%= recipe.title %></p>
-                  <a href="/recipe/<%= recipe._id %>">View Recipe</a>
-                </div>
-              </div>
-               <% } %>     
-            <% } %>
-        </div>
+  <div class="grid">
+    <% if (recipes.length > 0) { %>
+    <% for (recipe of recipes) { %>
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+      <div class="card-body">
+        <p class="card-text"><%= recipe.title %></p>
+        <a href="/recipe/<%= recipe._id %>">View Recipe</a>
+      </div>
+    </div>
+    <% } %>
+    <% } %>
+  </div>
 
-    <%- include('./includes/end.ejs') %>
+  <%- include('./includes/end.ejs') %>

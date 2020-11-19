@@ -1,7 +1,7 @@
 const session = require('express-session');
-const recipe = require('../models/recipe');
 const Recipe = require('../models/recipe');
 const User = require('../models/user');
+const fs = require('fs');
 
 exports.getHomePage = (req, res) => {
   Recipe.find()
@@ -207,4 +207,85 @@ exports.getInfo = async (req, res) => {
   }
 };
 
+exports.getEditRecipe = async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    //console.log(recipe);
+    res.status(422).render('addrecipe', {
+      title: 'Edit Recipe',
+      path: '',
+      errorMessage: '',
+      error: [],
+      oldInput: {
+        servings: recipe.servings,
+        preperationMinutes: recipe.preperationMinutes,
+        cookingMinutes: recipe.cookingMinutes,
+        title: recipe.title,
+        ingredients: recipe.ingredients,
+        instructions: recipe.instructions,
+        numIngredients: recipe.numIngredients,
+        numDirections: recipe.numDirections,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
+exports.deleteRecipe = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const recipe = await Recipe.findByIdAndDelete(id); // delete recipe from database
+    const addedRecipes = req.user.addedRecipes.filter(x => x != id);
+    await User.updateOne({ _id: req.user.id }, { $set: { addedRecipes: addedRecipes } });
+    const users = await User.find();
+    users.forEach(async user => {
+      const favorites = user.favoriteRecipes.filter(x => x != id);
+      await User.updateOne({ _id: user._id }, { $set: { favoriteRecipes: favorites } });
+    })
+    fs.unlinkSync(recipe.imagePath); // delete image from the server 
+    res.redirect('/auth/dashboard');
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+exports.addFavorite = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const favoriteArray = req.user.favoriteRecipes;
+    favoriteArray.push(id);
+    await User.updateOne({ _id: req.user.id }, { $set: { favoriteRecipes: favoriteArray } });
+    res.redirect('/');
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+exports.getFavorites = async (req, res) => {
+  try {
+    const recipesId = req.user.favoriteRecipes;
+    //console.log(recipesId);
+    let recipes = [];
+    if (recipesId.length > 1) {
+      await Promise.all(
+        (recipes = recipesId.map(async item => {
+          const recipe = await Recipe.findById(item);
+          return recipe;
+        }))
+      );
+    }
+    else {
+      const recipe = await Recipe.findById(recipesId[0]);
+      recipes.push(recipe);
+    }
+    console.log(recipes);
+    res.render('favorites', {
+      title: 'Favorite Recipes',
+      path: '/favorites',
+      recipes: recipes
+    })
+  } catch (error) {
+    console.log(error);
+  }
+}

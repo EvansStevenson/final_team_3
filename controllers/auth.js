@@ -86,6 +86,8 @@ exports.getSignup = (req, res, next) => {
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
       },
+      editMode: false,
+      user: ''
     });
   }
   res.render('auth/signup', {
@@ -100,6 +102,8 @@ exports.getSignup = (req, res, next) => {
       password: '',
       confirmPassword: '',
     },
+    editMode: false,
+    user: ''
   });
 };
 
@@ -121,6 +125,8 @@ exports.postSignup = async (req, res, next) => {
           password: req.body.password,
           confirmPassword: req.body.confirmPassword,
         },
+        editMode: false,
+        user: ''
       });
     }
     const hash = await bcrypt.hash(password, 12);
@@ -136,14 +142,12 @@ exports.getDashboard = async (req, res, next) => {
   try {
     const addedRecipes = req.user.addedRecipes;
     const recipes = [];
-    console.log(addedRecipes);
     await Promise.all(
       addedRecipes.map(async item => {
         const recipe = await Recipe.findOne({ _id: item });
         recipes.push(recipe);
       })
     );
-    console.log(recipes);
     res.render('dashboard', {
       title: 'Dashboard',
       path: '/auth/dashboard',
@@ -154,3 +158,57 @@ exports.getDashboard = async (req, res, next) => {
     console.error(error);
   }
 };
+
+exports.getEditAccount = async (req, res) => {
+  try {
+    res.render('auth/signup', {
+      title: 'Edit Account',
+      path: '',
+      errorMessage: null,
+      error: null,
+      submitAdmin: false,
+      oldInput: {
+        name: req.user.name,
+        email: req.user.email,
+        password: '',
+        confirmPassword: '',
+      },
+      editMode: true,
+      user: req.user
+    })
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+exports.postEditAccount = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).render('auth/signup', {
+        title: 'Edit Account',
+        path: '',
+        errorMessage: errors.array(),
+        error: errors.array()[0].msg,
+        submitAdmin: false,
+        oldInput: {
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password,
+          confirmPassword: req.body.confirmPassword,
+        },
+        editMode: true,
+        user: req.user
+      });
+    }
+    const hash = await bcrypt.hash(password, 12);
+    req.body.password = hash;
+    const user = await User.findByIdAndUpdate({ _id: req.user._id }, req.body);
+    console.log(user);
+    res.redirect('/auth/dashboard');
+  } catch (error) {
+    console.error(error);
+  }
+}

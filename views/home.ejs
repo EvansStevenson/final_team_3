@@ -23,13 +23,16 @@
                             <h1 class="recipe__title"><%= foods[0].title %></p>
                         </header>
                         <div class="centered">
-                           
-                        <a href="/recipe/<%= foods[0]._id%>"><button class="btn" type="submit">View Recipe</button></a>
-                        
+
+                            <a href="/recipe/<%= foods[0]._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+                            <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= foods[0]._id%>/favorite" class="btn btn-success">Add to Favorites</a>
+                            <% } %>
                         </div>
                     </article>
                 </div>
                 <% } %>
             </div>
 
-            <%- include('./includes/end.ejs') %>
+            <%- include('./includes/end.ejs') %> 
