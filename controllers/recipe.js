@@ -15,7 +15,7 @@ exports.getHomePage = (req, res) => {
 
       //console.log(recipe[0].imagePath);
       res.render('../views/home', {
-        title: 'CSE341 final',
+        title: 'Welcome! | Gourmeat',
         path: '/',
         foods: recipe,
       });
@@ -28,8 +28,8 @@ exports.getHomePage = (req, res) => {
 
 exports.getAddRecipe = (req, res) => {
   res.render('../views/addrecipe', {
-    title: 'New Recipe',
-    path: '/recipe//addrecipe',
+    title: 'Add New Recipe | Gourmeat',
+    path: '/recipe/addrecipe',
   });
 };
 
@@ -73,7 +73,7 @@ exports.postAddRecipe = (req, res) => {
   //console.log(image);
   if (!image) {
     return res.status(422).render('../views/addrecipe', {
-      title: 'Add Recipe',
+      title: 'Add New Recipe | Gourmeat',
       path: '/recipe/addrecipe',
       errorMessage: 'Attached file is not an image',
       error: [],
@@ -120,7 +120,7 @@ exports.postAddRecipe = (req, res) => {
 
 exports.getAbout = (req, res) => {
   res.render('../views/about', {
-    title: 'about',
+    title: 'About Us | Gourmeat',
     path: '/recipe/about',
   });
 };
@@ -170,7 +170,7 @@ exports.getCategories = (req, res) => {
       // let uvegan = [...new Set(vegan)];
       // let udessert = [...new Set(dessert)];
       res.render('../views/categories', {
-        title: 'categories',
+        title: 'Food Categories | Gourmeat',
         path: '/recipe/categories',
         chicken: chicken,
         beef: beef,
@@ -197,7 +197,7 @@ exports.getInfo = async (req, res) => {
     const user = await User.findById(recipe.creator);
 
     res.render('recipeinfo', {
-      title: 'Recipe Detail',
+      title: recipe.title + ' | Gourmeat',
       path: '/recipe',
       recipe: recipe,
       user: user,
@@ -212,7 +212,7 @@ exports.getEditRecipe = async (req, res) => {
     const recipe = await Recipe.findById(req.params.id);
     //console.log(recipe);
     res.status(422).render('addrecipe', {
-      title: 'Edit Recipe',
+      title: 'Edit Recipe | Gourmeat',
       path: '',
       errorMessage: '',
       error: [],
@@ -281,7 +281,7 @@ exports.getFavorites = async (req, res) => {
     }
     console.log(recipes);
     res.render('favorites', {
-      title: 'Favorite Recipes',
+      title: 'Favorite Recipes | Gourmeat',
       path: '/favorites',
       recipes: recipes
     })
