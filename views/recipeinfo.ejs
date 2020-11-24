@@ -21,9 +21,9 @@
                     </header> -->
                     <div>
                         <div class='flex'>
-                        <h5>Servings: <p><%= recipe.servings %></p></h5>
-                        <h5>Prep Time:<p><%= recipe.preperationMinutes %></p></h5>
-                        <h5>Cook Time:<p><%= recipe.cookingMinutes %></p></h5>
+                        <h5>Servings: <p><%= recipe.servings %></p>Total</h5>
+                        <h5>Prep Time:<p><%= recipe.preperationMinutes %></p>Minutes</h5>
+                        <h5>Cook Time:<p><%= recipe.cookingMinutes %></p>Minutes</h5>
 
                     </div> 
                     <div class="list">
@@ -33,16 +33,18 @@
                         <ul>
                         <li> 
                             <%= ingredient.amount %>
-                            <% if (ingredient.amount > 1) { %>
-                            <%= ingredient.unit %>s of
+                            <% if (ingredient.amount > 1 || ingredient.amount < 1) { %>
+                            <%= ingredient.unit %>s of 
                             <%= ingredient.name %>
+                          
                             <% } else { %>
-                            <%= ingredient.unit %> of
-                            <%= ingredient.name %></li>
+                            <%= ingredient.unit %> of 
+                            <%= ingredient.name %> 
+                        </li>
                         <% } %>
                         </ul>
                     <% } %>
-                    
+                     <button id="add-to-list">Add to List</button>
                     <h4>Instructions: </h4>
                     <ol>
                         <% for (instruction of recipe.instructions) { %>
