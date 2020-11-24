@@ -247,9 +247,14 @@ exports.addFavorite = async (req, res) => {
   try {
     const id = req.params.id;
     const favoriteArray = req.user.favoriteRecipes;
-    favoriteArray.push(id);
-    await User.updateOne({ _id: req.user.id }, { $set: { favoriteRecipes: favoriteArray } });
-    res.redirect('/');
+    const index = favoriteArray.indexOf(id);
+    if (index >= 0) {
+      return res.redirect('/');
+    } else {
+      favoriteArray.push(id);
+      await User.updateOne({ _id: req.user.id }, { $set: { favoriteRecipes: favoriteArray } });
+      res.redirect('/');
+    }
   } catch (error) {
     console.error(error);
   }
@@ -276,6 +281,18 @@ exports.getFavorites = async (req, res) => {
       path: '/favorites',
       recipes: recipes,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.removeFavorite = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const favorites = req.user.favoriteRecipes;
+    const updatedArray = favorites.filter(x => x != id);
+    await User.updateOne({ _id: req.user._id }, { $set: { favoriteRecipes: updatedArray } });
+    res.redirect('/recipe/favorites');
   } catch (error) {
     console.log(error);
   }
