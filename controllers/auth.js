@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
 
 exports.getLogin = (req, res, next) => {
   res.render('./auth/login', {
-    title: 'Login',
+    title: 'Login | Gourmeat',
     path: '/login',
     errorMessage: null,
     error: null,
@@ -26,7 +26,7 @@ exports.postLogin = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).render('auth/login', {
-        title: 'Login',
+        title: 'Login | Gourmeat',
         path: '/login',
         errorMessage: errors.array(),
         error: errors.array()[0].msg,
@@ -39,7 +39,7 @@ exports.postLogin = async (req, res, next) => {
     }
     if (!user) {
       return res.status(422).render('auth/login', {
-        title: 'Login',
+        title: 'Login | Gourmeat',
         path: '/login',
         errorMessage: errors.array(),
         error: errors.array()[0].msg,
@@ -75,7 +75,7 @@ exports.getSignup = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render('/auth/signup', {
-      title: 'Signup',
+      title: 'Signup | Gourmeat',
       path: '/signup',
       errorMessage: errors.array(),
       error: errors.array()[0].msg,
@@ -91,7 +91,7 @@ exports.getSignup = (req, res, next) => {
     });
   }
   res.render('auth/signup', {
-    title: 'Signup',
+    title: 'Signup | Gourmeat',
     path: '/signup',
     errorMessage: null,
     error: null,
@@ -114,7 +114,7 @@ exports.postSignup = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).render('auth/signup', {
-        title: 'Signup',
+        title: 'Signup | Gourmeat',
         path: '/signup',
         errorMessage: errors.array(),
         error: errors.array()[0].msg,
@@ -149,7 +149,7 @@ exports.getDashboard = async (req, res, next) => {
       })
     );
     res.render('dashboard', {
-      title: 'Dashboard',
+      title: 'Dashboard | Gourmeat',
       path: '/auth/dashboard',
       recipes: recipes,
       user: req.user,
@@ -162,7 +162,7 @@ exports.getDashboard = async (req, res, next) => {
 exports.getEditAccount = async (req, res) => {
   try {
     res.render('auth/signup', {
-      title: 'Edit Account',
+      title: 'Edit Account | Gourmeat',
       path: '',
       errorMessage: null,
       error: null,
@@ -188,7 +188,7 @@ exports.postEditAccount = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).render('auth/signup', {
-        title: 'Edit Account',
+        title: 'Edit Account | Gourmeat',
         path: '',
         errorMessage: errors.array(),
         error: errors.array()[0].msg,

@@ -306,6 +306,21 @@ hr.main {
     color: red;
 }
 
+.team3_image_div {
+    /* max-width: 100px; */
+    height: auto;
+    max-width: 150px;
+}
+
+.team3_image {
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border: 1.5px solid #ef5350;
+    border-radius: 5px;
+    padding: .3rem;
+    background-color: white;
+}
+
 @media (min-width: 768px) {
     .main-header__nav {
         display: flex;
