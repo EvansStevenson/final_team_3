@@ -9,6 +9,7 @@ const userSchema = new Schema({
   resetTokenExpiration: { type: Date },
   addedRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
   favoriteRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
+  shoppingList: [{type: String}],
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   level: { type: Number },
 });

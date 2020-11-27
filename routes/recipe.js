@@ -12,4 +12,6 @@ router.get('/:id/delete', recipeController.deleteRecipe);
 router.get('/:id/favorite', recipeController.addFavorite);
 router.get('/:id/remove-favorite', recipeController.removeFavorite);
 router.get('/favorites', recipeController.getFavorites);
+router.get('/list', recipeController.getList);
+router.get('/:id/add-to-list', recipeController.addList);
 module.exports = router;
