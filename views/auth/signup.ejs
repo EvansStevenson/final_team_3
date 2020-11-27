@@ -11,33 +11,50 @@
             <% if (errorMessage) { %>
             <div class="user-message user-message--error"><%= error %></div>
             <% } %>
-            <form class="login-form" action="/auth/signup" method="POST">
-                <div class="form-control">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name" value="<%= oldInput.name %>">
-                </div>
-                <div class="form-control">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" value="<%= oldInput.email %>">
-                </div>
-                <div class="form-control">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" value="<%= oldInput.password %>">
-                </div>
-                <div class="form-control">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" name="confirmPassword" id="confirmPassword"
-                        value="<%= oldInput.confirmPassword %>">
-                </div>
-                <% if (submitAdmin) { %>
-                <div class="form-control">
-                    <label for="birthday">Birthday</label>
-                    <input type="date" name="birthday" id="birthday">
-                </div>
-                <% } %>
-                <input type="hidden" name="_csrf" value="<%= csrf %>" />
-                <button class="btn" type="submit">Create Admin</button>
-                <button class="btn" type="submit">Create User</button>
-            </form>
+            <% if (user && editMode) {%>
+            <form class="login-form" action="/auth/<%= user._id %>/edit" method="POST">
+                <% } else { %>
+                <form class="login-form" action="/auth/signup" method="POST">
+                    <% } %>
+                    <div class="form-control">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" value="<%= oldInput.name %>">
+                    </div>
+                    <div class="form-control">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" value="<%= oldInput.email %>">
+                    </div>
+                    <div class="form-control">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" value="<%= oldInput.password %>">
+				            <div id="restrictions">
+					            Must Contain:
+					                <ul>
+						                <li>At least 1 Upper-Case Letter</li>
+						                <li>At least 1 Lower-Case Letter</li>
+						                <li>At least 1 Number</li>
+						                <li>At least 1 Special Character</li>
+						                <li>At least 8 Characters</li>
+					                </ul>
+				            </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" name="confirmPassword" id="confirmPassword"
+                            value="<%= oldInput.confirmPassword %>">
+                    </div>
+                    <% if (submitAdmin) { %>
+                    <div class="form-control">
+                        <label for="birthday">Birthday</label>
+                        <input type="date" name="birthday" id="birthday">
+                    </div>
+                    <% } %>
+                    <input type="hidden" name="_csrf" value="<%= csrf %>" />
+                    <% if (editMode) { %>
+                    <button class="btn" type="submit">Update Account</button>
+                    <% } else { %>
+                    <button class="btn" type="submit">Create Account</button>
+                    <% } %>
+                </form>
 
-            <%- include('../includes/end.ejs') %>
+                <%- include('../includes/end.ejs') %>

@@ -1,7 +1,7 @@
 const session = require('express-session');
-const recipe = require('../models/recipe');
 const Recipe = require('../models/recipe');
 const User = require('../models/user');
+const fs = require('fs');
 
 exports.getHomePage = (req, res) => {
   Recipe.find()
@@ -15,7 +15,7 @@ exports.getHomePage = (req, res) => {
 
       //console.log(recipe[0].imagePath);
       res.render('../views/home', {
-        title: 'CSE341 final',
+        title: 'Welcome! | Gourmeat',
         path: '/',
         foods: recipe,
       });
@@ -28,8 +28,8 @@ exports.getHomePage = (req, res) => {
 
 exports.getAddRecipe = (req, res) => {
   res.render('../views/addrecipe', {
-    title: 'New Recipe',
-    path: '/recipe//addrecipe',
+    title: 'Add New Recipe | Gourmeat',
+    path: '/recipe/addrecipe',
   });
 };
 
@@ -39,8 +39,17 @@ exports.postAddRecipe = (req, res) => {
   let cookingMinutes = req.body.cookingMinutes;
   let title = req.body.title;
   let ingredients = [];
+  let tags = [];
   let numIngredients = req.body.numIngredients;
 
+  //populate tags
+  for (let i = 0; i <= 6; i++) {
+    let id = i;
+    id.toString();
+    if (req.body['tag' + id] !== undefined) tags.push(req.body['tag' + id]);
+  }
+
+  //populate ingredients
   for (let i = 0; i < numIngredients; i++) {
     let id = i + 1;
     id.toString();
@@ -50,6 +59,7 @@ exports.postAddRecipe = (req, res) => {
     ingredients.push({ name: currentIngredient, unit: currentUnit, amount: currentAmount });
   }
 
+  //populate instructions
   let instructions = [];
   let numDirections = req.body.numDirections;
   for (let i = 0; i < numDirections; i++) {
@@ -59,10 +69,10 @@ exports.postAddRecipe = (req, res) => {
     instructions.push(currentDirection);
   }
   let image = req.file;
-  console.log(image);
+  //console.log(image);
   if (!image) {
     return res.status(422).render('../views/addrecipe', {
-      title: 'Add Recipe',
+      title: 'Add New Recipe | Gourmeat',
       path: '/recipe/addrecipe',
       errorMessage: 'Attached file is not an image',
       error: [],
@@ -81,7 +91,7 @@ exports.postAddRecipe = (req, res) => {
   }
 
   const imageUrl = image.path;
-  console.log(image.path);
+  //console.log(image.path);
   const recipe = new Recipe({
     servings: servings,
     preperationMinutes: preperationMinutes,
@@ -90,6 +100,7 @@ exports.postAddRecipe = (req, res) => {
     ingredients: ingredients,
     instructions: instructions,
     imagePath: imageUrl,
+    tags: tags,
     creator: req.user,
   });
   recipe
@@ -108,9 +119,65 @@ exports.postAddRecipe = (req, res) => {
 
 exports.getAbout = (req, res) => {
   res.render('../views/about', {
-    title: 'about',
+    title: 'About Us | Gourmeat',
     path: '/recipe/about',
   });
+};
+
+exports.getCategories = (req, res) => {
+  let chicken = [];
+  let beef = [];
+  let pork = [];
+  let fish = [];
+  let vegetable = [];
+  let vegan = [];
+  let dessert = [];
+  Recipe.find()
+    .then(recipe => {
+      for (let i of recipe) {
+        for (let tag of i.tags) {
+          if (tag === 'chicken') {
+            chicken.push(i);
+          } else if (tag === 'beef') {
+            beef.push(i);
+          } else if (tag === 'pork') {
+            pork.push(i);
+          } else if (tag === 'fish') {
+            fish.push(i);
+          } else if (tag === 'vegetable') {
+            vegetable.push(i);
+          } else if (tag === 'vegan') {
+            vegan.push(i);
+          } else if (tag === 'dessert') {
+            dessert.push(i);
+          }
+        }
+      }
+      //make unique
+      // let uchicken = [...new Set(chicken)];
+      // console.log(uchicken);
+      // let ubeef = [...new Set(beef)];
+      // let upork = [...new Set(pork)];
+      // let ufish = [...new Set(fish)];
+      // let uvegetable = [...new Set(vegetable)];
+      // let uvegan = [...new Set(vegan)];
+      // let udessert = [...new Set(dessert)];
+      res.render('../views/categories', {
+        title: 'Food Categories | Gourmeat',
+        path: '/recipe/categories',
+        chicken: chicken,
+        beef: beef,
+        pork: pork,
+        fish: fish,
+        vegetable: vegetable,
+        vegan: vegan,
+        dessert: dessert,
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.redirect('/500');
+    });
 };
 
 exports.getInfo = async (req, res) => {
@@ -123,7 +190,7 @@ exports.getInfo = async (req, res) => {
     const user = await User.findById(recipe.creator);
 
     res.render('recipeinfo', {
-      title: 'Recipe Detail',
+      title: recipe.title + ' | Gourmeat',
       path: '/recipe',
       recipe: recipe,
       user: user,
@@ -133,20 +200,100 @@ exports.getInfo = async (req, res) => {
   }
 };
 
+exports.getEditRecipe = async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    //console.log(recipe);
+    res.status(422).render('addrecipe', {
+      title: 'Edit Recipe | Gourmeat',
+      path: '',
+      errorMessage: '',
+      error: [],
+      oldInput: {
+        servings: recipe.servings,
+        preperationMinutes: recipe.preperationMinutes,
+        cookingMinutes: recipe.cookingMinutes,
+        title: recipe.title,
+        ingredients: recipe.ingredients,
+        instructions: recipe.instructions,
+        numIngredients: recipe.numIngredients,
+        numDirections: recipe.numDirections,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-// exports.getInfo = (req, res) => {
-//   const user.findById()
-//   let id = req.params.id;
-//   Recipe.findById(id)
-//   .then(recipe => {
-//     //console.log(recipe.imagePath);
-//     res.render('../views/recipeinfo', {
-//       title: 'Recipe Detail',
-//       path: '/recipe',
-//       recipe: recipe
-//   });
-//   }).catch(err => {
-//     console.log(err);
-//     res.redirect('/500');
-//   });
-// }
+exports.deleteRecipe = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const recipe = await Recipe.findByIdAndDelete(id); // delete recipe from database
+    const addedRecipes = req.user.addedRecipes.filter(x => x != id);
+    await User.updateOne({ _id: req.user.id }, { $set: { addedRecipes: addedRecipes } });
+    const users = await User.find();
+    users.forEach(async user => {
+      const favorites = user.favoriteRecipes.filter(x => x != id);
+      await User.updateOne({ _id: user._id }, { $set: { favoriteRecipes: favorites } });
+    });
+    fs.unlinkSync(recipe.imagePath); // delete image from the server
+    res.redirect('/auth/dashboard');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.addFavorite = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const favoriteArray = req.user.favoriteRecipes;
+    const index = favoriteArray.indexOf(id);
+    if (index >= 0) {
+      return res.redirect('/');
+    } else {
+      favoriteArray.push(id);
+      await User.updateOne({ _id: req.user.id }, { $set: { favoriteRecipes: favoriteArray } });
+      res.redirect('/');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.getFavorites = async (req, res) => {
+  try {
+    const recipesId = req.user.favoriteRecipes;
+    //console.log(recipesId);
+    let recipes = [];
+    if (recipesId.length > 1) {
+      await Promise.all(
+        recipesId.map(async item => {
+          const recipe = await Recipe.findById(item);
+          recipes.push(recipe);
+        })
+      );
+    } else {
+      const recipe = await Recipe.findById(recipesId[0]);
+      recipes.push(recipe);
+    }
+    res.render('favorites', {
+      title: 'Favorite Recipes | Gourmeat',
+      path: '/favorites',
+      recipes: recipes,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.removeFavorite = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const favorites = req.user.favoriteRecipes;
+    const updatedArray = favorites.filter(x => x != id);
+    await User.updateOne({ _id: req.user._id }, { $set: { favoriteRecipes: updatedArray } });
+    res.redirect('/recipe/favorites');
+  } catch (error) {
+    console.log(error);
+  }
+};

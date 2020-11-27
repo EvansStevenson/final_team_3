@@ -10,7 +10,7 @@
 
         <ul class="main-header__item-list">
             <li class="main-header__item">
-                <a class="<%= path === '/about' ? 'active' : '' %>" href="/about">About Us</a>
+                <a class="<%= path === '/about' ? 'active' : '' %>" href="/recipe/about">About Us</a>
             </li>
 
             <li class="main-header__item">
@@ -24,21 +24,21 @@
 
 
             <% if (isAuthenticated) { %>
-                <li class="main-header__item">
+            <li class="main-header__item">
                 <a class="<%= path === '/recipe/add-recipe' ? 'active' : '' %>" href="/recipe/addrecipe">Add Recipe</a>
 
             <li class="main-header__item">
-                <a class="<%= path === '/favorites' ? 'active' : '' %>" href="/favorites">Favorites</a>
+                <a class="<%= path === '/favorites' ? 'active' : '' %>" href="/recipe/favorites">Favorites</a>
             </li>
 
             <li class="main-header__item">
                 <a class="<%= path === '/list' ? 'active' : '' %>" href="/list">Grocery List</a>
             </li>
-                
+
             <li class="main-header__item">
-                <a class="<%= path === '/dashboard' ? 'active' : '' %>" href="/auth/dashboard" >Dashboard</a>
-            </li> 
-        <% } %>
+                <a class="<%= path === '/dashboard' ? 'active' : '' %>" href="/auth/dashboard">Dashboard</a>
+            </li>
+            <% } %>
         </ul>
 
         <!-- Searchbar -->
