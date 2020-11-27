@@ -11,7 +11,7 @@
             <h2 class="">Recipes</h2>
             <% for (let recipe of recipes) { %>
             <% if (recipe) { %>
-            <h4 class=""><a href="/recipe/<%=recipe._id%>"><%= recipe.title %></a>
+            <h4 class=""><a href="/recipe/<%=recipe._id%>/info"><%= recipe.title %></a>
                 <a class="btn btn-primary" href="/recipe/<%=recipe._id%>/edit">Edit</a>
                 <a class="btn btn-danger" href="/recipe/<%=recipe._id%>/delete">Delete</a>
             </h4>

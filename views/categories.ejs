@@ -147,6 +147,146 @@
                     </article>
                     <% } %>
                 </div>
+            <div id="chicken" hidden>
+                <% for (let recipe of chicken){ %>
+                <article class="card centered" style="margin-bottom: 20px;">
+                    <div class="card__image">
+                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                    </div>
+                    <header class="card__header">
+                        <h1 class="recipe__title"><%= recipe.title %></p>
+                    </header>
+                    <div class="centered">
+
+                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
+                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
+                        <% } %>
+
+                    </div>
+                </article>
+                <% } %>
+            </div>
+
+            <div id="beef" hidden>
+                <% for (let recipe of beef){ %>
+                <article class="card centered" style="margin-bottom: 20px;">
+                    <div class="card__image">
+                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                    </div>
+                    <header class="card__header">
+                        <h1 class="recipe__title"><%= recipe.title %></p>
+                    </header>
+                    <div class="centered">
+
+                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
+                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
+                        <% } %>
+                    </div>
+                </article>
+                <% } %>
+            </div>
+
+            <div id="pork" hidden>
+                <% for (let recipe of pork){ %>
+                <article class="card centered" style="margin-bottom: 20px;">
+                    <div class="card__image">
+                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                    </div>
+                    <header class="card__header">
+                        <h1 class="recipe__title"><%= recipe.title %></p>
+                    </header>
+                    <div class="centered">
+
+                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
+                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
+                        <% } %>
+                    </div>
+                </article>
+                <% } %>
+            </div>
+
+
+            <div id="fish" hidden>
+                <% for (let recipe of fish){ %>
+                <article class="card centered" style="margin-bottom: 20px;">
+                    <div class="card__image">
+                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                    </div>
+                    <header class="card__header">
+                        <h1 class="recipe__title"><%= recipe.title %></p>
+                    </header>
+                    <div class="centered">
+
+                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
+                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
+                        <% } %>
+                    </div>
+                </article>
+                <% } %>
+            </div>
+
+            <div id="vegetable" hidden>
+                <% for (let recipe of vegetable){ %>
+                <article class="card centered" style="margin-bottom: 20px;">
+                    <div class="card__image">
+                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                    </div>
+                    <header class="card__header">
+                        <h1 class="recipe__title"><%= recipe.title %></p>
+                    </header>
+                    <div class="centered">
+
+                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
+                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
+                        <% } %>
+                    </div>
+                </article>
+                <% } %>
+            </div>
+
+            <div id="vegan" hidden>
+                <% for (let recipe of vegan){ %>
+                <article class="card centered" style="margin-bottom: 20px;">
+                    <div class="card__image">
+                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                    </div>
+                    <header class="card__header">
+                        <h1 class="recipe__title"><%= recipe.title %></p>
+                    </header>
+                    <div class="centered">
+
+                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
+                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
+                        <% } %>
+                    </div>
+                </article>
+                <% } %>
+            </div>
+
+            <div id="dessert" hidden>
+                <% for (let recipe of dessert){ %>
+                <article class="card centered" style="margin-bottom: 20px;">
+                    <div class="card__image">
+                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                    </div>
+                    <header class="card__header">
+                        <h1 class="recipe__title"><%= recipe.title %></p>
+                    </header>
+                    <div class="centered">
+
+                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
+                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
+                        <% } %>
+                    </div>
+                </article>
+                <% } %>
             </div>
             
     <script src="/js/categories.js"></script>

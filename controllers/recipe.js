@@ -15,7 +15,7 @@ exports.getHomePage = (req, res) => {
 
       //console.log(recipe[0].imagePath);
       res.render('../views/home', {
-        title: 'CSE341 final',
+        title: 'Welcome! | Gourmeat',
         path: '/',
         foods: recipe,
       });
@@ -28,8 +28,8 @@ exports.getHomePage = (req, res) => {
 
 exports.getAddRecipe = (req, res) => {
   res.render('../views/addrecipe', {
-    title: 'New Recipe',
-    path: '/recipe//addrecipe',
+    title: 'Add New Recipe | Gourmeat',
+    path: '/recipe/addrecipe',
   });
 };
 
@@ -46,8 +46,7 @@ exports.postAddRecipe = (req, res) => {
   for (let i = 0; i <= 6; i++) {
     let id = i;
     id.toString();
-    if (req.body['tag' + id] !== undefined)
-      tags.push(req.body['tag' + id]);
+    if (req.body['tag' + id] !== undefined) tags.push(req.body['tag' + id]);
   }
 
   //populate ingredients
@@ -73,7 +72,7 @@ exports.postAddRecipe = (req, res) => {
   //console.log(image);
   if (!image) {
     return res.status(422).render('../views/addrecipe', {
-      title: 'Add Recipe',
+      title: 'Add New Recipe | Gourmeat',
       path: '/recipe/addrecipe',
       errorMessage: 'Attached file is not an image',
       error: [],
@@ -120,7 +119,7 @@ exports.postAddRecipe = (req, res) => {
 
 exports.getAbout = (req, res) => {
   res.render('../views/about', {
-    title: 'about',
+    title: 'About Us | Gourmeat',
     path: '/recipe/about',
   });
 };
@@ -137,26 +136,20 @@ exports.getCategories = (req, res) => {
     .then(recipe => {
       for (let i of recipe) {
         for (let tag of i.tags) {
-          if (tag === "chicken") {
+          if (tag === 'chicken') {
             chicken.push(i);
-          }
-          else if (tag === "beef") {
-            beef.push(i)
-          }
-          else if (tag === "pork") {
-            pork.push(i)
-          }
-          else if (tag === "fish") {
-            fish.push(i)
-          }
-          else if (tag === "vegetable") {
-            vegetable.push(i)
-          }
-          else if (tag === "vegan") {
-            vegan.push(i)
-          }
-          else if (tag === "dessert") {
-            dessert.push(i)
+          } else if (tag === 'beef') {
+            beef.push(i);
+          } else if (tag === 'pork') {
+            pork.push(i);
+          } else if (tag === 'fish') {
+            fish.push(i);
+          } else if (tag === 'vegetable') {
+            vegetable.push(i);
+          } else if (tag === 'vegan') {
+            vegan.push(i);
+          } else if (tag === 'dessert') {
+            dessert.push(i);
           }
         }
       }
@@ -170,7 +163,7 @@ exports.getCategories = (req, res) => {
       // let uvegan = [...new Set(vegan)];
       // let udessert = [...new Set(dessert)];
       res.render('../views/categories', {
-        title: 'categories',
+        title: 'Food Categories | Gourmeat',
         path: '/recipe/categories',
         chicken: chicken,
         beef: beef,
@@ -178,7 +171,7 @@ exports.getCategories = (req, res) => {
         fish: fish,
         vegetable: vegetable,
         vegan: vegan,
-        dessert: dessert
+        dessert: dessert,
       });
     })
     .catch(err => {
@@ -197,7 +190,7 @@ exports.getInfo = async (req, res) => {
     const user = await User.findById(recipe.creator);
 
     res.render('recipeinfo', {
-      title: 'Recipe Detail',
+      title: recipe.title + ' | Gourmeat',
       path: '/recipe',
       recipe: recipe,
       user: user,
@@ -212,7 +205,7 @@ exports.getEditRecipe = async (req, res) => {
     const recipe = await Recipe.findById(req.params.id);
     //console.log(recipe);
     res.status(422).render('addrecipe', {
-      title: 'Edit Recipe',
+      title: 'Edit Recipe | Gourmeat',
       path: '',
       errorMessage: '',
       error: [],
@@ -242,25 +235,30 @@ exports.deleteRecipe = async (req, res) => {
     users.forEach(async user => {
       const favorites = user.favoriteRecipes.filter(x => x != id);
       await User.updateOne({ _id: user._id }, { $set: { favoriteRecipes: favorites } });
-    })
-    fs.unlinkSync(recipe.imagePath); // delete image from the server 
+    });
+    fs.unlinkSync(recipe.imagePath); // delete image from the server
     res.redirect('/auth/dashboard');
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 exports.addFavorite = async (req, res) => {
   try {
     const id = req.params.id;
     const favoriteArray = req.user.favoriteRecipes;
-    favoriteArray.push(id);
-    await User.updateOne({ _id: req.user.id }, { $set: { favoriteRecipes: favoriteArray } });
-    res.redirect('/');
+    const index = favoriteArray.indexOf(id);
+    if (index >= 0) {
+      return res.redirect('/');
+    } else {
+      favoriteArray.push(id);
+      await User.updateOne({ _id: req.user.id }, { $set: { favoriteRecipes: favoriteArray } });
+      res.redirect('/');
+    }
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 exports.getFavorites = async (req, res) => {
   try {
@@ -269,23 +267,33 @@ exports.getFavorites = async (req, res) => {
     let recipes = [];
     if (recipesId.length > 1) {
       await Promise.all(
-        (recipes = recipesId.map(async item => {
+        recipesId.map(async item => {
           const recipe = await Recipe.findById(item);
-          return recipe;
-        }))
+          recipes.push(recipe);
+        })
       );
-    }
-    else {
+    } else {
       const recipe = await Recipe.findById(recipesId[0]);
       recipes.push(recipe);
     }
-    console.log(recipes);
     res.render('favorites', {
-      title: 'Favorite Recipes',
+      title: 'Favorite Recipes | Gourmeat',
       path: '/favorites',
-      recipes: recipes
-    })
+      recipes: recipes,
+    });
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+exports.removeFavorite = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const favorites = req.user.favoriteRecipes;
+    const updatedArray = favorites.filter(x => x != id);
+    await User.updateOne({ _id: req.user._id }, { $set: { favoriteRecipes: updatedArray } });
+    res.redirect('/recipe/favorites');
+  } catch (error) {
+    console.log(error);
+  }
+};
