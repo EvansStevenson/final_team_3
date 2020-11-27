@@ -2,6 +2,7 @@ const session = require('express-session');
 const Recipe = require('../models/recipe');
 const User = require('../models/user');
 const fs = require('fs');
+const user = require('../models/user');
 
 exports.getHomePage = (req, res) => {
   Recipe.find()
@@ -295,5 +296,46 @@ exports.removeFavorite = async (req, res) => {
     res.redirect('/recipe/favorites');
   } catch (error) {
     console.log(error);
+  }
+};
+
+exports.getList = async (req, res) => {
+
+  try {
+    const list = req.user.shoppingList;
+    let ingredients = [];
+    if (list.length > 1) {
+       ingredients = list;
+    }
+    res.render('list', { 
+      path: '/list',
+      title: 'Grocery List',
+      ingredients: ingredients,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.addList = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const recipe = await Recipe.findById(id);
+    const ingredients = recipe.ingredients;
+    const userIngredients = req.user.shoppingList;
+      for(let i = 0; i < ingredients.length; i++) {
+        if (userIngredients.length > 0) {
+          const index = userIngredients.indexOf(ingredients[i].name);
+          console.log(index);
+          if(index < 0) {
+            userIngredients.push(ingredients[i].name);
+          }
+        }  
+    }
+      await User.updateOne({ _id: req.user.id }, { $set: { shoppingList: userIngredients } });
+      res.redirect('/');
+    
+  } catch (error) {
+    console.error(error);
   }
 };

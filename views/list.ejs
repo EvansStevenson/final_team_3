@@ -8,30 +8,28 @@
     <main class="content">
         <div class="content-wrap">
 
-            <h1 class="centered" style="margin: 20px;"><%= recipe.title %></h1>
-
+            <h1 class="centered" style="margin: 20px;">Grocery List</h1>
 
             <div>
                 <article class="card centered" style="margin-bottom: 20px;">
                     <div class="card__image">
-                        <img src="../<%= recipe.imagePath %>" alt="no image found">
-                    </div>
+                        <!-- <img src="../%= recipe.imagePath %" alt="no image found"> -->
+                    </div> 
                     <div>
-
-                        <h4>Grocery Shopping List</h4>
-                        <% for (ingredient of recipe.ingredients) { %>
+                       
+                        <% if (ingredients.length > 0) { %>
+                        
                         <ul>
+                        <% for (ingredient of ingredients) { %>
+                        
                         <li> 
-                            <%= ingredient.amount %>
-                            <% if (ingredient.amount > 1) { %>
-                            <%= ingredient.unit %>s of
-                            <%= ingredient.name %>
-                            <% } else { %>
-                            <%= ingredient.unit %> of
-                            <%= ingredient.name %></li>
-                        <% } %>
+                            <%= ingredient %>
+                           
+                            <!-- <a class="btn" href="/recipe/%= recipe._id %/info">View Recipe</a>
+                            <a class="btn" href="/recipe/%= recipe._id %/remove-favorite">Remove</a> -->
+                            <% } %>
                         </ul>
-                    <% } %>
+                        <% } %>
                     </div>
                 </article>
             </div>
