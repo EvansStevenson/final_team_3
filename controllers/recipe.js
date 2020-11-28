@@ -143,7 +143,7 @@ exports.getCategories = (req, res) => {
             beef.push(i);
           } else if (tag === 'pork') {
             pork.push(i);
-          } else if (tag === 'fish') {
+          } else if (tag === 'seafood') {
             fish.push(i);
           } else if (tag === 'vegetable') {
             vegetable.push(i);
@@ -202,39 +202,92 @@ exports.getInfo = async (req, res) => {
 };
 
 exports.getEditRecipe = async (req, res) => {
-    const recipe = await Recipe.findById(req.params.id);
-    console.log(recipe.tags);
-    res.render('editrecipe', {
-      title: 'Edit Recipe | Gourmeat',
-      path: 'editrecipe',
-      servings: recipe.servings,
-      preperationMinutes: recipe.preperationMinutes,
-      cookingMinutes: recipe.cookingMinutes,
-      title: recipe.title,
-      ingredients: recipe.ingredients,
-      instructions: recipe.instructions,
-      tags: recipe.tags,
-    })
-  //   res.status(422).render('addrecipe', {
-  //     title: 'Edit Recipe | Gourmeat',
-  //     path: '',
-  //     errorMessage: '',
-  //     error: [],
-  //     oldInput: {
-  //       servings: recipe.servings,
-  //       preperationMinutes: recipe.preperationMinutes,
-  //       cookingMinutes: recipe.cookingMinutes,
-  //       title: recipe.title,
-  //       ingredients: recipe.ingredients,
-  //       instructions: recipe.instructions,
-  //       numIngredients: recipe.numIngredients,
-  //       numDirections: recipe.numDirections,
-  //     },
-  //   });
-  // } catch (error) {
-  //   console.error(error);
-  // }
+  const prodId = req.params.id;
+  const recipe = await Recipe.findById(req.params.id);
+  //console.log(recipe.tags);
+  res.render('editrecipe', {
+    title: 'Edit Recipe | Gourmeat',
+    path: 'editrecipe',
+    servings: recipe.servings,
+    preperationMinutes: recipe.preperationMinutes,
+    cookingMinutes: recipe.cookingMinutes,
+    title: recipe.title,
+    ingredients: recipe.ingredients,
+    instructions: recipe.instructions,
+    tags: recipe.tags,
+    id: prodId,
+  })
 };
+
+exports.postEditRecipe = (req, res) => {
+  let prodId = req.body.recipeId;
+  let newservings = req.body.servings;
+  let newpreperationMinutes = req.body.preperationMinutes;
+  let newcookingMinutes = req.body.cookingMinutes;
+  let newtitle = req.body.title;
+  let newingredients = [];
+  let newtags = [];
+  let newnumIngredients = req.body.numIngredients;
+
+  //populate tags
+  for (let i = 0; i <= 6; i++) {
+    let id = i;
+    id.toString();
+    if (req.body['tag' + id] !== undefined) newtags.push(req.body['tag' + id]);
+  }
+
+  //populate ingredients
+  for (let i = 0; i < newnumIngredients; i++) {
+    let id = i;
+    id.toString();
+    let currentAmount = req.body['amount' + id];
+    let currentIngredient = req.body['ingredient' + id];
+    let currentUnit = req.body['unit' + id];
+    newingredients.push({ name: currentIngredient, unit: currentUnit, amount: currentAmount });
+  }
+
+  //populate instructions
+  let newinstructions = [];
+  let numDirections = req.body.numDirections;
+  for (let i = 0; i < numDirections; i++) {
+    let id = i;
+    id.toString();
+    let currentDirection = req.body['direction' + id];
+    newinstructions.push(currentDirection);
+  }
+  let image = req.file;
+  //console.log(image);
+  if (!image) {
+    res.redirect('/500');
+  }
+  const imageUrl = image.path;
+  console.log(newinstructions)
+  Recipe.findById(prodId)
+    .then(recipe => {
+      if (recipe.creator.toString() !== req.user._id.toString()) {
+        return res.redirect('/');
+      }
+      fs.unlinkSync(recipe.imagePath); // delete image from the server
+      recipe.servings = newservings;
+      recipe.preperationMinutes = newpreperationMinutes
+      recipe.cookingMinutes = newcookingMinutes
+      recipe.title = newtitle
+      recipe.ingredients = newingredients
+      recipe.instructions = newinstructions
+      recipe.imagePath = imageUrl
+      recipe.tags = newtags
+      recipe.creator = req.user
+      return recipe.save()
+        .then(result => {
+          console.log('UPDATED recipe!');
+          res.redirect('/auth/dashboard');
+        })
+    })
+    .catch(err => {
+      console.log(err);
+      res.redirect('/500');
+    });
+}
 
 exports.deleteRecipe = async (req, res) => {
   try {
@@ -315,9 +368,9 @@ exports.getList = async (req, res) => {
     const list = req.user.shoppingList;
     let ingredients = [];
     if (list.length > 1) {
-       ingredients = list;
+      ingredients = list;
     }
-    res.render('list', { 
+    res.render('list', {
       path: '/list',
       title: 'Grocery List',
       ingredients: ingredients,
@@ -333,18 +386,18 @@ exports.addList = async (req, res) => {
     const recipe = await Recipe.findById(id);
     const ingredients = recipe.ingredients;
     const userIngredients = req.user.shoppingList;
-      for(let i = 0; i < ingredients.length; i++) {
-        if (userIngredients.length > 0) {
-          const index = userIngredients.indexOf(ingredients[i].name);
-          console.log(index);
-          if(index < 0) {
-            userIngredients.push(ingredients[i].name);
-          }
-        }  
+    for (let i = 0; i < ingredients.length; i++) {
+      if (userIngredients.length > 0) {
+        const index = userIngredients.indexOf(ingredients[i].name);
+        console.log(index);
+        if (index < 0) {
+          userIngredients.push(ingredients[i].name);
+        }
+      }
     }
-      await User.updateOne({ _id: req.user.id }, { $set: { shoppingList: userIngredients } });
-      res.redirect('/');
-    
+    await User.updateOne({ _id: req.user.id }, { $set: { shoppingList: userIngredients } });
+    res.redirect('/');
+
   } catch (error) {
     console.error(error);
   }

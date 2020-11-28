@@ -34,19 +34,8 @@
                     <label class="form-control" for="ingredient1">Ingredients</label><br>
                     <input class="form-control" type="text" placeholder="Ingredient #1" name="ingredient1"
                         id="ingredient1">
-                    <input class="form-control amount" name="amount1" type="number" step=".01" placeholder="amount">
-                    <select name="unit1" id="unit1">
-                        <option value="teaspoon">teaspoon</option>
-                        <option value="tablespoon">tablespoon</option>
-                        <option value="cup">cup</option>
-                        <option value="pint">pint</option>
-                        <option value="quart">quart</option>
-                        <option value="gallon">gallon</option>
-                        <option value="pound">pound</option>
-                        <option id="otherId1" value="other">other</option>
-                        <option value="" hidden>hidden</option>
-                    </select>
-                    <input class='form-control' type="text" hidden id="hiddenUnit1"><br>
+                    <input class="form-control amount" name="amount1" type="text" step=".01" placeholder="amount">
+                    <input name="unit1" type="text" id="unit1" placeholder="Unit (cup, teaspoon, etc.)"><br>
                     <div id="ingredients">
                     </div>
                     <button type='button' id="ingredientBtn">Add another Ingredient</button><br><br>
@@ -56,7 +45,7 @@
                         id="direction1"></textarea><br>
                     <div id="directions">
                     </div>
-                    <button type="button" id="directionBtn" onclick="addDirection()">Add another
+                    <button type="button" id="directionBtn">Add another
                         Direction</button><br><br>
 
                     <label class="form-control" for="image">Upload picture of final product</label><br>
@@ -78,7 +67,7 @@
                     <input class="form-control" type="checkbox" id="tag6" name="tag6" value="dessert">
                     <label class="form-control" for="tag6">Dessert</label><br>
 
-                    <input class="form-control" type="submit"> 
+                    <input class="form-control" type="submit">
                 </form>
             </div>
 

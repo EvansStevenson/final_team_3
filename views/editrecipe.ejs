@@ -11,9 +11,9 @@
             <h1>Edit Recipe</h1>
 
             <div class="recipe">
-                <form class="login-form" action="/recipe/addrecipe/submit" method="POST" enctype="multipart/form-data">
+                <form class="login-form" action="/recipe/edit" method="POST" enctype="multipart/form-data">
+                    <input type="text" name="recipeId" value="<%= id %>" hidden>
                     <input type="hidden" name="_csrf" value="<%= csrf %>" />
-                    <input id="numOfIngredients" type="number" value="1" name="numIngredients" hidden>
                     <label for="servings">Servings</label><br>
                     <input class="form-control" type="number" step=".01" placeholder="Servings" name="servings"
                         id="servings" value="<%= servings %>"><br><br>
@@ -30,28 +30,18 @@
                     <input class="form-control" type="text" placeholder="Title" name="title" id="title"
                         value="<%= title %>"><br><br>
 
-
                     <label class="form-control" for="ingredient1">Ingredients</label><br>
-                    <input class="form-control" type="text" placeholder="Ingredient #1" name="ingredient1"
-                        id="ingredient1">
-                    <input class="form-control amount" name="amount1" type="number" step=".01" placeholder="amount">
-                    <select name="unit1" id="unit1">
-                        <option value="teaspoon">teaspoon</option>
-                        <option value="tablespoon">tablespoon</option>
-                        <option value="cup">cup</option>
-                        <option value="pint">pint</option>
-                        <option value="quart">quart</option>
-                        <option value="gallon">gallon</option>
-                        <option value="pound">pound</option>
-                        <option id="otherId1" value="other">other</option>
-                        <option value="" hidden>hidden</option>
-                    </select>
-                    <input class='form-control' type="text" hidden id="hiddenUnit1"><br>
+                    <% let j = 0 %>
+                    <% for (j = 0; j < ingredients.length; j++){ %>
+                    <input class="form-control" type="text" placeholder="Ingredient #1" name="<%= 'ingredient' + j %>"
+                        id="ingredient1" value="<%= ingredients[j].name %>">
+                    <input class="form-control amount" name="<%= 'amount' + j %>" type="text" step=".01" placeholder="amount" value="<%= ingredients[j].amount %> ">
+                    <input name="<%= 'unit' + j %>" type="text" id="unit1" placeholder="Unit (cup, teaspoon, etc.)" value="<%= ingredients[j].unit %>"><br>
+                    <% } %>
+                    <input id="numOfIngredients" type="number" value="<%= j %>" name="numIngredients" hidden>
                     <div id="ingredients">
                     </div>
                     <button type='button' id="ingredientBtn">Add another Ingredient</button><br><br>
-
-
 
                     <label class="form-control">Directions</label><br>
                     <% let i = 0 %>
@@ -60,15 +50,13 @@
                         name="<%= 'direction' + i %>" id="<%= 'direction' + i %>"><%= instructions[i] %></textarea><br>
                     <% } %>
                     <input id="numOfDirections" type="number" value="<%= i %>" name="numDirections" hidden>
-
                     <div id="directions">
                     </div>
-                    <button type="button" id="directionBtn" onclick="addDirection()">Add another
+                    <button type="button" id="directionBtn">Add another
                         Direction</button><br><br>
 
                     <label class="form-control" for="image">Upload picture of final product</label><br>
                     <input class="form-control" type="file" name="image" id="image"><br><br>
-
 
                     <label class="form-control">Categories</label><br>
                     <% if (!tags.indexOf("chicken")) { %>
