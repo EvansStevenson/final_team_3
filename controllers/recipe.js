@@ -202,28 +202,38 @@ exports.getInfo = async (req, res) => {
 };
 
 exports.getEditRecipe = async (req, res) => {
-  try {
     const recipe = await Recipe.findById(req.params.id);
-    //console.log(recipe);
-    res.status(422).render('addrecipe', {
+    console.log(recipe.tags);
+    res.render('editrecipe', {
       title: 'Edit Recipe | Gourmeat',
-      path: '',
-      errorMessage: '',
-      error: [],
-      oldInput: {
-        servings: recipe.servings,
-        preperationMinutes: recipe.preperationMinutes,
-        cookingMinutes: recipe.cookingMinutes,
-        title: recipe.title,
-        ingredients: recipe.ingredients,
-        instructions: recipe.instructions,
-        numIngredients: recipe.numIngredients,
-        numDirections: recipe.numDirections,
-      },
-    });
-  } catch (error) {
-    console.error(error);
-  }
+      path: 'editrecipe',
+      servings: recipe.servings,
+      preperationMinutes: recipe.preperationMinutes,
+      cookingMinutes: recipe.cookingMinutes,
+      title: recipe.title,
+      ingredients: recipe.ingredients,
+      instructions: recipe.instructions,
+      tags: recipe.tags,
+    })
+  //   res.status(422).render('addrecipe', {
+  //     title: 'Edit Recipe | Gourmeat',
+  //     path: '',
+  //     errorMessage: '',
+  //     error: [],
+  //     oldInput: {
+  //       servings: recipe.servings,
+  //       preperationMinutes: recipe.preperationMinutes,
+  //       cookingMinutes: recipe.cookingMinutes,
+  //       title: recipe.title,
+  //       ingredients: recipe.ingredients,
+  //       instructions: recipe.instructions,
+  //       numIngredients: recipe.numIngredients,
+  //       numDirections: recipe.numDirections,
+  //     },
+  //   });
+  // } catch (error) {
+  //   console.error(error);
+  // }
 };
 
 exports.deleteRecipe = async (req, res) => {
