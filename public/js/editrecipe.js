@@ -13,7 +13,7 @@ function addIngredient() {
 
     let amount = document.createElement("input");
     amount.setAttribute('name', 'amount' + numberOfIngredients.toString());
-    amount.setAttribute('type', 'number');
+    amount.setAttribute('type', 'text');
     amount.setAttribute('step', '.01');
     amount.setAttribute('placeholder', 'amount');
     amount.setAttribute('style', 'width: 80px;');

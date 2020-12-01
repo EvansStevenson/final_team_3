@@ -267,7 +267,7 @@ exports.postEditRecipe = (req, res) => {
       if (recipe.creator.toString() !== req.user._id.toString()) {
         return res.redirect('/');
       }
-      fs.unlinkSync(recipe.imagePath); // delete image from the server
+      //fs.unlinkSync(recipe.imagePath); // delete image from the server
       recipe.servings = newservings;
       recipe.preperationMinutes = newpreperationMinutes
       recipe.cookingMinutes = newcookingMinutes

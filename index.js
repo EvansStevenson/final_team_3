@@ -57,7 +57,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'));
 
 /* add session to the app */

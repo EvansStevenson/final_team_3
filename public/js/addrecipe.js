@@ -11,8 +11,6 @@ function addIngredient() {
     ingredient.setAttribute("class", "form-control");
     document.getElementById('ingredients').appendChild(ingredient);
 
-
-
     let amount = document.createElement("input");
     amount.setAttribute('name', 'amount' + numberOfIngredients.toString());
     amount.setAttribute('type', 'text');
@@ -20,8 +18,6 @@ function addIngredient() {
     amount.setAttribute('placeholder', 'amount');
     amount.setAttribute('style', 'width: 80px;');
     document.getElementById('ingredients').appendChild(amount);
-
-    
 
     let unit = document.createElement("input");
     unit.setAttribute("id", 'unit' + numberOfIngredients.toString());
