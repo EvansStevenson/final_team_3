@@ -15,7 +15,7 @@
                 <a class="btn btn-primary" href="/recipe/<%=recipe._id%>/edit">Edit</a>
                 <a class="btn btn-danger" href="/recipe/<%=recipe._id%>/delete">Delete</a>
             </h4>
-                <% } %>
+            <% } %>
             <% } %>
         </div>
     </div>
@@ -23,4 +23,16 @@
     <a class="btn btn-success" href="/recipe/addrecipe">Add Recipe</a>
     <% } %>
     <h2 class=""><a href="/auth/<%= user._id%>/edit">Edit Account</a></h2>
+    <div class="friends">
+        <% if (friends.length > 0) {%>
+        <h2>List of friends</h2>
+        <ul>
+            <% for (let friend of friends) {%>
+            <li><%= friend.name %></li>
+            <% } %>
+        </ul>
+        <% } else {%>
+        <a class="btn" href="/auth/users">See users</a>
+        <% } %>
+    </div>
     <%- include('./includes/end.ejs') %>

@@ -82,5 +82,7 @@ router.post('/:id/edit', [
     })
     .trim(),
 ], authController.postEditAccount);
+router.get('/users', authController.getUsers);
+router.get('/user/:id/add-to-friends', authController.addToFriends)
 
 module.exports = router;

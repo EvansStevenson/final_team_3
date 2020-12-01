@@ -142,6 +142,7 @@ exports.getDashboard = async (req, res, next) => {
   try {
     const addedRecipes = req.user.addedRecipes;
     const recipes = [];
+    const friends = req.user.friends;
     await Promise.all(
       addedRecipes.map(async item => {
         const recipe = await Recipe.findOne({ _id: item });
@@ -153,6 +154,7 @@ exports.getDashboard = async (req, res, next) => {
       path: '/auth/dashboard',
       recipes: recipes,
       user: req.user,
+      friends: friends
     });
   } catch (error) {
     console.error(error);
@@ -211,4 +213,27 @@ exports.postEditAccount = async (req, res) => {
   } catch (error) {
     console.error(error);
   }
+}
+
+exports.getUsers = async (req, res) => {
+  let users = await User.find();
+  const friends = req.user.friends;
+  friends.forEach(x => {
+    users = users.filter(u => u._id !== x._id);
+  })
+  res.render('users', {
+    title: 'Users',
+    path: '',
+    users: users
+  })
+}
+
+exports.addToFriends = async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findById(id);
+  const friendRequest = user.friendRequest;
+  friendRequest.push({ requestor: req.user._id, approved: false });
+  user.update({ $set: { friendRequest: friendRequest } });
+
+
 }

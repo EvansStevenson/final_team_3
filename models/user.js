@@ -9,7 +9,11 @@ const userSchema = new Schema({
   resetTokenExpiration: { type: Date },
   addedRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
   favoriteRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
-  shoppingList: [{type: String}],
+  shoppingList: [{ type: String }],
+  friendRequest: [{
+    requestor: { type: Schema.Types.ObjectId, ref: 'User' },
+    approved: { type: Boolean }
+  }],
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   level: { type: Number },
 });
