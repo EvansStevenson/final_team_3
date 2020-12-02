@@ -87,7 +87,7 @@ exports.getSignup = (req, res, next) => {
         confirmPassword: req.body.confirmPassword,
       },
       editMode: false,
-      user: ''
+      user: '',
     });
   }
   res.render('auth/signup', {
@@ -103,7 +103,7 @@ exports.getSignup = (req, res, next) => {
       confirmPassword: '',
     },
     editMode: false,
-    user: ''
+    user: '',
   });
 };
 
@@ -126,7 +126,7 @@ exports.postSignup = async (req, res, next) => {
           confirmPassword: req.body.confirmPassword,
         },
         editMode: false,
-        user: ''
+        user: '',
       });
     }
     const hash = await bcrypt.hash(password, 12);
@@ -143,18 +143,29 @@ exports.getDashboard = async (req, res, next) => {
     const addedRecipes = req.user.addedRecipes;
     const recipes = [];
     const friends = req.user.friends;
+    const requestsReceived = [];
     await Promise.all(
       addedRecipes.map(async item => {
         const recipe = await Recipe.findOne({ _id: item });
         recipes.push(recipe);
       })
     );
+    if (req.user.friendRequests > 0) {
+      const requests = req.friendRequests;
+      await Promise.all(
+        requests.map(async id => {
+          const user = await User.findById(id);
+          requestsReceived.push(user);
+        })
+      );
+    }
     res.render('dashboard', {
       title: 'Dashboard | Gourmeat',
       path: '/auth/dashboard',
       recipes: recipes,
       user: req.user,
-      friends: friends
+      friends: friends,
+      requests: requestsReceived,
     });
   } catch (error) {
     console.error(error);
@@ -176,12 +187,12 @@ exports.getEditAccount = async (req, res) => {
         confirmPassword: '',
       },
       editMode: true,
-      user: req.user
-    })
+      user: req.user,
+    });
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 exports.postEditAccount = async (req, res) => {
   try {
@@ -202,7 +213,7 @@ exports.postEditAccount = async (req, res) => {
           confirmPassword: req.body.confirmPassword,
         },
         editMode: true,
-        user: req.user
+        user: req.user,
       });
     }
     const hash = await bcrypt.hash(password, 12);
@@ -213,27 +224,52 @@ exports.postEditAccount = async (req, res) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 exports.getUsers = async (req, res) => {
-  let users = await User.find();
+  const users = await User.find();
   const friends = req.user.friends;
-  friends.forEach(x => {
-    users = users.filter(u => u._id !== x._id);
-  })
+  let displayUsers = [];
+  let request;
+  let friendsIndex;
+  for (let i = 0; i < users.length; i++) {
+    friendsIndex = friends.indexOf(users[i]._id);
+    req.user.friendRequestsSent.forEach(x => {
+      console.log(x.user);
+      console.log(users[i]._id);
+      if (x.user === users[i]._id) {
+      }
+    });
+    console.log(request);
+    if (friendsIndex <= 0 && request <= 0) {
+      displayUsers.push(users[i]);
+    }
+  }
+
   res.render('users', {
     title: 'Users',
     path: '',
-    users: users
-  })
-}
+    users: displayUsers,
+  });
+};
 
 exports.addToFriends = async (req, res) => {
-  const id = req.params.id;
-  const user = await User.findById(id);
-  const friendRequest = user.friendRequest;
-  friendRequest.push({ requestor: req.user._id, approved: false });
-  user.update({ $set: { friendRequest: friendRequest } });
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id);
+    const friendRequest = user.friendRequests;
+    friendRequest.push({ requestor: req.user._id, approved: false });
+    user.update({ $set: { friendRequests: friendRequest } });
+    user.save();
+    const sentRequests = req.user.friendRequestsSent;
+    sentRequests.push({
+      user: user._id,
+      confirmed: false,
+    });
+    await User.updateOne({ _id: req.user._id }, { $set: { friendRequestsSent: sentRequests } });
 
-
-}
+    res.redirect('/auth/users');
+  } catch (error) {
+    console.log(error);
+  }
+};

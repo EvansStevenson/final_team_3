@@ -300,14 +300,13 @@ exports.removeFavorite = async (req, res) => {
 };
 
 exports.getList = async (req, res) => {
-
   try {
     const list = req.user.shoppingList;
     let ingredients = [];
     if (list.length > 1) {
-       ingredients = list;
+      ingredients = list;
     }
-    res.render('list', { 
+    res.render('list', {
       path: '/list',
       title: 'Grocery List',
       ingredients: ingredients,
@@ -323,18 +322,17 @@ exports.addList = async (req, res) => {
     const recipe = await Recipe.findById(id);
     const ingredients = recipe.ingredients;
     const userIngredients = req.user.shoppingList;
-      for(let i = 0; i < ingredients.length; i++) {
-        if (userIngredients.length > 0) {
-          const index = userIngredients.indexOf(ingredients[i].name);
-          console.log(index);
-          if(index < 0) {
-            userIngredients.push(ingredients[i].name);
-          }
-        }  
+    for (let i = 0; i < ingredients.length; i++) {
+      if (userIngredients.length > 0) {
+        const index = userIngredients.indexOf(ingredients[i].name);
+        console.log(index);
+        if (index < 0) {
+          userIngredients.push(ingredients[i].name);
+        }
+      }
     }
-      await User.updateOne({ _id: req.user.id }, { $set: { shoppingList: userIngredients } });
-      res.redirect('/');
-    
+    await User.updateOne({ _id: req.user.id }, { $set: { shoppingList: userIngredients } });
+    res.redirect('/');
   } catch (error) {
     console.error(error);
   }

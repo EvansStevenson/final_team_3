@@ -10,10 +10,20 @@ const userSchema = new Schema({
   addedRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
   favoriteRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
   shoppingList: [{ type: String }],
-  friendRequest: [{
-    requestor: { type: Schema.Types.ObjectId, ref: 'User' },
-    approved: { type: Boolean }
-  }],
+  friendRequests: [
+    {
+      _id: false,
+      requestor: { type: Schema.Types.ObjectId, ref: 'User' },
+      approved: { type: Boolean },
+    },
+  ],
+  friendRequestsSent: [
+    {
+      _id: false,
+      user: { type: Schema.Types.ObjectId, ref: 'User' },
+      confirmed: { type: Boolean },
+    },
+  ],
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   level: { type: Number },
 });

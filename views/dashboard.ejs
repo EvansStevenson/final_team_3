@@ -34,5 +34,14 @@
         <% } else {%>
         <a class="btn" href="/auth/users">See users</a>
         <% } %>
+        <% if (requests > 0) {%> 
+            <h2>Friend requests:</h2>
+            <ul>
+                <% for (let request of requests) {%> 
+                    <li><p>Request from: <%= request.name %></p> <a class="btn" href="/auth/user/<%= request._id %>/accept ">Accept request</a><a class="btn" href="auth/user/<%= request._id %>/decline">Decline request</a> </li>
+                <% } %> 
+            </ul>
+        <% } %> 
+
     </div>
     <%- include('./includes/end.ejs') %>
