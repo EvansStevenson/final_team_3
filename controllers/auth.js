@@ -161,7 +161,7 @@ exports.getDashboard = async (req, res, next) => {
       );
     }
     res.render('dashboard', {
-      title: req.user.name + '\'s Dashboard | Gourmeat',
+      title: req.user.name + "'s Dashboard | Gourmeat",
       path: '/auth/dashboard',
       recipes: recipes,
       user: req.user,
@@ -231,20 +231,15 @@ exports.getUsers = async (req, res) => {
   const users = await User.find();
   const friends = req.user.friends;
   const requestsSent = req.user.friendRequestsSent;
-  let displayUsers = [];
-  let request;
-  let friendsIndex;
-  for (let i = 0; i < users.length; i++) {
-    friendsIndex = friends.indexOf(users[i]._id);
-    requestsSent.forEach(y => {
-      request = users.findIndex(x => x._id === y.user);
+  const notFriends = users.filter(x => x._id.toHexString() !== req.user._id.toHexString());
+  const displayUsers = [];
+  for (let i = 0; i < notFriends.length; i++) {
+    requestsSent.forEach(x => {
+      if (x.user.toHexString() !== notFriends[i]._id.toHexString()) {
+        displayUsers.push(notFriends[i]);
+      }
     });
-    console.log(request);
-    if (friendsIndex <= 0 && request <= 0) {
-      displayUsers.push(users[i]);
-    }
   }
-
   res.render('users', {
     title: 'Users',
     path: '',

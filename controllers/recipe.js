@@ -216,7 +216,7 @@ exports.getEditRecipe = async (req, res) => {
     instructions: recipe.instructions,
     tags: recipe.tags,
     id: prodId,
-  })
+  });
 };
 
 exports.postEditRecipe = (req, res) => {
@@ -260,36 +260,36 @@ exports.postEditRecipe = (req, res) => {
   if (image) {
     imageUrl = image.path;
   }
-  
-  console.log(newinstructions)
+
+  console.log(newinstructions);
   Recipe.findById(prodId)
     .then(recipe => {
       if (recipe.creator.toString() !== req.user._id.toString()) {
         return res.redirect('/');
       }
       recipe.servings = newservings;
-      recipe.preperationMinutes = newpreperationMinutes
-      recipe.cookingMinutes = newcookingMinutes
-      recipe.title = newtitle
-      recipe.ingredients = newingredients
-      recipe.instructions = newinstructions
-      if (imageUrl !== ''){ //only update and delete old image if there is a new image 
+      recipe.preperationMinutes = newpreperationMinutes;
+      recipe.cookingMinutes = newcookingMinutes;
+      recipe.title = newtitle;
+      recipe.ingredients = newingredients;
+      recipe.instructions = newinstructions;
+      if (imageUrl !== '') {
+        //only update and delete old image if there is a new image
         fs.unlinkSync(recipe.imagePath); // delete image from the server
-        recipe.imagePath = imageUrl
+        recipe.imagePath = imageUrl;
       }
-      recipe.tags = newtags
-      recipe.creator = req.user
-      return recipe.save()
-        .then(result => {
-          console.log('UPDATED recipe!');
-          res.redirect('/auth/dashboard');
-        })
+      recipe.tags = newtags;
+      recipe.creator = req.user;
+      return recipe.save().then(result => {
+        console.log('UPDATED recipe!');
+        res.redirect('/auth/dashboard');
+      });
     })
     .catch(err => {
       console.log(err);
       res.redirect('/500');
     });
-}
+};
 
 exports.deleteRecipe = async (req, res) => {
   try {
@@ -398,10 +398,6 @@ exports.addList = async (req, res) => {
     }
     await User.updateOne({ _id: req.user.id }, { $set: { shoppingList: userIngredients } });
     res.redirect('/');
-<<<<<<< HEAD
-=======
-
->>>>>>> development
   } catch (error) {
     console.error(error);
   }
