@@ -14,9 +14,12 @@ label {
     color: white;
     width: 80%;
     border-radius: 10px;
-    margin-left: 3rem;
+    margin: auto;
     margin-bottom: 3rem;
     padding: 10px;
+    justify-content: center;
+    text-align: center;
+    text-align: left;
 }
 
 .recipe button {

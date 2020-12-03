@@ -41,10 +41,10 @@ li span {
 }
 
 p.about {
-    text-align: justify;
-    width: 75%;
+    text-align: center;
     text-align: left;
-    margin: 25px 50px;
+    width: 90%;
+    margin: 1rem auto;
 }
 
 div.about {
@@ -52,8 +52,9 @@ div.about {
     border: 1.5px solid #ef5350;
     background-color: #586BA4;
     color: white;
-    width: 80%;
+    width: 75%;
     border-radius: 10px;
     margin: 25px 50px;
     padding: 10px;
+    margin: auto;
 }
