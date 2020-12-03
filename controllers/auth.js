@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Recipe = require('../models/recipe');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
+const user = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
   res.render('./auth/login', {
@@ -160,7 +161,7 @@ exports.getDashboard = async (req, res, next) => {
       );
     }
     res.render('dashboard', {
-      title: 'Dashboard | Gourmeat',
+      title: req.user.name + '\'s Dashboard | Gourmeat',
       path: '/auth/dashboard',
       recipes: recipes,
       user: req.user,

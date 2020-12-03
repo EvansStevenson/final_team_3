@@ -8,6 +8,7 @@ router.get('/about', recipeController.getAbout);
 router.get('/categories', recipeController.getCategories);
 router.get('/:id/info', recipeController.getInfo);
 router.get('/:id/edit', recipeController.getEditRecipe);
+router.post('/edit', recipeController.postEditRecipe);
 router.get('/:id/delete', recipeController.deleteRecipe);
 router.get('/:id/favorite', recipeController.addFavorite);
 router.get('/:id/remove-favorite', recipeController.removeFavorite);

@@ -1,0 +1,124 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/stylesheets/addrecipe.css">
+</head>
+
+<body>
+    <%- include('./includes/nav.ejs') %>
+
+    <main class="content">
+        <div class="content-wrap">
+
+            <h1>Edit Recipe</h1>
+
+            <div class="recipe">
+                <form class="login-form" action="/recipe/edit" method="POST" enctype="multipart/form-data">
+                    <input type="text" name="recipeId" value="<%= id %>" hidden>
+                    <input type="hidden" name="_csrf" value="<%= csrf %>" />
+                    <label for="servings">Servings</label><br>
+                    <input class="form-control" type="number" step=".01" placeholder="Servings" name="servings"
+                        id="servings" value="<%= servings %>"><br><br>
+
+                    <label class="form-control" for="preperationMinutes">Preparation Time (Minutes)</label><br>
+                    <input class="form-control" type="number" step=".01" placeholder="Preparation Time"
+                        name="preperationMinutes" id="preperationMinutes" value="<%= preperationMinutes %>"><br><br>
+
+                    <label class="form-control" for="cookingMinutes">Cooking Time (Minutes)</label><br>
+                    <input class="form-control" type="number" step=".01" placeholder="Cooking Time"
+                        name="cookingMinutes" id="cookingMinutes" value="<%= cookingMinutes %>"><br><br>
+
+                    <label class="form-control" for="title">Title</label><br>
+                    <input class="form-control" type="text" placeholder="Title" name="title" id="title"
+                        value="<%= title %>"><br><br>
+
+                    <label class="form-control" for="ingredient1">Ingredients</label><br>
+                    <% let j = 0 %>
+                    <% for (j = 0; j < ingredients.length; j++){ %>
+                    <input class="form-control" type="text" placeholder="Ingredient #1" name="<%= 'ingredient' + j %>"
+                        id="ingredient1" value="<%= ingredients[j].name %>">
+                    <input class="form-control amount" name="<%= 'amount' + j %>" type="text" step=".01" placeholder="amount" value="<%= ingredients[j].amount %> ">
+                    <input name="<%= 'unit' + j %>" type="text" id="unit1" placeholder="Unit (cup, teaspoon, etc.)" value="<%= ingredients[j].unit %>"><br>
+                    <% } %>
+                    <input id="numOfIngredients" type="number" value="<%= j %>" name="numIngredients" hidden>
+                    <div id="ingredients">
+                    </div>
+                    <button type='button' id="ingredientBtn">Add another Ingredient</button><br><br>
+
+                    <label class="form-control">Directions</label><br>
+                    <% let i = 0 %>
+                    <% for (i = 0; i < instructions.length; i++){ %>
+                    <textarea class="form-control" placeholder="<%= 'Direction #' + (i + 1) %>"
+                        name="<%= 'direction' + i %>" id="<%= 'direction' + i %>"><%= instructions[i] %></textarea><br>
+                    <% } %>
+                    <input id="numOfDirections" type="number" value="<%= i %>" name="numDirections" hidden>
+                    <div id="directions">
+                    </div>
+                    <button type="button" id="directionBtn">Add another
+                        Direction</button><br><br>
+
+                    <label class="form-control" for="image">Upload picture of final product</label><br>
+                    <input class="form-control" type="file" name="image" id="image"><br><br>
+
+                    <label class="form-control">Categories</label><br>
+                    <% if (tags.includes("chicken")) { %>
+                    <input class="form-control" type="checkbox" id="tag0" name="tag0" value="chicken" checked>
+                    <label class="form-control" for="tag0">Chicken</label><br>
+                    <% } else{ %>
+                    <input class="form-control" type="checkbox" id="tag0" name="tag0" value="chicken">
+                    <label class="form-control" for="tag0">Chicken</label><br>
+                    <% } %>
+
+                    <% if (tags.includes("beef")) { %>
+                    <input class="form-control" type="checkbox" id="tag1" name="tag1" value="beef" checked>
+                    <label class="form-control" for="tag1">Beef</label><br>
+                    <% } else{ %>
+                    <input class="form-control" type="checkbox" id="tag1" name="tag1" value="beef">
+                    <label class="form-control" for="tag1">Beef</label><br>
+                    <% } %>
+
+                    <% if (tags.includes("pork")) { %>
+                    <input class="form-control" type="checkbox" id="tag2" name="tag2" value="pork" checked>
+                    <label class="form-control" for="tag2">Pork</label><br>
+                    <% } else{ %>
+                    <input class="form-control" type="checkbox" id="tag2" name="tag2" value="pork">
+                    <label class="form-control" for="tag2">Pork</label><br>
+                    <% } %>
+
+                    <% if (tags.includes("seafood")) { %>
+                    <input class="form-control" type="checkbox" id="tag3" name="tag3" value="seafood" checked>
+                    <label class="form-control" for="tag3">Seafood</label><br>
+                    <% } else{ %>
+                    <input class="form-control" type="checkbox" id="tag3" name="tag3" value="seafood">
+                    <label class="form-control" for="tag3">Seafood</label><br>
+                    <% } %>
+
+                    <% if (tags.includes("vegetable")) { %>
+                    <input class="form-control" type="checkbox" id="tag4" name="tag4" value="vegetable" checked>
+                    <label class="form-control" for="tag4">Vegetable</label><br>
+                    <% } else{ %>
+                    <input class="form-control" type="checkbox" id="tag4" name="tag4" value="vegetable">
+                    <label class="form-control" for="tag4">Vegetable</label><br>
+                    <% } %>
+
+                    <% if (tags.includes("vegan")) { %>
+                    <input class="form-control" type="checkbox" id="tag5" name="tag5" value="vegan" checked>
+                    <label class="form-control" for="tag5">Vegan</label><br>
+                    <% } else{ %>
+                    <input class="form-control" type="checkbox" id="tag5" name="tag5" value="vegan">
+                    <label class="form-control" for="tag5">Vegan</label><br>
+                    <% } %>
+
+                    <% if (tags.includes("dessert")) { %>
+                    <input class="form-control" type="checkbox" id="tag6" name="tag6" value="dessert" checked>
+                    <label class="form-control" for="tag6">Dessert</label><br>
+                    <% } else{ %>
+                    <input class="form-control" type="checkbox" id="tag6" name="tag6" value="dessert">
+                    <label class="form-control" for="tag6">Dessert</label><br>
+                    <% } %>
+                    <input class="form-control" type="submit">
+                </form>
+            </div>
+
+            <script src="/js/editrecipe.js"></script>
+            <%- include('./includes/end.ejs') %>
+
+           
