@@ -229,16 +229,14 @@ exports.postEditAccount = async (req, res) => {
 exports.getUsers = async (req, res) => {
   const users = await User.find();
   const friends = req.user.friends;
+  const requestsSent = req.user.friendRequestsSent;
   let displayUsers = [];
   let request;
   let friendsIndex;
   for (let i = 0; i < users.length; i++) {
     friendsIndex = friends.indexOf(users[i]._id);
-    req.user.friendRequestsSent.forEach(x => {
-      console.log(x.user);
-      console.log(users[i]._id);
-      if (x.user === users[i]._id) {
-      }
+    requestsSent.forEach(y => {
+      request = users.findIndex(x => x._id === y.user);
     });
     console.log(request);
     if (friendsIndex <= 0 && request <= 0) {
