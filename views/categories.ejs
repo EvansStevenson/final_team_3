@@ -5,12 +5,14 @@
 <body>
     <%- include('./includes/nav.ejs') %>
 
-    <main class="content">
-        <div class="content-wrap">
+    <!-- These were commented out to get rid of the footer and associated styling -->
+    <!-- <main class="content">
+        <div class="content-wrap"> -->
 
             <h1 class="" style="margin: 20px;">Food Categories</h1>
 
             <div id="cbuttons">
+<<<<<<< HEAD
                <button id="chickenbtn" class="reload chickenbg">Chicken</button><br> 
                <button id="beefbtn" class="reload beefbg">Beef</button> <br> 
                <button id="porkbtn" class="reload porkbg">Pork</button>  <br> 
@@ -18,6 +20,15 @@
                <button id="vegetablebtn" class="reload vegbg">Vegetable</button> <br> 
               <button id="veganbtn" class="reload veganbg">Vegan</button> <br> 
                <button id="dessertbtn" class="reload dessertbg">Dessert</button> <br> 
+=======
+                <button id="chickenbtn" class="reload chickenbg">Chicken</button><br>
+                <button id="beefbtn" class="reload beefbg">Beef</button> <br>
+                <button id="porkbtn" class="reload porkbg">Pork</button> <br>
+                <button id="fishbtn" class="reload fishbg">Fish</button> <br>
+                <button id="vegetablebtn" class="reload vegbg">Vegetable</button> <br>
+                <button id="veganbtn" class="reload veganbg">Vegan</button> <br>
+                <button id="dessertbtn" class="reload dessertbg">Dessert</button> <br>
+>>>>>>> development
             </div>
 
             <div style="margin-left:25%;padding:1px 16px;height:1000px;">
@@ -31,14 +42,15 @@
                             <h1 class="recipe__title"><%= recipe.title %></p>
                         </header>
                         <div class="centered">
-    
-                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-    
+
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+
                         </div>
                     </article>
                     <% } %>
                 </div>
-    
+
                 <div id="beef" hidden>
                     <% for (let recipe of beef){ %>
                     <article class="card centered" style="margin-bottom: 20px;">
@@ -49,14 +61,15 @@
                             <h1 class="recipe__title"><%= recipe.title %></p>
                         </header>
                         <div class="centered">
-    
-                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-    
+
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+
                         </div>
                     </article>
                     <% } %>
                 </div>
-    
+
                 <div id="pork" hidden>
                     <% for (let recipe of pork){ %>
                     <article class="card centered" style="margin-bottom: 20px;">
@@ -67,15 +80,16 @@
                             <h1 class="recipe__title"><%= recipe.title %></p>
                         </header>
                         <div class="centered">
-    
-                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-    
+
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+
                         </div>
                     </article>
                     <% } %>
                 </div>
-    
-    
+
+
                 <div id="fish" hidden>
                     <% for (let recipe of fish){ %>
                     <article class="card centered" style="margin-bottom: 20px;">
@@ -86,14 +100,15 @@
                             <h1 class="recipe__title"><%= recipe.title %></p>
                         </header>
                         <div class="centered">
-    
-                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-    
+
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+
                         </div>
                     </article>
                     <% } %>
                 </div>
-    
+
                 <div id="vegetable" hidden>
                     <% for (let recipe of vegetable){ %>
                     <article class="card centered" style="margin-bottom: 20px;">
@@ -104,14 +119,15 @@
                             <h1 class="recipe__title"><%= recipe.title %></p>
                         </header>
                         <div class="centered">
-    
-                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-    
+
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+
                         </div>
                     </article>
                     <% } %>
                 </div>
-    
+
                 <div id="vegan" hidden>
                     <% for (let recipe of vegan){ %>
                     <article class="card centered" style="margin-bottom: 20px;">
@@ -122,14 +138,15 @@
                             <h1 class="recipe__title"><%= recipe.title %></p>
                         </header>
                         <div class="centered">
-    
-                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-    
+
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+
                         </div>
                     </article>
                     <% } %>
                 </div>
-    
+
                 <div id="dessert" hidden>
                     <% for (let recipe of dessert){ %>
                     <article class="card centered" style="margin-bottom: 20px;">
@@ -140,154 +157,167 @@
                             <h1 class="recipe__title"><%= recipe.title %></p>
                         </header>
                         <div class="centered">
-    
-                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-    
+
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+
                         </div>
                     </article>
                     <% } %>
                 </div>
-            <div id="chicken" hidden>
-                <% for (let recipe of chicken){ %>
-                <article class="card centered" style="margin-bottom: 20px;">
-                    <div class="card__image">
-                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
-                    </div>
-                    <header class="card__header">
-                        <h1 class="recipe__title"><%= recipe.title %></p>
-                    </header>
-                    <div class="centered">
+                <div id="chicken" hidden>
+                    <% for (let recipe of chicken){ %>
+                    <article class="card centered" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title"><%= recipe.title %></p>
+                        </header>
+                        <div class="centered">
 
-                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+                            <% if (isAuthenticated) { %>
                             <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
-                        <% } %>
+                            <% } %>
 
-                    </div>
-                </article>
-                <% } %>
-            </div>
+                        </div>
+                    </article>
+                    <% } %>
+                </div>
 
-            <div id="beef" hidden>
-                <% for (let recipe of beef){ %>
-                <article class="card centered" style="margin-bottom: 20px;">
-                    <div class="card__image">
-                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
-                    </div>
-                    <header class="card__header">
-                        <h1 class="recipe__title"><%= recipe.title %></p>
-                    </header>
-                    <div class="centered">
+                <div id="beef" hidden>
+                    <% for (let recipe of beef){ %>
+                    <article class="card centered" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title"><%= recipe.title %></p>
+                        </header>
+                        <div class="centered">
 
-                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+                            <% if (isAuthenticated) { %>
                             <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
-                        <% } %>
-                    </div>
-                </article>
-                <% } %>
-            </div>
+                            <% } %>
+                        </div>
+                    </article>
+                    <% } %>
+                </div>
 
-            <div id="pork" hidden>
-                <% for (let recipe of pork){ %>
-                <article class="card centered" style="margin-bottom: 20px;">
-                    <div class="card__image">
-                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
-                    </div>
-                    <header class="card__header">
-                        <h1 class="recipe__title"><%= recipe.title %></p>
-                    </header>
-                    <div class="centered">
+                <div id="pork" hidden>
+                    <% for (let recipe of pork){ %>
+                    <article class="card centered" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title"><%= recipe.title %></p>
+                        </header>
+                        <div class="centered">
 
-                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+                            <% if (isAuthenticated) { %>
                             <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
-                        <% } %>
-                    </div>
-                </article>
-                <% } %>
-            </div>
+                            <% } %>
+                        </div>
+                    </article>
+                    <% } %>
+                </div>
 
 
-            <div id="fish" hidden>
-                <% for (let recipe of fish){ %>
-                <article class="card centered" style="margin-bottom: 20px;">
-                    <div class="card__image">
-                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
-                    </div>
-                    <header class="card__header">
-                        <h1 class="recipe__title"><%= recipe.title %></p>
-                    </header>
-                    <div class="centered">
+                <div id="fish" hidden>
+                    <% for (let recipe of fish){ %>
+                    <article class="card centered" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title"><%= recipe.title %></p>
+                        </header>
+                        <div class="centered">
 
-                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+                            <% if (isAuthenticated) { %>
                             <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
-                        <% } %>
-                    </div>
-                </article>
-                <% } %>
-            </div>
+                            <% } %>
+                        </div>
+                    </article>
+                    <% } %>
+                </div>
 
-            <div id="vegetable" hidden>
-                <% for (let recipe of vegetable){ %>
-                <article class="card centered" style="margin-bottom: 20px;">
-                    <div class="card__image">
-                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
-                    </div>
-                    <header class="card__header">
-                        <h1 class="recipe__title"><%= recipe.title %></p>
-                    </header>
-                    <div class="centered">
+                <div id="vegetable" hidden>
+                    <% for (let recipe of vegetable){ %>
+                    <article class="card centered" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title"><%= recipe.title %></p>
+                        </header>
+                        <div class="centered">
 
-                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+                            <% if (isAuthenticated) { %>
                             <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
-                        <% } %>
-                    </div>
-                </article>
-                <% } %>
-            </div>
+                            <% } %>
+                        </div>
+                    </article>
+                    <% } %>
+                </div>
 
-            <div id="vegan" hidden>
-                <% for (let recipe of vegan){ %>
-                <article class="card centered" style="margin-bottom: 20px;">
-                    <div class="card__image">
-                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
-                    </div>
-                    <header class="card__header">
-                        <h1 class="recipe__title"><%= recipe.title %></p>
-                    </header>
-                    <div class="centered">
+                <div id="vegan" hidden>
+                    <% for (let recipe of vegan){ %>
+                    <article class="card centered" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title"><%= recipe.title %></p>
+                        </header>
+                        <div class="centered">
 
-                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+                            <% if (isAuthenticated) { %>
                             <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
-                        <% } %>
-                    </div>
-                </article>
-                <% } %>
-            </div>
+                            <% } %>
+                        </div>
+                    </article>
+                    <% } %>
+                </div>
 
-            <div id="dessert" hidden>
-                <% for (let recipe of dessert){ %>
-                <article class="card centered" style="margin-bottom: 20px;">
-                    <div class="card__image">
-                        <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
-                    </div>
-                    <header class="card__header">
-                        <h1 class="recipe__title"><%= recipe.title %></p>
-                    </header>
-                    <div class="centered">
+                <div id="dessert" hidden>
+                    <% for (let recipe of dessert){ %>
+                    <article class="card centered" style="margin-bottom: 20px;">
+                        <div class="card__image">
+                            <img src=" ../<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                        </div>
+                        <header class="card__header">
+                            <h1 class="recipe__title"><%= recipe.title %></p>
+                        </header>
+                        <div class="centered">
 
-                        <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View Recipe</button></a>
-                        <% if (isAuthenticated) { %>
+                            <a href="/recipe/<%= recipe._id%>/info"><button class="btn" type="submit">View
+                                    Recipe</button></a>
+                            <% if (isAuthenticated) { %>
                             <a href="/recipe/<%= recipe._id%>/favorite" class="btn btn-success">Add to Favorites</a>
-                        <% } %>
-                    </div>
-                </article>
-                <% } %>
+                            <% } %>
+                        </div>
+                    </article>
+                    <% } %>
+                </div>
+
+                <script src="/js/categories.js"></script>
             </div>
-            
-    <script src="/js/categories.js"></script>
-    <%- include('./includes/end.ejs') %>
+        <!-- </div>
+    </main> -->
+</body>
+
+</html>
