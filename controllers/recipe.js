@@ -256,25 +256,27 @@ exports.postEditRecipe = (req, res) => {
     newinstructions.push(currentDirection);
   }
   let image = req.file;
-  //console.log(image);
-  if (!image) {
-    res.redirect('/500');
+  let imageUrl = '';
+  if (image) {
+    imageUrl = image.path;
   }
-  const imageUrl = image.path;
+  
   console.log(newinstructions)
   Recipe.findById(prodId)
     .then(recipe => {
       if (recipe.creator.toString() !== req.user._id.toString()) {
         return res.redirect('/');
       }
-      //fs.unlinkSync(recipe.imagePath); // delete image from the server
       recipe.servings = newservings;
       recipe.preperationMinutes = newpreperationMinutes
       recipe.cookingMinutes = newcookingMinutes
       recipe.title = newtitle
       recipe.ingredients = newingredients
       recipe.instructions = newinstructions
-      recipe.imagePath = imageUrl
+      if (imageUrl !== ''){ //only update and delete old image if there is a new image 
+        fs.unlinkSync(recipe.imagePath); // delete image from the server
+        recipe.imagePath = imageUrl
+      }
       recipe.tags = newtags
       recipe.creator = req.user
       return recipe.save()

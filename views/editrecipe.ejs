@@ -59,7 +59,7 @@
                     <input class="form-control" type="file" name="image" id="image"><br><br>
 
                     <label class="form-control">Categories</label><br>
-                    <% if (!tags.indexOf("chicken")) { %>
+                    <% if (tags.includes("chicken")) { %>
                     <input class="form-control" type="checkbox" id="tag0" name="tag0" value="chicken" checked>
                     <label class="form-control" for="tag0">Chicken</label><br>
                     <% } else{ %>
@@ -67,7 +67,7 @@
                     <label class="form-control" for="tag0">Chicken</label><br>
                     <% } %>
 
-                    <% if (!tags.indexOf("beef")) { %>
+                    <% if (tags.includes("beef")) { %>
                     <input class="form-control" type="checkbox" id="tag1" name="tag1" value="beef" checked>
                     <label class="form-control" for="tag1">Beef</label><br>
                     <% } else{ %>
@@ -75,7 +75,7 @@
                     <label class="form-control" for="tag1">Beef</label><br>
                     <% } %>
 
-                    <% if (!tags.indexOf("pork")) { %>
+                    <% if (tags.includes("pork")) { %>
                     <input class="form-control" type="checkbox" id="tag2" name="tag2" value="pork" checked>
                     <label class="form-control" for="tag2">Pork</label><br>
                     <% } else{ %>
@@ -83,7 +83,7 @@
                     <label class="form-control" for="tag2">Pork</label><br>
                     <% } %>
 
-                    <% if (!tags.indexOf("seafood")) { %>
+                    <% if (tags.includes("seafood")) { %>
                     <input class="form-control" type="checkbox" id="tag3" name="tag3" value="seafood" checked>
                     <label class="form-control" for="tag3">Seafood</label><br>
                     <% } else{ %>
@@ -91,7 +91,7 @@
                     <label class="form-control" for="tag3">Seafood</label><br>
                     <% } %>
 
-                    <% if (!tags.indexOf("vegetable")) { %>
+                    <% if (tags.includes("vegetable")) { %>
                     <input class="form-control" type="checkbox" id="tag4" name="tag4" value="vegetable" checked>
                     <label class="form-control" for="tag4">Vegetable</label><br>
                     <% } else{ %>
@@ -99,7 +99,7 @@
                     <label class="form-control" for="tag4">Vegetable</label><br>
                     <% } %>
 
-                    <% if (!tags.indexOf("vegan")) { %>
+                    <% if (tags.includes("vegan")) { %>
                     <input class="form-control" type="checkbox" id="tag5" name="tag5" value="vegan" checked>
                     <label class="form-control" for="tag5">Vegan</label><br>
                     <% } else{ %>
@@ -107,7 +107,7 @@
                     <label class="form-control" for="tag5">Vegan</label><br>
                     <% } %>
 
-                    <% if (!tags.indexOf("dessert")) { %>
+                    <% if (tags.includes("dessert")) { %>
                     <input class="form-control" type="checkbox" id="tag6" name="tag6" value="dessert" checked>
                     <label class="form-control" for="tag6">Dessert</label><br>
                     <% } else{ %>
