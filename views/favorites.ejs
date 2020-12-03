@@ -7,21 +7,24 @@
 
   <h1 class="">My Favorite Recipes</h1>
 
-  <div class="grid">
-    <% if (recipes.length > 0) { %>
-      <% for (recipe of recipes) { %>
-        <% if (recipe) {%> 
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" style="width: 100%;" src="/<%= recipe.imagePath %>" alt="<%= recipe.title %>">
-            <div class="card-body">
-              <p class="card-text"><%= recipe.title %></p>
-              <a class="btn" href="/recipe/<%= recipe._id %>/info">View Recipe</a>
-              <a class="btn" href="/recipe/<%= recipe._id %>/remove-favorite">Remove</a>
-            </div>
-          </div>
-        <% } %> 
-      <% } %>
-    <% } %>
-  </div>
+  <main class="content">
+    <div class="content-wrap">
 
-  <%- include('./includes/end.ejs') %>
+      <div class="grid">
+        <% if (recipes.length > 0) { %>
+          <% for (recipe of recipes) { %>
+            <% if (recipe) {%>
+              <div class="card" style="width: 18rem; margin-bottom: 1rem;">
+                <img class="card-img-top" style="width: 100%;" src="/<%= recipe.imagePath %>" alt="<%= recipe.title %>">
+                <div class="card-body">
+                  <p class="card-text"><%= recipe.title %></p>
+                  <a class="btn" href="/recipe/<%= recipe._id %>/info">View Recipe</a>
+                  <a class="btn" href="/recipe/<%= recipe._id %>/remove-favorite">Remove</a>
+                </div>
+              </div>
+            <% } %>
+          <% } %>
+        <% } %>
+      </div>
+
+      <%- include('./includes/end.ejs') %>
