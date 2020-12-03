@@ -3,6 +3,7 @@ const Recipe = require('../models/recipe');
 const User = require('../models/user');
 const fs = require('fs');
 const user = require('../models/user');
+const { userInfo } = require('os');
 
 exports.getHomePage = (req, res) => {
   Recipe.find()
@@ -323,15 +324,19 @@ exports.addList = async (req, res) => {
     const recipe = await Recipe.findById(id);
     const ingredients = recipe.ingredients;
     const userIngredients = req.user.shoppingList;
+    if (userIngredients <= 0) { 
+      ingredients.forEach(x => {
+        userIngredients.push(x.name);
+      });
+    }
       for(let i = 0; i < ingredients.length; i++) {
         if (userIngredients.length > 0) {
           const index = userIngredients.indexOf(ingredients[i].name);
-          console.log(index);
           if(index < 0) {
             userIngredients.push(ingredients[i].name);
           }
         }  
-    }
+    } 
       await User.updateOne({ _id: req.user.id }, { $set: { shoppingList: userIngredients } });
       res.redirect('/');
     
