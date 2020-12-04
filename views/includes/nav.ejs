@@ -4,13 +4,13 @@
 
         <!-- Logo/ Homepage link -->
         <div class="main-header__item">
-            <a class="<%= path === '/' ? 'active' : '' %>" href="/"><img src="/images/logo-transparent.png" class="logo"
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/"><img src="/images/logo-transparent.png"
                     alt="Gourmeat Logo" height="50" width="50" /></a>
         </div>
 
         <ul class="main-header__item-list">
             <li class="main-header__item">
-                <a class="<%= path === '/about' ? 'active' : '' %>" href="/recipe/about">About Us</a>
+                <a class="<%= path === '/recipe/about' ? 'active' : '' %>" href="/recipe/about">About Us</a>
             </li>
 
             <li class="main-header__item">
@@ -19,13 +19,12 @@
             </li>
         </ul>
 
+        <!-- Authenticated Only Pages -->
         <ul class="main-header__item-list" style="float: left;">
-            <!-- About page -->
-
 
             <% if (isAuthenticated) { %>
             <li class="main-header__item">
-                <a class="<%= path === '/recipe/add-recipe' ? 'active' : '' %>" href="/recipe/addrecipe">Add Recipe</a>
+                <a class="<%= path === '/recipe/addrecipe' ? 'active' : '' %>" href="/recipe/addrecipe">Add Recipe</a>
 
             <li class="main-header__item">
                 <a class="<%= path === '/favorites' ? 'active' : '' %>" href="/recipe/favorites">Favorites</a>
@@ -36,31 +35,19 @@
             </li>
 
             <li class="main-header__item">
-                <a class="<%= path === '/dashboard' ? 'active' : '' %>" href="/auth/dashboard">Dashboard</a>
+                <a class="<%= path === '/auth/dashboard' ? 'active' : '' %>" href="/auth/dashboard">Dashboard</a>
             </li>
             <% } %>
         </ul>
 
-        <!-- Searchbar -->
-        <!-- <ul class="main-header__item-list">
-                <li class="main-header__item">
-                    <div class="search-container">
-                        <form action="/search">
-                            <input type="text" placeholder="Find a recipe" name="search">
-                            <button type="submit"><img src="/images/search.png" alt="Search Icon" height="30px" width="30px"></button>
-                        </form>
-                    </div>
-                </li>
-        </ul> -->
-
         <ul class="main-header__item-list">
             <% if (!isAuthenticated) { %>
             <li class="main-header__item">
-                <a class="<%= path === '/auth/login' ? 'active' : '' %>" href="/auth/login">Log In</a>
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/auth/login">Log In</a>
             </li>
 
             <li class="main-header__item">
-                <a class="<%= path === '/auth/signup' ? 'active' : '' %>" href="/auth/signup">Sign Up</a>
+                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/auth/signup">Sign Up</a>
             </li>
             <% } else { %>
             <li class="main-header__item">

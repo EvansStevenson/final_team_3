@@ -8,31 +8,35 @@
     <main class="content">
         <div class="content-wrap">
 
-            <h1>Welcome to Gourmeat!</h1>
-
-
-            <h2>Try a random recipe:</h2>
-            <div>
-                <% if (foods.length > 0) { %>
-                <div>
-                    <article class="card centered" style="margin-bottom: 20px;">
-                        <div class="card__image">
-                            <img src=" <%= foods[0].imagePath %>" alt="<%= foods[0].title %>">
-                        </div>
-                        <header class="card__header">
-                            <h1 class="recipe__title"><%= foods[0].title %></p>
-                        </header>
-                        <div class="centered">
-
-                            <a href="/recipe/<%= foods[0]._id%>/info"><button class="btn" type="submit">View
-                                    Recipe</button></a>
-                            <% if (isAuthenticated) { %>
-                            <a href="/recipe/<%= foods[0]._id%>/favorite" class="btn btn-success">Add to Favorites</a>
-                            <% } %>
-                        </div>
-                    </article>
-                </div>
-                <% } %>
+            <div class="gourmeat-header">
+                <img src="/images/logo-transparent-minimal.png" class="logo" alt="Gourmeat Logo" />
+                <h1>Welcome to Gourmeat!</h1>
+                <hr>
             </div>
 
-            <%- include('./includes/end.ejs') %> 
+            <h2>Try a random recipe:
+            </h2>
+            <% if (foods.length > 0) { %>
+            <div>
+                <article class="card centered" style="margin-bottom: 20px;">
+                    <div class="card__image">
+                        <img src=" <%= foods[0].imagePath %>" alt="<%= foods[0].title %>">
+                    </div>
+                    <header class="card__header">
+                        <h1 class="recipe__title"><%= foods[0].title %></p>
+                    </header>
+                    <div class="centered">
+
+                        <a href="/recipe/<%= foods[0]._id%>/info"><button class="btn" type="submit">View
+                                Recipe</button></a>
+                        <% if (isAuthenticated) { %>
+                        <a href="/recipe/<%= foods[0]._id%>/favorite" class="btn btn-success">Add to Favorites</a>
+                        <% } %>
+                        <a href="/" type="submit"><button class="btn" type="submit">Random Recipe</button></a>
+                    </div>
+                </article>
+            </div>
+            <% } %>
+        </div>
+
+        <%- include('./includes/end.ejs') %>

@@ -38,8 +38,8 @@
 
                             <a href="/recipe/<%= recipe._id%>/info"><button class="btn-small" type="submit">View
                                     Recipe</button></a>
-                            <a class="btn-small btn-primary" href="/recipe/<%=recipe._id%>/edit">Edit</a>
-                            <a class="btn-small btn-danger" href="/recipe/<%=recipe._id%>/delete">Delete</a>
+                            <a  href="/recipe/<%=recipe._id%>/edit"><button class="btn-small" type="submit">Edit</button></a>
+                            <a  href="/recipe/<%=recipe._id%>/delete"><button class="btn-small" type="submit">Delete</button></a>
                         </div>
                     </article>
                     <% } %>
@@ -48,7 +48,7 @@
                 <% } else { %>
                 <h2>You have no recipes.</h2>
                 <% } %>
-                <h2 class="btn btn-success" href="/recipe/addrecipe">Add Recipe</a></h2>
+                <a href="/recipe/addrecipe"><button class="btn" type="submit">Add Recipe</button></a>
             </div>
             <div class="friends">
                 <% if (friends.length > 0) {%>
