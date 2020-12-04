@@ -45,9 +45,25 @@ form {
     color: #102542;
 }
 
+.gourmeat-header {
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+}
+
 .logo {
-    border-radius: 5px;
-    /* background: white; */
+    border-radius: 50px;
+    /* background: #fcc42a; */
+    background: #586BA4;
+    max-width: 100px;
+    max-height: 100px;
+}
+
+hr {
+    width:400px;
+    background-color: #102542;
+    margin-bottom: 20px;
 }
 
 h1, h2 {
