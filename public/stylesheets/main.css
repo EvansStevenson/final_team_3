@@ -270,7 +270,7 @@ h1, h2 {
     cursor: pointer;
 }
 
-.btn:hover, .btn:active {
+.btn:hover, .btn:active, .btn-small:hover, .btn-small:active{
     background-color: #ef5350;
     color: white;
 }

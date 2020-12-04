@@ -8,7 +8,7 @@ function addIngredient() {
     ingredient.setAttribute('type', 'text');
     ingredient.setAttribute('placeholder', 'Ingredient #' + numberOfIngredients.toString());
     ingredient.setAttribute('name', 'ingredient' + numberOfIngredients.toString());
-    ingredient.setAttribute("class", "form-control");
+    ingredient.setAttribute("class", "form-control default-input");
     document.getElementById('ingredients').appendChild(ingredient);
 
     let amount = document.createElement("input");
@@ -17,6 +17,7 @@ function addIngredient() {
     amount.setAttribute('step', '.01');
     amount.setAttribute('placeholder', 'amount');
     amount.setAttribute('style', 'width: 80px;');
+    amount.setAttribute("class", "form-control default-input amount");
     document.getElementById('ingredients').appendChild(amount);
 
     let unit = document.createElement("input");
@@ -24,6 +25,7 @@ function addIngredient() {
     unit.setAttribute("type", "text");
     unit.setAttribute("placeholder", "Unit (cup, teaspoon, etc.)");
     unit.setAttribute('name', 'unit' + numberOfIngredients.toString());
+    unit.setAttribute("class", "default-input");
     document.getElementById('ingredients').appendChild(unit);
     let br = document.createElement("br");
     document.getElementById('ingredients').appendChild(br);
@@ -34,7 +36,7 @@ function addDirection() {
     document.getElementById('numOfDirections').value = numberOfDirections;
     let newDirection = document.createElement("textarea");
     newDirection.setAttribute('placeholder', 'Direction #' + numberOfDirections.toString());
-    newDirection.setAttribute("class", "form-control");
+    newDirection.setAttribute("class", "form-control default-input");
     newDirection.setAttribute('name', 'direction' + numberOfDirections.toString());
     document.getElementById('directions').appendChild(newDirection);
     let br = document.createElement("br");
