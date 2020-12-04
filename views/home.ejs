@@ -8,16 +8,18 @@
     <main class="content">
         <div class="content-wrap">
 
-            <div class="gourmeat-header">
+            <div class="gourmeat-header" style="max-width: 80%;">
                 <img src="/images/logo-transparent-minimal.png" class="logo" alt="Gourmeat Logo" />
                 <h1>Welcome to Gourmeat!</h1>
+                <p>While you're here you can explore different types of cuisine, add your own recipes to share with the world, and connect with friends.</p>
+                <p>We hope that you enjoy your stay.</p>
                 <hr>
             </div>
 
             <h2>Try a random recipe:
             </h2>
             <% if (foods.length > 0) { %>
-            <div>
+            <div style="margin-bottom: 5rem; margin-top: 2rem;">
                 <article class="card centered" style="margin-bottom: 20px;">
                     <div class="card__image">
                         <img src=" <%= foods[0].imagePath %>" alt="<%= foods[0].title %>">

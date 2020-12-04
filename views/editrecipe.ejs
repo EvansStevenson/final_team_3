@@ -14,7 +14,12 @@
                 <form class="login-form" action="/recipe/edit" method="POST" enctype="multipart/form-data">
                     <input type="text" name="recipeId" value="<%= id %>" hidden>
                     <input type="hidden" name="_csrf" value="<%= csrf %>" />
-                    <label for="servings">Servings</label><br>
+
+                    <label for="title">Title</label><br>
+                    <input class="form-control default-input" type="text" placeholder="Title" name="title" id="title"
+                        value="<%= title %>"><br><br>
+
+                    <label class="form-control" for="servings">Servings</label><br>
                     <input class="form-control default-input" type="number" step=".01" placeholder="Servings" name="servings"
                         id="servings" value="<%= servings %>"><br><br>
 
@@ -26,9 +31,7 @@
                     <input class="form-control default-input" type="number" step=".01" placeholder="Cooking Time"
                         name="cookingMinutes" id="cookingMinutes" value="<%= cookingMinutes %>"><br><br>
 
-                    <label class="form-control" for="title">Title</label><br>
-                    <input class="form-control default-input" type="text" placeholder="Title" name="title" id="title"
-                        value="<%= title %>"><br><br>
+                    
 
                     <label class="form-control" for="ingredient1">Ingredients</label><br>
                     <% let j = 0 %>
