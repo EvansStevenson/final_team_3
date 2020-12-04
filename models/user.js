@@ -15,6 +15,7 @@ const userSchema = new Schema({
       _id: false,
       requestor: { type: Schema.Types.ObjectId, ref: 'User' },
       approved: { type: Boolean },
+      declined: { type: Boolean },
     },
   ],
   friendRequestsSent: [

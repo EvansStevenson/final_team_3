@@ -2,7 +2,6 @@ const User = require('../models/user');
 const Recipe = require('../models/recipe');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
-const user = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
   res.render('./auth/login', {
@@ -156,7 +155,7 @@ exports.getDashboard = async (req, res, next) => {
       const requests = req.user.friendRequests;
       await Promise.all(
         requests.map(async x => {
-          if (!x.approved) {
+          if (!x.approved && !x.declined) {
             const user = await User.findById(x.requestor);
             requestsReceived.push(user);
           }
@@ -170,7 +169,7 @@ exports.getDashboard = async (req, res, next) => {
           const user = await User.findById(item);
           users.push(user);
         })
-      )
+      );
     }
     // console.log(requestsReceived);
     res.render('dashboard', {
@@ -247,7 +246,6 @@ exports.getUsers = async (req, res) => {
   const notFriends = users.filter(x => x._id.toHexString() !== req.user._id.toHexString());
   const displayUsers = [];
   for (let i = 0; i < notFriends.length; i++) {
-    console.log(notFriends.length)
     if (requestsSent[i]) {
       if (requestsSent[i].user.toHexString() !== notFriends[i]._id.toHexString()) {
         displayUsers.push(notFriends[i]);
@@ -268,7 +266,7 @@ exports.addToFriends = async (req, res) => {
     const id = req.params.id;
     const user = await User.findById(id);
     const friendRequest = user.friendRequests;
-    friendRequest.push({ requestor: req.user._id, approved: false });
+    friendRequest.push({ requestor: req.user._id, approved: false, declined: false });
     user.update({ $set: { friendRequests: friendRequest } });
     user.save();
     const sentRequests = req.user.friendRequestsSent;
@@ -288,7 +286,6 @@ exports.postAcceptFriend = async (req, res) => {
   try {
     const id = req.params.id;
     const requests = req.user.friendRequests;
-    console.log(requests);
     const updatedRequests = [];
     requests.forEach(x => {
       if (id === x.requestor.toHexString()) {
@@ -297,7 +294,7 @@ exports.postAcceptFriend = async (req, res) => {
       } else {
         updatedRequests.push(x);
       }
-    })
+    });
     const friendsOne = req.user.friends;
     const user = await User.findById(id);
     friendsOne.push(user);
@@ -311,12 +308,58 @@ exports.postAcceptFriend = async (req, res) => {
       } else {
         updatedSentRequests.push(x);
       }
-    })
+    });
     const friendsTwo = user.friends;
     friendsTwo.push(req.user);
-    await User.updateOne({ _id: id }, { $set: { friendRequestsSent: updatedSentRequests, friends: friendsTwo } })
+    await User.updateOne({ _id: id }, { $set: { friendRequestsSent: updatedSentRequests, friends: friendsTwo } });
     res.redirect('/auth/dashboard');
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+exports.postDeclineFriend = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const requests = req.user.friendRequests;
+    const updatedRequests = [];
+    requests.forEach(x => {
+      if (id === x.requestor.toHexString()) {
+        x.approved = false;
+        x.declined = true;
+        updatedRequests.push(x);
+      } else {
+        updatedRequests.push(x);
+      }
+    });
+    await User.updateOne({ _id: req.user._id }, { $set: { friendRequests: updatedRequests } });
+    res.redirect('/auth/dashboard');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getFriendsRecipes = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id);
+    const addedRecipes = user.addedRecipes;
+    const displayRecipes = [];
+    if (addedRecipes.length > 0) {
+      await Promise.all(
+        addedRecipes.map(async x => {
+          const recipe = await Recipe.findById(x);
+          displayRecipes.push(recipe);
+        })
+      );
+    }
+    res.render('friends-recipes', {
+      title: 'Added Recipes',
+      path: '',
+      recipes: displayRecipes,
+      user: user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

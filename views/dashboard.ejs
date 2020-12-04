@@ -55,7 +55,7 @@
                 <h2>List of friends</h2>
                 <ul>
                     <% for (let friend of friends) {%>
-                    <li><%= friend.name %></li>
+                    <li><%= friend.name %> <a class="btn btn-primary" href="/auth/user/<%= friend._id %>/recipes">Added recipes</a></li>
                     <% } %>
                 </ul>
                 <% } else {%>
@@ -68,7 +68,7 @@
                     <li>
                         <p>Request from: <%= request.name %></p> <a class="btn"
                             href="/auth/user/<%= request._id %>/accept ">Accept request</a><a class="btn"
-                            href="auth/user/<%= request._id %>/decline">Decline request</a>
+                            href="/auth/user/<%= request._id %>/decline">Decline request</a>
                     </li>
                     <% } %>
                 </ul>
