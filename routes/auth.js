@@ -84,5 +84,6 @@ router.post('/:id/edit', [
 ], authController.postEditAccount);
 router.get('/users', authController.getUsers);
 router.get('/user/:id/add-to-friends', authController.addToFriends)
+router.get('/user/:id/accept', authController.postAcceptFriend);
 
 module.exports = router;
