@@ -276,7 +276,9 @@ exports.postEditRecipe = (req, res) => {
       recipe.instructions = newinstructions;
       if (imageUrl !== '') {
         //only update and delete old image if there is a new image
-        fs.unlinkSync(recipe.imagePath); // delete image from the server
+        if(fs.existsSync(recipe.imagePath)){ //Check if there is an old image to delete
+          fs.unlinkSync(recipe.imagePath); // delete image from the server
+        }
         recipe.imagePath = imageUrl;
       }
       recipe.tags = newtags;
