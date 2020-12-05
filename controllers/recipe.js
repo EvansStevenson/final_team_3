@@ -217,7 +217,7 @@ exports.getEditRecipe = async (req, res) => {
     instructions: recipe.instructions,
     tags: recipe.tags,
     id: prodId,
-  })
+  });
 };
 
 exports.postEditRecipe = (req, res) => {
@@ -261,36 +261,36 @@ exports.postEditRecipe = (req, res) => {
   if (image) {
     imageUrl = image.path;
   }
-  
-  console.log(newinstructions)
+
+  console.log(newinstructions);
   Recipe.findById(prodId)
     .then(recipe => {
       if (recipe.creator.toString() !== req.user._id.toString()) {
         return res.redirect('/');
       }
       recipe.servings = newservings;
-      recipe.preperationMinutes = newpreperationMinutes
-      recipe.cookingMinutes = newcookingMinutes
-      recipe.title = newtitle
-      recipe.ingredients = newingredients
-      recipe.instructions = newinstructions
-      if (imageUrl !== ''){ //only update and delete old image if there is a new image 
+      recipe.preperationMinutes = newpreperationMinutes;
+      recipe.cookingMinutes = newcookingMinutes;
+      recipe.title = newtitle;
+      recipe.ingredients = newingredients;
+      recipe.instructions = newinstructions;
+      if (imageUrl !== '') {
+        //only update and delete old image if there is a new image
         fs.unlinkSync(recipe.imagePath); // delete image from the server
-        recipe.imagePath = imageUrl
+        recipe.imagePath = imageUrl;
       }
-      recipe.tags = newtags
-      recipe.creator = req.user
-      return recipe.save()
-        .then(result => {
-          console.log('UPDATED recipe!');
-          res.redirect('/auth/dashboard');
-        })
+      recipe.tags = newtags;
+      recipe.creator = req.user;
+      return recipe.save().then(result => {
+        console.log('UPDATED recipe!');
+        res.redirect('/auth/dashboard');
+      });
     })
     .catch(err => {
       console.log(err);
       res.redirect('/500');
     });
-}
+};
 
 exports.deleteRecipe = async (req, res) => {
   try {
@@ -366,7 +366,6 @@ exports.removeFavorite = async (req, res) => {
 };
 
 exports.getList = async (req, res) => {
-
   try {
     const list = req.user.shoppingList;
     let ingredients = [];
@@ -389,23 +388,41 @@ exports.addList = async (req, res) => {
     const recipe = await Recipe.findById(id);
     const ingredients = recipe.ingredients;
     const userIngredients = req.user.shoppingList;
-    if (userIngredients <= 0) { 
+    if (userIngredients <= 0) {
       ingredients.forEach(x => {
         userIngredients.push(x.name);
       });
     }
-      for(let i = 0; i < ingredients.length; i++) {
-        if (userIngredients.length > 0) {
-          const index = userIngredients.indexOf(ingredients[i].name);
-          if(index < 0) {
-            userIngredients.push(ingredients[i].name);
-          }
-        }  
-    } 
-      await User.updateOne({ _id: req.user.id }, { $set: { shoppingList: userIngredients } });
-      res.redirect('/');
-    
+    for (let i = 0; i < ingredients.length; i++) {
+      if (userIngredients.length > 0) {
+        const index = userIngredients.indexOf(ingredients[i].name);
+        if (index < 0) {
+          userIngredients.push(ingredients[i].name);
+        }
+      }
+    }
+    await User.updateOne({ _id: req.user.id }, { $set: { shoppingList: userIngredients } });
+    res.redirect('/');
   } catch (error) {
     console.error(error);
+  }
+};
+
+exports.removeFromList = async (req, res) => {
+  try {
+    const ingredientsRemoved = req.body.ingredients;
+    const shoppingList = req.user.shoppingList;
+    const updatedShoppingList = [];
+    for (let i = 0; i < shoppingList.length; i++) {
+      ingredientsRemoved.forEach(x => {
+        if (x !== shoppingList[i]) {
+          updatedShoppingList.push(shoppingList[i]);
+        }
+      });
+    }
+    await User.updateOne({ _id: req.user._id }, { $set: { shoppingList: updatedShoppingList } });
+    res.redirect('/recipe/list');
+  } catch (error) {
+    console.log(error);
   }
 };
