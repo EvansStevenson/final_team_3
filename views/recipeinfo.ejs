@@ -57,6 +57,9 @@
                 </ol>
                     <h4>Contributor: </h4><p><%= user.name %></p>
                     </div>
+                    <% if (isAuthenticated) { %>
+                        <a href="/recipe/<%= recipe._id %>/favorite" class="btn btn-success">Add to Favorites</a>
+                    <% } %>
                     </div>
                 </article>
             </div>

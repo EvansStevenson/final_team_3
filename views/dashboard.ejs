@@ -20,7 +20,7 @@
                         <li>Number of Recipes: <%= recipes.length %></li>
                     </ul>
                 </div>
-                <a href="/auth/<%= user._id%>/edit"><button class="btn" type="submit">Edit Account</button></a>
+                <a class="btn btn-success" href="/auth/<%= user._id%>/edit">Edit Account</a>
             </div>
 
             <!-- Recipe Section -->
@@ -49,6 +49,31 @@
                 <h2>You have no recipes.</h2>
                 <% } %>
                 <a href="/recipe/addrecipe"><button class="btn" type="submit">Add Recipe</button></a>
+            </div>
+            <div class="friends">
+                <% if (friends.length > 0) {%>
+                <h2>List of friends</h2>
+                <ul>
+                    <% for (let friend of friends) {%>
+                    <li><%= friend.name %> <a class="btn btn-primary" href="/auth/user/<%= friend._id %>/recipes">Added recipes</a></li>
+                    <% } %>
+                </ul>
+                <% } else {%>
+                <a class="btn" href="/auth/users">See users</a>
+                <% } %>
+                <% if (requests.length > 0) {%>
+                <h2>Friend requests:</h2>
+                <ul>
+                    <% for (let request of requests) {%>
+                    <li>
+                        <p>Request from: <%= request.name %></p> <a class="btn"
+                            href="/auth/user/<%= request._id %>/accept ">Accept request</a><a class="btn"
+                            href="/auth/user/<%= request._id %>/decline">Decline request</a>
+                    </li>
+                    <% } %>
+                </ul>
+                <% } %>
+
             </div>
 
             <%- include('./includes/end.ejs') %>
