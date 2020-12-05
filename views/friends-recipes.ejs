@@ -20,14 +20,13 @@
                   <div class="centered">
                     <p class="card-text"><%= recipe.title %></p>
                     <a class="btn" href="/recipe/<%= recipe._id %>/info">View Recipe</a>
-                    <a class="btn" href="/recipe/<%= recipe._id %>/remove-favorite">Remove</a>
                   </div>
                 </div>
               </div>
             <% } %>
           <% } %>
         <% } else {%>
-          <h3><%= user.name %> doesn't have recipes</h3>
+          <h3><%= user.name %> hasn't added any recipes of their own yet.</h3>
         <% } %> 
       </div>
 

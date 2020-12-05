@@ -76,4 +76,5 @@ label {
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     border: .75px solid #ef5350;
+    padding: 3px;
   }

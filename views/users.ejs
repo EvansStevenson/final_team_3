@@ -1,20 +1,28 @@
 <%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/stylesheets/users.css">
 </head>
 
 <body>
   <%- include('./includes/nav.ejs') %>
 
-  <% if (users.length > 0) {%>
-  <h1 class="">All Users</h1>
-  <ul>
-    <% for (let user of users) {%>
-    <li>
-      <p><%= user.name %></p> <a href="/auth/user/<%= user._id %>/add-to-friends">Add to Friends</a>
-    </li>
-    <% } %>
-  </ul>
-  <% } else {%>
-  <p>There is no new users</p>
-  <% } %>
+  <main class="content">
+      <div class="content-wrap">
+        
+        <div class="users centered">
+          <% if (users.length > 0) {%>
+            <h1>All Users</h1>
+            <p>Try to find a friend or two!</p>
+            <hr>
+            <ul style="list-style: none;">
+              <% for (let user of users) {%>
+                <li class="card-small">
+                  <h3 class="card-small__header"><%= user.name %></h3> <a class="btn-small" href="/auth/user/<%= user._id %>/add-to-friends">Send Friend Request</a>
+                </li>
+                <% } %>
+              </ul>
+              <% } else {%>
+                <p>No one else is here yet.  It looks like you are the first!  Be sure to invite your friends.</p>
+                <% } %>
+        </div>
 
-  <%- include('./includes/end.ejs') %>
+      <%- include('./includes/end.ejs') %>

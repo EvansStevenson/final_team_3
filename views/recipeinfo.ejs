@@ -33,15 +33,9 @@
                         <ul>
                         <li> 
                             <%= ingredient.amount %>
-                            <% if (ingredient.amount > 1 || ingredient.amount < 1) { %>
-                            <%= ingredient.unit %>s of 
-                            <%= ingredient.name %>
-                          
-                            <% } else { %>
                             <%= ingredient.unit %> of 
                             <%= ingredient.name %> 
                         </li>
-                        <% } %>
                         </ul>
                     <% } %>
                      <a class="btn" id="add-to-list" href="/recipe/<%= recipe._id %>/add-to-list">Add to List</a>

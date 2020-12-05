@@ -30,7 +30,7 @@ form {
 
 .centered {
   text-align: center;
-  margin: 0 auto;
+  margin: auto;
 }
 
 .image {
@@ -53,7 +53,6 @@ form {
 }
 
 .logo {
-<<<<<<< HEAD
     border-radius: 50px;
     /* background: #fcc42a; */
     background: #586BA4;
@@ -61,13 +60,6 @@ form {
     max-height: 100px;
     border: 1.5px solid #102542;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-=======
-  border-radius: 50px;
-  /* background: #fcc42a; */
-  background: #586ba4;
-  max-width: 100px;
-  max-height: 100px;
->>>>>>> vova
 }
 
 hr {
@@ -163,7 +155,7 @@ h2 {
   float: right;
 }
 
-.mobile-nav {
+/*.mobile-nav {
   width: 30rem;
   height: 100vh;
   max-width: 90%;
@@ -177,7 +169,7 @@ h2 {
   transition: transform 0.3s ease-out;
 }
 
-.mobile-nav.open {
+ .mobile-nav.open {
   transform: translateX(0);
 }
 
@@ -237,7 +229,7 @@ h2 {
 #side-menu-toggle:active {
   color: #ffeb3b;
   border-color: #ffeb3b;
-}
+} */
 
 .backdrop {
   position: fixed;
@@ -321,12 +313,30 @@ h2 {
 
 .btn.danger {
   color: red;
-  border-color: red;
+  border: 1.5px solid red;
+  background: white;
+  border-radius: 5px;
 }
+
+.btn.success {
+    color: white;
+    border: 1.5px solid  #4771fa;
+    /* background:  #A8C256; */
+    background:  #4771fa;
+    border-radius: 5px;
+}
+  
 
 .btn.danger:hover,
 .btn.danger:active {
-  background: red;
+  background-color: red;
+  color: white;
+}
+
+.btn.success:hover,
+.btn.success:active {
+  background-color: #102542;
+  border: 1.5px solid #102542;
   color: white;
 }
 
