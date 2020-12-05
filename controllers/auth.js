@@ -244,7 +244,7 @@ exports.getUsers = async (req, res) => {
   const friends = req.user.friends;
   const requestsSent = req.user.friendRequestsSent;
   const notFriends = users.filter(x => x._id.toHexString() !== req.user._id.toHexString());
-  const displayUsers = [];
+  let displayUsers = [];
   for (let i = 0; i < notFriends.length; i++) {
     if (requestsSent[i]) {
       if (requestsSent[i].user.toHexString() !== notFriends[i]._id.toHexString()) {
@@ -254,6 +254,9 @@ exports.getUsers = async (req, res) => {
       displayUsers.push(notFriends[i]);
     }
   }
+  friends.forEach(f => {
+    displayUsers = displayUsers.filter(x => x._id.toHexString() !== f.toHexString());
+  });
   res.render('users', {
     title: 'Users',
     path: '',

@@ -410,17 +410,7 @@ exports.addList = async (req, res) => {
 
 exports.removeFromList = async (req, res) => {
   try {
-    const ingredientsRemoved = req.body.ingredients;
-    const shoppingList = req.user.shoppingList;
-    const updatedShoppingList = [];
-    for (let i = 0; i < shoppingList.length; i++) {
-      ingredientsRemoved.forEach(x => {
-        if (x !== shoppingList[i]) {
-          updatedShoppingList.push(shoppingList[i]);
-        }
-      });
-    }
-    await User.updateOne({ _id: req.user._id }, { $set: { shoppingList: updatedShoppingList } });
+    await User.updateOne({ _id: req.user._id }, { $set: { shoppingList: [] } });
     res.redirect('/recipe/list');
   } catch (error) {
     console.log(error);

@@ -29,7 +29,7 @@
                             <% } %>
                         </ul>
                         <input type="hidden" name="_csrf" value="<%= csrf %>" />
-                        <a id="remove-btn" class="btn">Remove ingredient(s)</a>
+                        <a href="/recipe/remove-from-list" class="btn">Clear List</a>
                         <% } else { %>
                             <h2>You don't have any items on your grocery list.</h2>
                         <% } %>

@@ -16,21 +16,3 @@ Array.from(checkboxCollection).forEach(item => {
     }
   });
 });
-
-const sendData = async array => {
-  const response = await fetch('http://localhost:5000/recipe/remove-from-list', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: {
-      ingredients: ingredientsRemoved,
-      csrf: csrf,
-    },
-  });
-};
-
-document.getElementById('remove-btn').addEventListener('click', () => {
-  csrf = document.querySelector('input[type=hidden]').value;
-  sendData(ingredientsRemoved);
-});
