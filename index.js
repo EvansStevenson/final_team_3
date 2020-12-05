@@ -1,6 +1,6 @@
 //Here is our index for our final.
 const express = require('express');
-
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const session = require('express-session');
@@ -33,23 +33,37 @@ const User = require('./models/user');
 
 const app = express();
 
-
-//Options for mongoose
-const options = {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useFindAndModify: false
-};
+// //Options for mongoose
+// const options = {
+//   useUnifiedTopology: true,
+//   useNewUrlParser: true,
+//   useFindAndModify: false
+// };
 
 const PORT = process.env.PORT || 5000;
 /* Check if the url is in the server env otherwise use it from the config */
-const MONGODB_URI = process.env.MONGODB_URI || config.get('mongoURI');
+const MONGODB_URI = process.env.MONGODB_URL || config.get('mongoURI');
 /* Create session store and point to database, and save it in collection sessions */
 const store = new mongoDBStore({
   uri: MONGODB_URI,
   collection: 'sessions',
 });
 const csrfProtection = csrf();
+
+//cennect to heroku
+const corsOptions = {
+  origin: "https://team3final.herokuapp.com/",
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+const options = {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  family: 4
+};
+const MONGODB_URL = process.env.MONGODB_URL || MONGODB_URI;
 
 //body parser
 app.use(express.static(path.join(__dirname, 'public')));
@@ -62,7 +76,7 @@ app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
 /* add session to the app */
 app.use(
   session({
-    secret: config.get('sessionSecret'),
+    secret: process.env.sessionSecret || config.get('sessionSecret'),
     resave: false,
     saveUninitialized: false,
     store: store,
@@ -101,7 +115,7 @@ app.use(errorController.get404);
 
 //Connect to the database and open the web server
 mongoose
-  .connect(MONGODB_URI, options)
+  .connect(MONGODB_URL, options)
   .then(result => {
     app.listen(PORT, () => console.log(`Listening on ${PORT}`));
   })
@@ -109,3 +123,5 @@ mongoose
     console.log(err);
     res.redirect('/500');
   });
+
+ 
