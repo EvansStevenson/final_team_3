@@ -37,23 +37,27 @@
             <li class="main-header__item">
                 <a class="<%= path === '/auth/dashboard' ? 'active' : '' %>" href="/auth/dashboard">Dashboard</a>
             </li>
+
+            <li class="main-header__item">
+                <a class="<%= path === '' ? 'active' : '' %>" href="/auth/users">Users</a>
+            </li>
             <% } %>
         </ul>
 
         <ul class="main-header__item-list">
             <% if (!isAuthenticated) { %>
             <li class="main-header__item">
-                <a class="<%= path === '/login' ? 'active' : '' %>" href="/auth/login">Log In</a>
+                <a class="btn success <%= path === '/login' ? 'active' : '' %>" href="/auth/login">Log In</a>
             </li>
 
             <li class="main-header__item">
-                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/auth/signup">Sign Up</a>
+                <a class="btn success <%= path === '/signup' ? 'active' : '' %>" href="/auth/signup">Sign Up</a>
             </li>
             <% } else { %>
             <li class="main-header__item">
                 <form action="/auth/logout" method="post">
                     <input type="hidden" name="_csrf" value="<%= csrf %>">
-                    <button type="submit">Logout</button>
+                    <button class="btn danger" type="submit">Logout</button>
                 </form>
             </li>
             <% } %>

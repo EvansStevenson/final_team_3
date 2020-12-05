@@ -5,7 +5,7 @@
   <%- include('./includes/nav.ejs') %>
 
 
-  <h1 class="">My Favorite Recipes</h1>
+  <h1 class="">Your Favorite Recipes</h1>
 
   <main class="content">
     <div class="content-wrap">
@@ -20,7 +20,7 @@
                   <div class="centered">
                     <p class="card-text"><%= recipe.title %></p>
                     <a class="btn" href="/recipe/<%= recipe._id %>/info">View Recipe</a>
-                    <a class="btn" href="/recipe/<%= recipe._id %>/remove-favorite">Remove</a>
+                    <a class="btn danger" href="/recipe/<%= recipe._id %>/remove-favorite">Unfavorite</a>
                   </div>
                 </div>
               </div>
