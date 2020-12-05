@@ -2,7 +2,6 @@ const User = require('../models/user');
 const Recipe = require('../models/recipe');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
-const user = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
   res.render('./auth/login', {
@@ -88,7 +87,7 @@ exports.getSignup = (req, res, next) => {
         confirmPassword: req.body.confirmPassword,
       },
       editMode: false,
-      user: ''
+      user: '',
     });
   }
   res.render('auth/signup', {
@@ -104,7 +103,7 @@ exports.getSignup = (req, res, next) => {
       confirmPassword: '',
     },
     editMode: false,
-    user: ''
+    user: '',
   });
 };
 
@@ -127,7 +126,7 @@ exports.postSignup = async (req, res, next) => {
           confirmPassword: req.body.confirmPassword,
         },
         editMode: false,
-        user: ''
+        user: '',
       });
     }
     const hash = await bcrypt.hash(password, 12);
@@ -143,17 +142,43 @@ exports.getDashboard = async (req, res, next) => {
   try {
     const addedRecipes = req.user.addedRecipes;
     const recipes = [];
+    const friends = req.user.friends;
+    const requestsReceived = [];
     await Promise.all(
       addedRecipes.map(async item => {
         const recipe = await Recipe.findOne({ _id: item });
         recipes.push(recipe);
       })
     );
+    // console.log(req.user.friendRequests);
+    if (req.user.friendRequests) {
+      const requests = req.user.friendRequests;
+      await Promise.all(
+        requests.map(async x => {
+          if (!x.approved && !x.declined) {
+            const user = await User.findById(x.requestor);
+            requestsReceived.push(user);
+          }
+        })
+      );
+    }
+    const users = [];
+    if (friends.length > 0) {
+      await Promise.all(
+        friends.map(async item => {
+          const user = await User.findById(item);
+          users.push(user);
+        })
+      );
+    }
+    // console.log(requestsReceived);
     res.render('dashboard', {
-      title: req.user.name + '\'s Dashboard | Gourmeat',
+      title: req.user.name + "'s Dashboard | Gourmeat",
       path: '/auth/dashboard',
       recipes: recipes,
       user: req.user,
+      friends: users,
+      requests: requestsReceived,
     });
   } catch (error) {
     console.error(error);
@@ -175,12 +200,12 @@ exports.getEditAccount = async (req, res) => {
         confirmPassword: '',
       },
       editMode: true,
-      user: req.user
-    })
+      user: req.user,
+    });
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 exports.postEditAccount = async (req, res) => {
   try {
@@ -201,7 +226,7 @@ exports.postEditAccount = async (req, res) => {
           confirmPassword: req.body.confirmPassword,
         },
         editMode: true,
-        user: req.user
+        user: req.user,
       });
     }
     const hash = await bcrypt.hash(password, 12);
@@ -212,4 +237,129 @@ exports.postEditAccount = async (req, res) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
+
+exports.getUsers = async (req, res) => {
+  const users = await User.find();
+  const friends = req.user.friends;
+  const requestsSent = req.user.friendRequestsSent;
+  const notFriends = users.filter(x => x._id.toHexString() !== req.user._id.toHexString());
+  const displayUsers = [];
+  for (let i = 0; i < notFriends.length; i++) {
+    if (requestsSent[i]) {
+      if (requestsSent[i].user.toHexString() !== notFriends[i]._id.toHexString()) {
+        displayUsers.push(notFriends[i]);
+      }
+    } else {
+      displayUsers.push(notFriends[i]);
+    }
+  }
+  res.render('users', {
+    title: 'Users',
+    path: '',
+    users: displayUsers,
+  });
+};
+
+exports.addToFriends = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id);
+    const friendRequest = user.friendRequests;
+    friendRequest.push({ requestor: req.user._id, approved: false, declined: false });
+    user.update({ $set: { friendRequests: friendRequest } });
+    user.save();
+    const sentRequests = req.user.friendRequestsSent;
+    sentRequests.push({
+      user: user._id,
+      confirmed: false,
+    });
+    await User.updateOne({ _id: req.user._id }, { $set: { friendRequestsSent: sentRequests } });
+
+    res.redirect('/auth/users');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.postAcceptFriend = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const requests = req.user.friendRequests;
+    const updatedRequests = [];
+    requests.forEach(x => {
+      if (id === x.requestor.toHexString()) {
+        x.approved = true;
+        updatedRequests.push(x);
+      } else {
+        updatedRequests.push(x);
+      }
+    });
+    const friendsOne = req.user.friends;
+    const user = await User.findById(id);
+    friendsOne.push(user);
+    await User.updateOne({ _id: req.user._id }, { $set: { friendRequests: updatedRequests, friends: friendsOne } });
+    const sentRequests = user.friendRequestsSent;
+    const updatedSentRequests = [];
+    sentRequests.forEach(x => {
+      if (req.user._id.toHexString() === x.user.toHexString()) {
+        x.confirmed = true;
+        updatedSentRequests.push(x);
+      } else {
+        updatedSentRequests.push(x);
+      }
+    });
+    const friendsTwo = user.friends;
+    friendsTwo.push(req.user);
+    await User.updateOne({ _id: id }, { $set: { friendRequestsSent: updatedSentRequests, friends: friendsTwo } });
+    res.redirect('/auth/dashboard');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.postDeclineFriend = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const requests = req.user.friendRequests;
+    const updatedRequests = [];
+    requests.forEach(x => {
+      if (id === x.requestor.toHexString()) {
+        x.approved = false;
+        x.declined = true;
+        updatedRequests.push(x);
+      } else {
+        updatedRequests.push(x);
+      }
+    });
+    await User.updateOne({ _id: req.user._id }, { $set: { friendRequests: updatedRequests } });
+    res.redirect('/auth/dashboard');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getFriendsRecipes = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id);
+    const addedRecipes = user.addedRecipes;
+    const displayRecipes = [];
+    if (addedRecipes.length > 0) {
+      await Promise.all(
+        addedRecipes.map(async x => {
+          const recipe = await Recipe.findById(x);
+          displayRecipes.push(recipe);
+        })
+      );
+    }
+    res.render('friends-recipes', {
+      title: 'Added Recipes',
+      path: '',
+      recipes: displayRecipes,
+      user: user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
