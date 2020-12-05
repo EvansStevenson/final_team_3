@@ -15,5 +15,5 @@ router.get('/:id/remove-favorite', recipeController.removeFavorite);
 router.get('/favorites', recipeController.getFavorites);
 router.get('/list', recipeController.getList);
 router.get('/:id/add-to-list', recipeController.addList);
-router.post('/remove-from-list', recipeController.removeFromList);
+router.get('/remove-from-list', recipeController.removeFromList);
 module.exports = router;

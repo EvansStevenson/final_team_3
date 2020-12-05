@@ -38,7 +38,9 @@
                         </li>
                         </ul>
                     <% } %>
+                    <% if (isAuthenticated) {%> 
                      <a class="btn" id="add-to-list" href="/recipe/<%= recipe._id %>/add-to-list">Add to List</a>
+                    <% } %> 
                     <h4>Instructions: </h4>
                     <ol>
                         <% for (instruction of recipe.instructions) { %>
